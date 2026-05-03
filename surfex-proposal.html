@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FounderBud × Surfex — What's possible</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent:       #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-soft:  #eff6ff;
+    --text:         #1d1d1f;
+    --text-2:       #6e6e73;
+    --text-3:       #86868b;
+    --bg:           #ffffff;
+    --bg-2:         #f5f5f7;
+    --border:       #e5e7eb;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md:    0 4px 12px rgba(0,0,0,0.06);
+    --shadow-lg:    0 8px 28px rgba(0,0,0,0.09);
+    --radius:       14px;
+    --radius-sm:    8px;
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    background: var(--text);
+    color: #fff;
+    padding: 64px 24px 56px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 20px;
+  }
+  #hero h1 {
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+  #hero h1 span { color: #60a5fa; }
+  #hero p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.65;
+  }
+  .pain-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .pain-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .pain-chip::before { content: '⚠ '; opacity: 0.6; }
+
+  /* ── SECTION WRAPPER ── */
+  .section { padding: 56px 24px; }
+  .section-alt { background: var(--bg-2); }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--text-2);
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  /* ── USE CASE CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .uc-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .uc-card:hover { box-shadow: var(--shadow-md); }
+  .uc-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .uc-icon {
+    font-size: 26px;
+    width: 48px;
+    height: 48px;
+    background: var(--accent-soft);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .uc-title-wrap { flex: 1; min-width: 0; }
+  .uc-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .uc-hook {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.4;
+  }
+  .uc-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.2s;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .uc-card.open .uc-toggle {
+    background: var(--accent);
+    color: #fff;
+    transform: rotate(45deg);
+  }
+  .uc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .uc-card.open .uc-body { max-height: 400px; }
+  .uc-detail {
+    padding: 0 24px 24px;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .uc-detail strong { color: var(--text); }
+
+  /* bonus card */
+  .uc-card.bonus { border-color: var(--accent); }
+  .uc-card.bonus .uc-icon { background: var(--accent); font-size: 22px; }
+  .uc-card.bonus .uc-title { color: var(--accent); }
+
+  /* ── PACKAGING ── */
+  .pack-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .pack-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .pack-card.featured {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), var(--shadow-md);
+  }
+  .pack-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 40px;
+    margin-bottom: 14px;
+  }
+  .pack-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pack-tagline {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .pack-includes {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pack-includes li {
+    font-size: 14px;
+    color: var(--text-2);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .pack-includes li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── PHASE LABEL ── */
+  .pack-phase {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  /* ── ALPHA NOTE ── */
+  .alpha-note {
+    max-width: 620px;
+    margin: 36px auto 0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+  }
+  .alpha-cost-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .alpha-cost-label {
+    color: var(--text-3);
+    flex-shrink: 0;
+    width: 200px;
+    line-height: 1.5;
+  }
+  .alpha-cost-value { color: var(--text-2); line-height: 1.5; }
+  .alpha-cost-value strong { color: var(--text); }
+  .alpha-free { color: var(--accent); font-weight: 700; }
+  .alpha-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+  .alpha-deal {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .alpha-detail {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .alpha-detail:last-child { margin-bottom: 0; }
+
+  /* ── OFFER ── */
+  #offer {
+    background: var(--text);
+    padding: 56px 24px;
+    text-align: center;
+  }
+  .offer-card {
+    max-width: 580px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+  }
+  .offer-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #60a5fa;
+    margin-bottom: 20px;
+  }
+  .offer-deal {
+    font-size: clamp(18px, 3.5vw, 24px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .offer-deal em {
+    font-style: normal;
+    color: #60a5fa;
+  }
+  .offer-divider {
+    width: 40px;
+    height: 2px;
+    background: rgba(255,255,255,0.15);
+    margin: 0 auto 24px;
+    border-radius: 2px;
+  }
+  .offer-detail {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    max-width: 440px;
+    margin: 0 auto 28px;
+  }
+  .offer-detail strong { color: rgba(255,255,255,0.9); }
+  .offer-costs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .offer-cost-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .offer-cost-label {
+    color: rgba(255,255,255,0.45);
+    flex-shrink: 0;
+    width: 110px;
+    padding-top: 1px;
+  }
+  .offer-cost-value { color: rgba(255,255,255,0.85); line-height: 1.5; }
+  .offer-cost-value strong { color: #fff; }
+  .offer-cost-value .free-badge {
+    display: inline-block;
+    background: rgba(96,165,250,0.2);
+    color: #60a5fa;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 40px;
+    letter-spacing: 0.04em;
+    margin-left: 6px;
+  }
+
+  /* ── QUESTIONS ── */
+  .questions-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .questions-toggle {
+    width: 100%;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.15s;
+  }
+  .questions-toggle:hover { background: var(--bg-2); }
+  .questions-toggle .arrow {
+    font-size: 13px;
+    color: var(--text-3);
+    transition: transform 0.2s;
+  }
+  .questions-toggle.open .arrow { transform: rotate(180deg); }
+  .questions-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .questions-body.open { max-height: 400px; }
+  .q-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 4px 4px;
+  }
+  .q-chip {
+    background: var(--accent-soft);
+    border: 1px solid #bfdbfe;
+    color: var(--accent);
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .q-chip::before { content: '"'; opacity: 0.6; }
+  .q-chip::after { content: '"'; opacity: 0.6; }
+
+  /* ── CTA ── */
+  #cta {
+    background: var(--accent);
+    padding: 64px 24px;
+    text-align: center;
+  }
+  .cta-inner { max-width: 520px; margin: 0 auto; }
+  .cta-headline {
+    font-size: clamp(20px, 4vw, 30px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .cta-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .cta-promise {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: #fff;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+  /* ── FOOTER ── */
+  #footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    padding: 56px 24px;
+  }
+  .footer-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .footer-handle a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.75);
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.15s;
+  }
+  .footer-handle a:hover { background: rgba(255,255,255,0.18); }
+  .footer-note {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── INTEGRATION CHIPS ── */
+  .int-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .int-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-right: 2px;
+    white-space: nowrap;
+  }
+  .int-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 40px;
+    white-space: nowrap;
+  }
+  .int-chip.built {
+    background: var(--bg-2);
+    color: var(--text-2);
+    border: 1px solid #e0e0e5;
+  }
+  .int-chip.ext {
+    background: #fff7ed;
+    color: #b45309;
+    border: 1px solid #fed7aa;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 640px) {
+    .pack-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 768px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+    .uc-card.bonus { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">FounderBud × Surfex</div>
+  <h1>Where Surfex is losing <span>time and money</span> right now</h1>
+  <p>Six fixes. No desk time for Mike. Everything runs through Telegram or takes under 2 minutes.</p>
+  <div class="pain-chips">
+    <span class="pain-chip">40–50% ad spend wasted</span>
+    <span class="pain-chip">Reviews left on the table</span>
+    <span class="pain-chip">Content never posted</span>
+    <span class="pain-chip">Pipeline invisible</span>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section">
+  <div class="section-label">What gets fixed</div>
+  <h2 class="section-title">Six things FounderBud handles for you</h2>
+  <p class="section-sub">Click any card to see exactly how it works.</p>
+
+  <div class="cards-grid">
+
+    <div class="uc-card" onclick="toggleCard(this)">
+      <div class="uc-header">
+        <div class="uc-icon">📱</div>
+        <div class="uc-title-wrap">
+          <div class="uc-title">Content on Autopilot</div>
+          <div class="uc-hook">Mike shoots the job. FounderBud writes, schedules, and posts it.</div>
+        </div>
+        <button class="uc-toggle" onclick="event.stopPropagation()">+</button>
+      </div>
+      <div class="uc-body">
+        <div class="uc-detail">
+          Mike photographs or films a completed job — <strong>60 seconds on site</strong> — and sends it to Telegram. The content agent drafts a caption in his voice. Mike approves with a thumbs up. It posts to Instagram, Facebook, and Google Business automatically.<br><br>
+          All content stored permanently. No SaaS subscription, no platform holding it hostage. <strong>Result: consistent presence without Mike writing a single word.</strong>
+          <div class="int-row">
+            <span class="int-label">Runs on</span>
+            <span class="int-chip built">Telegram Bot</span>
+            <span class="int-chip built">Claude Content Agent</span>
+            <span class="int-chip built">Google Business Profile API</span>
+            <span class="int-chip ext">Blotato or Buffer (~$20/mo)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uc-card" onclick="toggleCard(this)">
+      <div class="uc-header">
+        <div class="uc-icon">📊</div>
+        <div class="uc-title-wrap">
+          <div class="uc-title">Google Ads Health Dashboard</div>
+          <div class="uc-hook">See exactly where your ad budget is going — and what to cut.</div>
+        </div>
+        <button class="uc-toggle" onclick="event.stopPropagation()">+</button>
+      </div>
+      <div class="uc-body">
+        <div class="uc-detail">
+          FounderBud pulls Google Ads data weekly and builds a <strong>browser-based dashboard</strong> showing CTR trends, bot click signals (high clicks, zero conversions), and cost per real lead.<br><br>
+          Auto-generates a weekly recommendations card: negative keywords to add, bid caps to set, ad schedule to adjust. No login, no SaaS — open in your browser, current data, clear actions. <strong>Estimated recovery: 30–40% of current wasted spend redirected to real leads.</strong>
+          <div class="int-row">
+            <span class="int-label">Runs on</span>
+            <span class="int-chip built">FounderBud HTML Builder</span>
+            <span class="int-chip built">FounderBud Scheduler</span>
+            <span class="int-chip ext">Google Ads API (free, 2–3 day setup)</span>
+            <span class="int-chip ext">Google Cloud Project (free)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uc-card" onclick="toggleCard(this)">
+      <div class="uc-header">
+        <div class="uc-icon">⭐</div>
+        <div class="uc-title-wrap">
+          <div class="uc-title">Automated Review Generation</div>
+          <div class="uc-hook">Every completed job becomes a Google review request. Automatically.</div>
+        </div>
+        <button class="uc-toggle" onclick="event.stopPropagation()">+</button>
+      </div>
+      <div class="uc-body">
+        <div class="uc-detail">
+          Invoice paid → personalised email to the customer <strong>3–5 days later</strong>, using their name, job type, and site. No review after 7 days? One polite follow-up. Sequence stops the moment they leave a review.<br><br>
+          Monthly report shows review velocity and which job types convert best. <strong>No more relying on Mike remembering to ask.</strong>
+          <div class="int-row">
+            <span class="int-label">Runs on</span>
+            <span class="int-chip built">Gmail API</span>
+            <span class="int-chip built">FounderBud Scheduler</span>
+            <span class="int-chip ext">Google Business Profile API (free)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uc-card" onclick="toggleCard(this)">
+      <div class="uc-header">
+        <div class="uc-icon">🔧</div>
+        <div class="uc-title-wrap">
+          <div class="uc-title">Lead Pipeline Visibility</div>
+          <div class="uc-hook">Know what's quoted, what's pending, where next month's revenue comes from.</div>
+        </div>
+        <button class="uc-toggle" onclick="event.stopPropagation()">+</button>
+      </div>
+      <div class="uc-body">
+        <div class="uc-detail">
+          Browser-based quote tracker — <strong>no Airtable, no Monday, no subscription</strong>. Shows every open quote, when it was sent, and when to follow up. Auto follow-up email for quotes not responded to in 5 days.<br><br>
+          Lead source tagging shows which ads and posts are bringing paying jobs. Referral trigger fires automatically after every 5-star review. <strong>Pipeline goes from invisible to predictable.</strong>
+          <div class="int-row">
+            <span class="int-label">Runs on</span>
+            <span class="int-chip built">FounderBud HTML Builder</span>
+            <span class="int-chip built">Gmail API</span>
+            <span class="int-chip built">Browser localStorage</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uc-card" onclick="toggleCard(this)">
+      <div class="uc-header">
+        <div class="uc-icon">🔒</div>
+        <div class="uc-title-wrap">
+          <div class="uc-title">Customer Data Safety</div>
+          <div class="uc-hook">Your customer records stay on your machine. Not in someone else's cloud.</div>
+        </div>
+        <button class="uc-toggle" onclick="event.stopPropagation()">+</button>
+      </div>
+      <div class="uc-body">
+        <div class="uc-detail">
+          Customer data — names, addresses, job sites, invoices — handled with <strong>PII-aware processing</strong>. Any AI work anonymises records first. The vault lives locally: Mike owns it permanently, no platform can take it away.<br><br>
+          Integrates with Xero or MYOB for accounting handoff — no double entry. Monthly data hygiene check: stale records, incomplete jobs, missing follow-ups.
+          <div class="int-row">
+            <span class="int-label">Runs on</span>
+            <span class="int-chip built">PII Processing Layer</span>
+            <span class="int-chip built">Local Obsidian Vault</span>
+            <span class="int-chip ext">Xero API or MYOB API (free setup)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uc-card bonus" onclick="toggleCard(this)">
+      <div class="uc-header">
+        <div class="uc-icon">🎙️</div>
+        <div class="uc-title-wrap">
+          <div class="uc-title">Voice-to-Job-Brief</div>
+          <div class="uc-hook">Talk the job. FounderBud builds the record, the post, and the invoice brief.</div>
+        </div>
+        <button class="uc-toggle" onclick="event.stopPropagation()">+</button>
+      </div>
+      <div class="uc-body">
+        <div class="uc-detail">
+          Mike records a 30-second voice note on Telegram: <em>"Just finished a 400sqm epoxy pour at a Rocklea warehouse, industrial grey, $28k, client was stoked."</em><br><br>
+          FounderBud generates: structured job record, social post draft, invoice line items, and a testimonial request email — all in one shot. Mike reviews and approves. <strong>Under 2 minutes. Saves 30–45 minutes of admin per job.</strong>
+          <div class="int-row">
+            <span class="int-label">Runs on</span>
+            <span class="int-chip built">Telegram Voice</span>
+            <span class="int-chip built">Whisper Transcription</span>
+            <span class="int-chip built">Claude Structured Output</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PACKAGING -->
+<section class="section section-alt">
+  <div class="section-label">The journey</div>
+  <h2 class="section-title">How we build this together</h2>
+  <p class="section-sub">Three phases. We start at Phase 1 and build as you see results. No rush.</p>
+
+  <div class="pack-grid">
+    <div class="pack-card">
+      <div class="pack-phase">Phase 1</div>
+      <div class="pack-name">Get it running</div>
+      <div class="pack-tagline">See it working before we go further.</div>
+      <ul class="pack-includes">
+        <li>Content agent setup</li>
+        <li>Review automation</li>
+        <li>Telegram approval workflow</li>
+        <li>Multi-platform posting</li>
+      </ul>
+    </div>
+
+    <div class="pack-card featured">
+      <div class="pack-phase" style="color:#60a5fa;">Phase 2</div>
+      <div class="pack-name">Add the revenue levers</div>
+      <div class="pack-tagline">When Phase 1 is humming, we add the money tools.</div>
+      <ul class="pack-includes">
+        <li>Everything in Phase 1</li>
+        <li>Google Ads health dashboard</li>
+        <li>Quote pipeline tracker</li>
+        <li>Lead source tagging</li>
+        <li>Quote follow-up automation</li>
+      </ul>
+    </div>
+
+    <div class="pack-card">
+      <div class="pack-phase">Phase 3</div>
+      <div class="pack-name">The full OS</div>
+      <div class="pack-tagline">The full picture. Surfex running on autopilot.</div>
+      <ul class="pack-includes">
+        <li>All 6 use cases</li>
+        <li>Voice-to-job-brief</li>
+        <li>Customer data vault</li>
+        <li>Xero / MYOB integration</li>
+        <li>Monthly health reports</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alpha-note">
+    <div class="alpha-cost-row">
+      <span class="alpha-cost-label">Your only cost</span>
+      <span class="alpha-cost-value">Claude Pro subscription — <strong>~AUD $32/month</strong>, billed by Anthropic directly to you</span>
+    </div>
+    <div class="alpha-cost-row">
+      <span class="alpha-cost-label">Setup, personalisation + 30-day support</span>
+      <span class="alpha-cost-value alpha-free">Free for every phase</span>
+    </div>
+    <div class="alpha-divider"></div>
+    <p class="alpha-detail">It's yours forever. I get a testimonial. Every problem we solve for Surfex becomes a blueprint I take to the next business.</p>
+  </div>
+</section>
+
+
+<!-- QUESTIONS -->
+<section class="section">
+  <div class="section-label">For the conversation</div>
+  <h2 class="section-title">Questions worth asking</h2>
+  <p class="section-sub">Before any product. These surface the real cost of staying put.</p>
+
+  <div class="questions-wrap">
+    <button class="questions-toggle" onclick="toggleQuestions(this)">
+      <span>Show conversation starters</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="questions-body">
+      <div class="q-chips">
+        <div class="q-chip">How many jobs last quarter where you never got a review?</div>
+        <div class="q-chip">What % of your ad budget actually turned into a quoted job?</div>
+        <div class="q-chip">If you got 45 minutes back per job — what would you do with it?</div>
+        <div class="q-chip">What happens to your customer data if you stop paying for your current tool?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-headline">Pick a time and we'll sort everything on the call.</h2>
+    <p class="cta-promise">Either way you get a second brain for free. A business operating system... a COO in your pocket. It's yours forever.</p>
+    <a class="cta-btn" href="https://calendar.notion.so/meet/uremarkable/baz" target="_blank" rel="noopener">Book a free call →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section id="footer">
+  <div class="footer-name">Baz Ozturk — FounderBud</div>
+  <div class="footer-handle">
+    <a href="https://www.linkedin.com/in/baz-ozturk/" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      linkedin.com/in/baz-ozturk
+    </a>
+  </div>
+  <p class="footer-note">Everything built here lives on your machine. No subscription until you're convinced.</p>
+</section>
+
+<script>
+  function toggleCard(card) {
+    const isOpen = card.classList.contains('open');
+    // close all
+    document.querySelectorAll('.uc-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  function toggleQuestions(btn) {
+    btn.classList.toggle('open');
+    const body = btn.nextElementSibling;
+    body.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
