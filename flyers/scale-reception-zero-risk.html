@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!--
   VERSIONS
+  v4 — 2026-05-05 — New H1/subhead; stats moved above scenario; DOM line restored; usage reframed as Shazza disclaimers
   v3 — 2026-05-05 — Em dashes removed; psychic/cold plunge; Van Damme; matchmaker; sickie; olympics; Shazza column
   v2 — 2026-05-05 — Shazza brand voice aligned throughout
   v1 — Original zero-risk start flyer
@@ -191,7 +192,11 @@
 
     /* ── USAGE CARDS ── */
     .usage-row {
-      display: flex; align-items: center; gap: 14px; margin-bottom: 12px;
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;
+    }
+    .usage-label {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.3px; margin-bottom: 4px; font-style: italic;
     }
 
     .usage-eg {
@@ -359,23 +364,11 @@
     <div class="label">Scale Reception</div>
     <div class="trust-badge">Zero-Risk Start</div>
 
-    <h1>Every missed call<br>is a missed commission.</h1>
+    <h1>Voicemail had<br>a good run.</h1>
 
     <p class="subhead">
-      Buyers don't leave voicemails. They move to the next listing. Shazza answers every call you miss, 24/7, qualifies the buyer, and drops the brief in your inbox before you call them back.
+      Buyers don't leave them anymore. They move to the next listing. Shazza gets em while they're hot and emotionally charged... qualifies every call ... around the clock and drops the brief in your inbox before you call them back.
     </p>
-
-    <!-- SCENARIO -->
-    <div class="scenario-box">
-      <div class="scenario-time">9pm Saturday</div>
-      <div class="scenario-body">
-        Buyer calls after your open home. Gets voicemail. They're not gone yet; but by Monday they've seen two more properties, talked to their broker, consulted their psychic, cold plunged, and the conviction you had them at Saturday is half what it was.
-      </div>
-      <div class="scenario-punch">
-        That's not a lost buyer. That's a harder close. And harder closes stretch your days on market.
-        <span>DOM is the number you walk into every listing presentation with. One stretched close makes Van Damme look inflexible.</span>
-      </div>
-    </div>
 
     <!-- STAT ROW -->
     <div class="stat-row">
@@ -394,6 +387,18 @@
       <div class="stat-block">
         <div class="stat-n green">24/7</div>
         <div class="stat-label">Always on. Never voicemail.</div>
+      </div>
+    </div>
+
+    <!-- SCENARIO -->
+    <div class="scenario-box">
+      <div class="scenario-time">9pm Saturday</div>
+      <div class="scenario-body">
+        Buyer calls after your open home. Gets voicemail. They're not gone yet; but by Monday they've seen two more properties, talked to their broker, consulted their psychic, cold plunged, and the conviction you had them at Saturday is half what it was.
+      </div>
+      <div class="scenario-punch">
+        That's not a lost buyer. That's a harder close. And harder closes stretch your days on market.
+        <span>DOM is the number you walk into every listing presentation with. One stretched close moves it.</span>
       </div>
     </div>
 
@@ -470,12 +475,13 @@
       </div>
       <div class="usage-row">
         <div class="usage-eg">
+          <div class="usage-label">Shazza's best guess if you miss ...</div>
           <div class="usage-vol">~60 calls</div>
           <div class="usage-min">~210 min</div>
           <div class="usage-cost">~$55 AUD</div>
         </div>
-        <div class="usage-sep">or</div>
         <div class="usage-eg">
+          <div class="usage-label">And if you're really making Shazza work</div>
           <div class="usage-vol">~150 calls</div>
           <div class="usage-min">~500+ min</div>
           <div class="usage-cost">~$130 AUD</div>
