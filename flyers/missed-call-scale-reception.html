@@ -289,6 +289,75 @@
       font-weight: 700;
       color: var(--text);
     }
+
+    /* ── INCLUDES BLOCK ── */
+    .includes-block {
+      background: var(--gold-light);
+      border: 1.5px solid rgba(198,151,63,0.25);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 32px;
+    }
+    .includes-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .includes-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .include-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .include-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .include-text {
+      font-size: 13.5px;
+      color: var(--sub);
+      line-height: 1.5;
+    }
+    .include-text strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 1px;
+    }
+    /* ── URGENCY STRIP ── */
+    .urgency-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--vp);
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-bottom: 14px;
+    }
+    .urgency-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .urgency-text {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.4;
+    }
+    .urgency-text strong { color: #fff; }
   </style>
 </head>
 <body>
@@ -330,17 +399,51 @@
       </div>
     </div>
 
+    <!-- URGENCY STRIP -->
+    <div class="urgency-strip">
+      <div class="urgency-dot"></div>
+      <div class="urgency-text"><strong>5 founding spots.</strong> First in, locked in at $399 for 6 months. After that: $499/month + $500 setup.</div>
+    </div>
+
     <div class="cta-label">Two ways to look at it:</div>
 
     <div class="cta-row">
       <a class="cta-btn cta-founding" href="https://izzyoj.github.io/proposals/scale-reception-founding.html">
         <div class="btn-label">⚡ I'm ready to commit</div>
-        <div class="btn-sub">$399/month founding offer. 5 spots.</div>
+        <div class="btn-sub">$399/month locked 6 months. Setup waived ($500 value). 5 spots only.</div>
       </a>
       <a class="cta-btn cta-trial" href="https://izzyoj.github.io/proposals/scale-reception-costbase.html">
-        <div class="btn-label">Try first, zero risk</div>
-        <div class="btn-sub">Free setup. Pay for what you use.</div>
+        <div class="btn-label">Not ready? Try at cost first</div>
+        <div class="btn-sub">30 days at cost, then $399/month. Same price, proof first.</div>
       </a>
+    </div>
+
+
+    <!-- WHAT'S INCLUDED -->
+    <div class="includes-block">
+      <div class="includes-label">What $399/month covers</div>
+      <div class="includes-grid">
+        <div class="include-item">
+          <div class="include-icon">📞</div>
+          <div class="include-text"><strong>24/7 call cover</strong>Every call answered. No voicemail. No missed buyer.</div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">🎯</div>
+          <div class="include-text"><strong>Live qualification</strong>Name, property, budget, timeline — captured on every call.</div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">📬</div>
+          <div class="include-text"><strong>Instant call brief</strong>Summary hits your phone before you call them back.</div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">⚙️</div>
+          <div class="include-text"><strong>Full setup included</strong>Voice, scripts, tone, handoff flows. Normally $500 — waived for founding clients.</div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">📈</div>
+          <div class="include-text"><strong>Monthly tune</strong>Scripts refined from real call patterns each month.</div>
+        </div>
+      </div>
     </div>
 
     <div class="closer-line">Or just call me back. I'll definitely answer.</div>
