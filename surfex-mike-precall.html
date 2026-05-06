@@ -331,20 +331,25 @@
       </div>
     </div>
     <div class="step-body">
-      <p>Download and install Node.js directly — no command line needed for this step.</p>
-      <div class="link-row">
-        <a class="ext-link" href="https://nodejs.org/en/download" target="_blank">&#8599; Download Node.js LTS — nodejs.org</a>
+      <p>Download the installer directly from Node.js -- no Homebrew, no command line for this step.</p>
+      <a href="https://nodejs.org/en/download" target="_blank" class="link-btn">&#x2197; Download Node.js LTS -- nodejs.org</a>
+      <div class="substep" style="margin-top:14px;">
+        <div class="substep-num">1</div>
+        <div class="substep-body">Click the link above. Download the <strong>macOS Installer (.pkg)</strong> -- the LTS version on the left. Save it to your Downloads folder.</div>
       </div>
-      <ol class="substep-list" style="margin-top:10px;">
-        <li>Click the link above and download the <strong>macOS Installer (.pkg)</strong> — the LTS version is the one you want.</li>
-        <li>Open your <strong>Downloads</strong> folder, double-click the <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">.pkg</code> file, and follow the installer prompts. Node installs itself — you don't choose a location.</li>
-        <li>Once it finishes, open Warp and run this to confirm it worked:</li>
-      </ol>
-      <div class="cmd-block" style="margin-top:10px;">
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-body">Open Downloads, double-click the <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">.pkg</code> file, and follow the prompts. Node installs itself -- you don't choose a location.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">3</div>
+        <div class="substep-body">Once done, open Warp and run this to confirm it worked:</div>
+      </div>
+      <div class="cmd-block">
         <code>node --version</code>
         <button class="copy-btn" onclick="copyCmd(this, 'node --version')">Copy</button>
       </div>
-      <p style="margin-top:8px;">You should see something like <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">v20.x.x</code> or higher. If you do, you're done.</p>
+      <p>You should see something like <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">v20.x.x</code> or higher.</p>
       <p>Confirm it worked: type <code style="background:#f0f0f5;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:12px;">node --version</code> and press Enter. You should see something like <strong>v20.x.x</strong>.</p>
     </div>
     <div class="tick-row" id="tick-3" onclick="tick(3)">
