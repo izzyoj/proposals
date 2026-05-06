@@ -331,18 +331,20 @@
       </div>
     </div>
     <div class="step-body">
-      <p>Open Warp, paste this command, and press Enter:</p>
-      <div class="cmd-block">
-        <code>brew install node</code>
-        <button class="copy-btn" onclick="copyCmd(this, 'brew install node')">Copy</button>
+      <p>Download and install Node.js directly — no command line needed for this step.</p>
+      <div class="link-row">
+        <a class="ext-link" href="https://nodejs.org/en/download" target="_blank">&#8599; Download Node.js LTS — nodejs.org</a>
       </div>
-      <div class="note note-amber">
-        <strong>Getting "command not found: brew"?</strong> Run this first -- it installs Homebrew, then run <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:11px;">brew install node</code> once done.
-        <div class="cmd-block" style="margin-top:8px;margin-bottom:0;">
-          <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>
-          <button class="copy-btn" onclick="copyCmd(this, '/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;')">Copy</button>
-        </div>
+      <ol class="substep-list" style="margin-top:10px;">
+        <li>Click the link above and download the <strong>macOS Installer (.pkg)</strong> — the LTS version is the one you want.</li>
+        <li>Open your <strong>Downloads</strong> folder, double-click the <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">.pkg</code> file, and follow the installer prompts. Node installs itself — you don't choose a location.</li>
+        <li>Once it finishes, open Warp and run this to confirm it worked:</li>
+      </ol>
+      <div class="cmd-block" style="margin-top:10px;">
+        <code>node --version</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'node --version')">Copy</button>
       </div>
+      <p style="margin-top:8px;">You should see something like <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">v20.x.x</code> or higher. If you do, you're done.</p>
       <p>Confirm it worked: type <code style="background:#f0f0f5;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:12px;">node --version</code> and press Enter. You should see something like <strong>v20.x.x</strong>.</p>
     </div>
     <div class="tick-row" id="tick-3" onclick="tick(3)">
@@ -455,7 +457,7 @@
         <span class="use-chip use-chip-orange">&#x1F527; Job phase tracker</span>
       </div>
       <div class="note note-blue">
-        <strong>Every voice note Mike sends lands in inbox/.</strong> The bot transcribes it, extracts the job details, and routes it to the right folder -- <code style="font-family:monospace;font-size:11px;">quotes/draft/</code> if it's a new quote, <code style="font-family:monospace;font-size:11px;">jobs/active/</code> if the job is already booked. The quote pipeline tracks every open opportunity from first enquiry through to booked or dead. The multi-day phase tracker lives in <code style="font-family:monospace;font-size:11px;">jobs/active/</code> -- one file per job, phases: Prep, Primer, Base coat, Topcoat, Cure, with Mike and Callum assigned per phase.
+        <strong>Every voice note Mike sends lands in inbox/.</strong> The bot transcribes it, extracts the job details, and routes it to the right folder -- <code style="font-family:monospace;font-size:11px;">quotes/draft/</code> if it's a new quote, <code style="font-family:monospace;font-size:11px;">jobs/active/</code> if the job is already booked. The quote pipeline tracks every open opportunity from first enquiry through to booked or dead. The multi-day phase tracker lives in <code style="font-family:monospace;font-size:11px;">jobs/active/</code> -- one file per job, phases: Prep, Primer, Base coat, Topcoat, Cure, with Mike and Callin assigned per phase.
       </div>
 
       <a href="https://obsidian.md" target="_blank" class="link-btn">&#x2197; Download Obsidian -- free at obsidian.md</a>
@@ -466,7 +468,7 @@
       </div>
       <div class="substep">
         <div class="substep-num">2</div>
-        <div class="substep-body">Click <strong>Create new vault</strong>. Name it something simple -- <strong>"SurfexBrain"</strong> or your first name. Save it to your Documents folder.</div>
+        <div class="substep-body">Click <strong>Create new vault</strong>. Name it something simple -- <strong>"SurfexBrain"</strong> or your first name. Save it to your <strong>Documents</strong> folder — for example <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">~/Documents/SurfexBrain</code>. This is separate from the claudeclaw folder — two different locations, one config line connecting them.</div>
       </div>
       <div class="substep">
         <div class="substep-num">3</div>
@@ -599,7 +601,7 @@
       <p>Gemini powers two things here: reading job site photos and nightly memory consolidation across sessions.</p>
       <div class="note note-blue">
         <strong>What Gemini does here:</strong><br><br>
-        <strong>Photo reading:</strong> Mike or Callum shoots a photo on site and sends it via Telegram. Gemini reads it -- surface type, condition, visible issues -- so the structured job record includes a visual reference automatically. That photo also goes into <code style="font-family:monospace;font-size:11px;">content/queue/</code> as a draft Instagram caption.<br><br>
+        <strong>Photo reading:</strong> Mike or Callin shoots a photo on site and sends it via Telegram. Gemini reads it -- surface type, condition, visible issues -- so the structured job record includes a visual reference automatically. That photo also goes into <code style="font-family:monospace;font-size:11px;">content/queue/</code> as a draft Instagram caption.<br><br>
         <strong>Memory consolidation:</strong> Each night, Gemini scans conversation history and extracts patterns -- quote conversion rates, follow-up timing, job types -- so FounderBud stays sharp across sessions.
       </div>
       <a href="https://aistudio.google.com/app/apikey" target="_blank" class="link-btn">&#x2197; Get API key at aistudio.google.com</a>
@@ -629,7 +631,7 @@
     <div class="step-body">
       <p>FounderBud lives in a private GitHub repo. Baz adds you as a <strong>Collaborator</strong> -- scoped to just this repo. No shared passwords.</p>
       <div class="note note-blue">
-        <strong>Two-part step.</strong> You set up the tools and send Baz your username. He invites you. You accept via email. Then you clone it together on the call -- 30 seconds.
+        <strong>Two-part step.</strong> You set up the tools and send Baz your username. He invites you. You accept via email. Then you clone it together on the call -- 30 seconds. It goes into <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:12px;">~/claudeclaw</code> in your home folder. Keep the name as-is -- the bot references its own files by that name internally.
       </div>
       <p><strong>1. Create a GitHub account</strong> (skip if you already have one)</p>
       <a href="https://github.com/signup" target="_blank" class="link-btn">&#x2197; Sign up at github.com/signup</a>
@@ -733,12 +735,12 @@
       <div class="about-field">
         <label>What does a week of jobs look like?</label>
         <div class="about-hint">Rough number, what types (epoxy, waterproofing, polished concrete), how many days per job, who's on site.</div>
-        <textarea rows="3" placeholder="e.g. 3-4 active jobs a week. Mix of residential epoxy and commercial waterproofing. Most jobs run 2-3 days. Usually Mike and Callum on site together for the bigger ones..."></textarea>
+        <textarea rows="3" placeholder="e.g. 3-4 active jobs a week. Mix of residential epoxy and commercial waterproofing. Most jobs run 2-3 days. Usually Mike and Callin on site together for the bigger ones..."></textarea>
       </div>
       <div class="about-field">
-        <label>What's Callum's current workflow on a job?</label>
+        <label>What's Callin's current workflow on a job?</label>
         <div class="about-hint">What does he actually use day-to-day?</div>
-        <textarea rows="2" placeholder="e.g. Callum runs the on-site work. He calls or texts Mike for anything admin. No real system for tracking phases or handovers..."></textarea>
+        <textarea rows="2" placeholder="e.g. Callin runs the on-site work. He calls or texts Mike for anything admin. No real system for tracking phases or handovers..."></textarea>
       </div>
       <div class="about-field">
         <label>What's the biggest time sink right now?</label>
@@ -808,7 +810,7 @@
     </div>
     <div class="expect-item">
       <div class="expect-time">0:13</div>
-      <div class="expect-text"><strong>First message test</strong> -- type anything in Telegram. FounderBud responds. Confirm it knows Surfex, Mike, Callum, epoxy flooring.</div>
+      <div class="expect-text"><strong>First message test</strong> -- type anything in Telegram. FounderBud responds. Confirm it knows Surfex, Mike, Callin, epoxy flooring.</div>
     </div>
     <div class="expect-item">
       <div class="expect-time">0:15</div>
