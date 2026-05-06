@@ -435,8 +435,17 @@
       <p style="margin-top:16px;"><strong>Finally: get your personal chat ID</strong></p>
       <div class="substep">
         <div class="substep-num">1</div>
-        <div class="substep-body">Search for <strong>@userinfobot</strong> in Telegram. It will instantly reply with your <strong>User ID</strong> number. Save it below.</div>
+        <div class="substep-body">In Telegram, search for your bot by username (e.g. <strong>surfexbudXYZ_bot</strong>). Open it and press <strong>Start</strong>, then send it any message (e.g. "hello").</div>
       </div>
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-body">Open a browser and paste this URL -- replacing <code style="background:#f5f5f7;padding:2px 6px;border-radius:4px;">YOUR_TOKEN_HERE</code> with your actual bot token:<br><code style="display:block;background:#f5f5f7;padding:8px 12px;border-radius:6px;margin-top:6px;font-size:13px;word-break:break-all;">https://api.telegram.org/botYOUR_TOKEN_HERE/getUpdates</code></div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">3</div>
+        <div class="substep-body">In the JSON that loads, find <code style="background:#f5f5f7;padding:2px 6px;border-radius:4px;">"chat":{"id": 123456789</code> -- that number is your <strong>ALLOWED_CHAT_ID</strong>. Copy it and save below.</div>
+      </div>
+      <div class="note note-amber" style="margin-top:12px;"><strong>If the JSON shows <code>{"ok":true,"result":[]}</code></strong> (empty result), the bot hasn't received your message yet. Go back to Telegram, make sure you pressed Start and sent a message to the bot, then refresh the browser URL.</div>
     </div>
     <div class="tick-row" id="tick-5" onclick="tick(5)">
       <div class="tick-box" id="box-5"></div>
@@ -709,7 +718,7 @@
         <input type="text" placeholder="e.g. @surfexbudXYZ_bot" />
       </div>
       <div class="save-field">
-        <label>Telegram Chat ID (from @userinfobot -- Step 5)</label>
+        <label>Telegram Chat ID (from getUpdates -- Step 5)</label>
         <input type="text" placeholder="e.g. 1234567890" />
       </div>
       <div class="save-divider">GitHub (from Step 10)</div>
