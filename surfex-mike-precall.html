@@ -374,13 +374,20 @@
         <strong>Why not a regular API key?</strong> FounderBud runs on the Claude Agent SDK -- it authenticates via your Claude login, not an API key. The free plan won't work. Pro is the unlock -- $32/month covers everything on this stack.
       </div>
       <a href="https://claude.ai" target="_blank" class="link-btn">&#x2197; Sign up at claude.ai</a>
-      <p>Once you've signed up and chosen Pro, open <strong>Warp</strong> and paste this to log in:</p>
+      <p>Once you've signed up and chosen Pro, open <strong>Warp</strong> and run these two commands in order:</p>
       <div class="cmd-block">
-        <code>npx @anthropic-ai/claude-code</code>
-        <button class="copy-btn" onclick="copyCmd(this, 'npx @anthropic-ai/claude-code')">Copy</button>
+        <code>sudo npm install -g @anthropic-ai/claude-code</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'sudo npm install -g @anthropic-ai/claude-code')">Copy</button>
+      </div>
+      <div class="note note-blue" style="margin-bottom:10px;">
+        <strong>It will ask for your Mac password.</strong> That's normal for a global install. Type it and press Enter -- nothing will show as you type, that's fine.
+      </div>
+      <div class="cmd-block">
+        <code>claude login</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'claude login')">Copy</button>
       </div>
       <div class="note note-blue">
-        <strong>A browser window will open.</strong> Sign in with the same account you just created. Once you see a response in the terminal, you're done -- close it and move on.
+        <strong>A browser window will open.</strong> Sign in with the same Claude account you just created. Once it confirms you're logged in, press Ctrl+C and move on.
       </div>
     </div>
     <div class="tick-row" id="tick-4" onclick="tick(4)">

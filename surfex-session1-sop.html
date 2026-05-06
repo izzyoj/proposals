@@ -564,6 +564,13 @@
       </div>
 
       <div class="setup-step">
+        <div class="setup-step-label">Step B2</div>
+        <div class="setup-step-title">Build the TypeScript source</div>
+        <div class="cmd-block"><code>npm run build</code><button class="copy-btn" onclick="cp(this,'npm run build')">Copy</button></div>
+        <div class="setup-note">Compiles TypeScript to JavaScript in <code>dist/</code>. Required before first start. Takes 15-20 seconds. If it errors, check the Troubleshoot tab.</div>
+      </div>
+
+      <div class="setup-step">
         <div class="setup-step-label">Step C</div>
         <div class="setup-step-title">Copy the .env template</div>
         <div class="cmd-block"><code>cp ~/claudeclaw/.env.example ~/claudeclaw/.env</code><button class="copy-btn" onclick="cp(this,'cp ~/claudeclaw/.env.example ~/claudeclaw/.env')">Copy</button></div>
@@ -587,10 +594,13 @@
           <div class="env-line"><span class="env-key">TELEGRAM_BOT_TOKEN</span>=<span class="env-val">       </span><span class="env-comment">  # main bot token from BotFather (Step 5) — 1 of 5 total bots</span></div>
           <div class="env-line"><span class="env-key">ALLOWED_CHAT_ID</span>=<span class="env-val">          </span><span class="env-comment">  # from getUpdates (Step 5) — number only, no quotes</span></div>
           <div class="env-line"><span class="env-key">VAULT_PATH</span>=<span class="env-val">~/Documents/SurfexBrain</span></div>
+          <div class="env-line"><span class="env-key">DB_ENCRYPTION_KEY</span>=<span class="env-val">        </span><span class="env-comment">  # generate with command below — required, must be 64 hex chars</span></div>
           <div class="env-line"><span class="env-key">GROQ_API_KEY</span>=<span class="env-val">             </span><span class="env-comment">  # from Step 7 (skip if not done)</span></div>
           <div class="env-line"><span class="env-key">GOOGLE_API_KEY</span>=<span class="env-val">           </span><span class="env-comment">  # from Step 9 (skip if not done)</span></div>
           <div class="env-line"><span class="env-key">ELEVENLABS_API_KEY</span>=<span class="env-val">       </span><span class="env-comment">  # from Step 8 (skip if not done)</span></div>
         </div>
+        <div class="setup-note" style="margin-top:8px;"><strong>Generate the DB_ENCRYPTION_KEY now.</strong> In Warp, run this and copy the output — paste it as the value for <code>DB_ENCRYPTION_KEY</code> in the .env file:</div>
+        <div class="cmd-block" style="margin-top:6px;"><code>openssl rand -hex 32</code><button class="copy-btn" onclick="cp(this,'openssl rand -hex 32')">Copy</button></div>
         <div class="setup-note" style="margin-top:6px;">Save the file (Cmd+S), close TextEdit.</div>
         <div class="setup-note" style="margin-top:8px;background:#fff8f0;border-left:3px solid #f5a623;padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;"><strong>5 bots, 1 chat ID.</strong> The full system has 5 agents (main, research, comms, content, ops) — each needs its own BotFather token when activated. Only the main bot runs today. All 5 share the same <code>ALLOWED_CHAT_ID</code> — one number covers the whole system, no matter how many bots are live.</div>
       </div>
@@ -600,6 +610,38 @@
         <div class="setup-step-title">Start the main bot</div>
         <div class="cmd-block"><code>cd ~/claudeclaw && npm start</code><button class="copy-btn" onclick="cp(this,'cd ~/claudeclaw && npm start')">Copy</button></div>
         <div class="setup-note">Bot starts and sends a message to Mike's Telegram within 10 seconds. If it errors — check the Troubleshoot tab.</div>
+      </div>
+    </div>
+
+    <!-- Phase 2B -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 2B</span>
+        <span class="phase-title">Make it persistent with pm2</span>
+        <span class="phase-time">After bot confirms alive</span>
+      </div>
+
+      <div class="setup-note" style="margin-bottom:12px;">Once the bot comes alive (Mike gets a Telegram message), press <strong>Ctrl+C</strong> to stop it. Then set up pm2 so it survives terminal closes and reboots.</div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step E2</div>
+        <div class="setup-step-title">Install pm2</div>
+        <div class="cmd-block"><code>sudo npm install -g pm2</code><button class="copy-btn" onclick="cp(this,'sudo npm install -g pm2')">Copy</button></div>
+        <div class="setup-note">Will ask for Mac password.</div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step E3</div>
+        <div class="setup-step-title">Start bot under pm2</div>
+        <div class="cmd-block"><code>pm2 start ~/claudeclaw/dist/index.js --name zara</code><button class="copy-btn" onclick="cp(this,'pm2 start ~/claudeclaw/dist/index.js --name zara')">Copy</button></div>
+        <div class="setup-note">Replace <code>zara</code> with the client's bot name if different.</div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step E4</div>
+        <div class="setup-step-title">Save and enable startup</div>
+        <div class="cmd-block"><code>pm2 save && pm2 startup</code><button class="copy-btn" onclick="cp(this,'pm2 save && pm2 startup')">Copy</button></div>
+        <div class="setup-note"><strong>pm2 startup will output one more command to run.</strong> Copy and run that command too — it's what survives reboots. Check pm2 status with: <code>pm2 status</code></div>
       </div>
     </div>
 
