@@ -913,7 +913,7 @@
     document.getElementById('tick-' + n).classList.toggle('ticked', state[n]);
     document.getElementById('card-' + n).classList.toggle('done', state[n]);
     const num = document.getElementById('num-' + n);
-    num.textContent = state[n] ? '&#x2713;' : n;
+    num.textContent = state[n] ? '✓' : n;
     updateProgress();
   }
 
