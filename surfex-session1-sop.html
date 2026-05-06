@@ -405,7 +405,14 @@
       <div class="fix-panel" id="fp-5">
         <h4>Fix it</h4>
         <div class="fix-item"><strong>No bot:</strong> Telegram → search <strong>@BotFather</strong> → /newbot → name: "Surfex Assistant" → username: surfexbudXYZ_bot → copy the token it gives you.</div>
-        <div class="fix-item"><strong>No chat ID:</strong> Search <strong>@userinfobot</strong> in Telegram → send any message → copy the number it replies with.</div>
+        <div class="fix-item"><strong>No chat ID:</strong>
+          <ol style="margin:6px 0 0 16px;padding:0;line-height:1.8;">
+            <li>In Telegram, search your bot by username → press <strong>Start</strong> → send it "hello"</li>
+            <li>Open browser → paste: <code style="background:#f5f5f7;padding:2px 5px;border-radius:4px;font-size:12px;word-break:break-all;">https://api.telegram.org/botYOUR_TOKEN/getUpdates</code></li>
+            <li>Find <code style="background:#f5f5f7;padding:2px 5px;border-radius:4px;font-size:12px;">"chat":{"id":XXXXXXXXX</code> -- that number is the ALLOWED_CHAT_ID</li>
+            <li>If result is empty <code style="background:#f5f5f7;padding:2px 5px;border-radius:4px;font-size:12px;">{"result":[]}</code> → bot hasn't seen a message yet. Send one in Telegram first, then refresh.</li>
+          </ol>
+        </div>
       </div>
     </div>
 
@@ -578,7 +585,7 @@
         <div class="setup-note">Mike pastes values from his precall notepad. Fill in these fields:</div>
         <div class="env-block">
           <div class="env-line"><span class="env-key">TELEGRAM_BOT_TOKEN</span>=<span class="env-val">       </span><span class="env-comment">  # bot token from BotFather (Step 5)</span></div>
-          <div class="env-line"><span class="env-key">ALLOWED_CHAT_ID</span>=<span class="env-val">          </span><span class="env-comment">  # chat ID from @userinfobot (Step 5)</span></div>
+          <div class="env-line"><span class="env-key">ALLOWED_CHAT_ID</span>=<span class="env-val">          </span><span class="env-comment">  # from getUpdates (Step 5) — number only, no quotes</span></div>
           <div class="env-line"><span class="env-key">VAULT_PATH</span>=<span class="env-val">~/Documents/SurfexBrain</span></div>
           <div class="env-line"><span class="env-key">GROQ_API_KEY</span>=<span class="env-val">             </span><span class="env-comment">  # from Step 7 (skip if not done)</span></div>
           <div class="env-line"><span class="env-key">GOOGLE_API_KEY</span>=<span class="env-val">           </span><span class="env-comment">  # from Step 9 (skip if not done)</span></div>
@@ -725,7 +732,7 @@
         <div class="trouble-dot"></div>
         <div>
           <div class="trouble-q">Bot starts but doesn't respond in Telegram</div>
-          <div class="trouble-a">Two most common causes: (1) TELEGRAM_BOT_TOKEN is wrong — must match exactly what BotFather gave. (2) ALLOWED_CHAT_ID is wrong — must be the number from @userinfobot, not a username. Check both in .env, restart bot.</div>
+          <div class="trouble-a">Two most common causes: (1) TELEGRAM_BOT_TOKEN is wrong — must match exactly what BotFather gave. (2) ALLOWED_CHAT_ID is wrong — must be the number from getUpdates, not a username or @handle. To verify the correct ID: open browser, paste <code style="background:#f5f5f7;padding:2px 5px;border-radius:4px;font-size:12px;">https://api.telegram.org/botYOUR_TOKEN/getUpdates</code> (replace YOUR_TOKEN), find <code style="background:#f5f5f7;padding:2px 5px;border-radius:4px;font-size:12px;">"chat":{"id":XXXXXX</code> — that exact number goes in .env with no quotes. Check both, restart bot.</div>
         </div>
       </div>
       <div class="trouble-row">
