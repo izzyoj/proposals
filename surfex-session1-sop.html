@@ -395,7 +395,7 @@
         <div class="step-num" id="sn-5">5</div>
         <div class="step-info">
           <div class="step-title">Telegram bot created — token + chat ID saved</div>
-          <div class="step-ask">Ask: <strong>"Search your bot username in Telegram — does it come up?"</strong><br>Ask: <strong>"Do you have your bot token (numbers:AAF...) and chat ID saved?"</strong></div>
+          <div class="step-ask">Ask: <strong>"Search your main bot username in Telegram — does it come up?"</strong><br>Ask: <strong>"Do you have your main bot token (numbers:AAF...) and chat ID saved?"</strong><br><span style="font-size:12px;color:var(--muted);">Note: only the main bot today. The 4 specialist agents are deferred to a later session.</span></div>
         </div>
         <div class="step-right">
           <button class="fix-toggle" id="ft-5" onclick="toggleFix(5)">Fix it</button>
@@ -584,7 +584,7 @@
         <div class="cmd-block"><code>open -e ~/claudeclaw/.env</code><button class="copy-btn" onclick="cp(this,'open -e ~/claudeclaw/.env')">Copy</button></div>
         <div class="setup-note">Mike pastes values from his precall notepad. Fill in these fields:</div>
         <div class="env-block">
-          <div class="env-line"><span class="env-key">TELEGRAM_BOT_TOKEN</span>=<span class="env-val">       </span><span class="env-comment">  # bot token from BotFather (Step 5)</span></div>
+          <div class="env-line"><span class="env-key">TELEGRAM_BOT_TOKEN</span>=<span class="env-val">       </span><span class="env-comment">  # main bot token from BotFather (Step 5) — 1 of 5 total bots</span></div>
           <div class="env-line"><span class="env-key">ALLOWED_CHAT_ID</span>=<span class="env-val">          </span><span class="env-comment">  # from getUpdates (Step 5) — number only, no quotes</span></div>
           <div class="env-line"><span class="env-key">VAULT_PATH</span>=<span class="env-val">~/Documents/SurfexBrain</span></div>
           <div class="env-line"><span class="env-key">GROQ_API_KEY</span>=<span class="env-val">             </span><span class="env-comment">  # from Step 7 (skip if not done)</span></div>
@@ -592,11 +592,12 @@
           <div class="env-line"><span class="env-key">ELEVENLABS_API_KEY</span>=<span class="env-val">       </span><span class="env-comment">  # from Step 8 (skip if not done)</span></div>
         </div>
         <div class="setup-note" style="margin-top:6px;">Save the file (Cmd+S), close TextEdit.</div>
+        <div class="setup-note" style="margin-top:8px;background:#fff8f0;border-left:3px solid #f5a623;padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;"><strong>5 bots, 1 chat ID.</strong> The full system has 5 agents (main, research, comms, content, ops) — each needs its own BotFather token when activated. Only the main bot runs today. All 5 share the same <code>ALLOWED_CHAT_ID</code> — one number covers the whole system, no matter how many bots are live.</div>
       </div>
 
       <div class="setup-step">
         <div class="setup-step-label">Step E</div>
-        <div class="setup-step-title">Start the bot</div>
+        <div class="setup-step-title">Start the main bot</div>
         <div class="cmd-block"><code>cd ~/claudeclaw && npm start</code><button class="copy-btn" onclick="cp(this,'cd ~/claudeclaw && npm start')">Copy</button></div>
         <div class="setup-note">Bot starts and sends a message to Mike's Telegram within 10 seconds. If it errors — check the Troubleshoot tab.</div>
       </div>
@@ -706,6 +707,15 @@
         <div class="s2-item"><div class="s2-dot"></div><div>Twilio account created at <strong>twilio.com</strong> (free trial works to start)</div></div>
         <div class="s2-item"><div class="s2-dot"></div><div>A real booked job as test data for the phase tracker</div></div>
         <div class="s2-item"><div class="s2-dot"></div><div>Groq + Gemini keys if not done in Session 1</div></div>
+      </div>
+
+      <div class="setup-step" style="margin-top:12px;">
+        <div class="setup-step-label">Future session — 4 specialist agents</div>
+        <div class="setup-step-title" style="margin-bottom:6px;font-size:13px;color:var(--muted);">Once the main bot is running smoothly, each specialist agent gets its own BotFather token. They all use the same ALLOWED_CHAT_ID already configured.</div>
+        <div class="s2-item"><div class="s2-dot" style="background:#86868b;"></div><div><strong>research</strong> — deep lookups, competitive intel, background checks on customers/suppliers</div></div>
+        <div class="s2-item"><div class="s2-dot" style="background:#86868b;"></div><div><strong>comms</strong> — email drafts, calendar booking, recruiter/supplier outreach</div></div>
+        <div class="s2-item"><div class="s2-dot" style="background:#86868b;"></div><div><strong>content</strong> — before/after captions, Google review requests, LinkedIn posts</div></div>
+        <div class="s2-item"><div class="s2-dot" style="background:#86868b;"></div><div><strong>ops</strong> — system health, build checks, scheduled task management</div></div>
       </div>
     </div>
 
