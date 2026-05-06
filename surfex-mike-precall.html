@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FounderBud Setup: Mike @ Surfex</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --accent: #6a3de8;
+      --accent-hover: #5a2fd8;
+      --accent-light: #f2eeff;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --faint: #86868b;
+      --border: rgba(0,0,0,0.07);
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --green: #34c759;
+      --green-light: #f0faf3;
+      --orange: #ff9500;
+      --orange-light: #fff8f0;
+      --step-size: 56px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 0 0 60px;
+      min-height: 100vh;
+    }
+
+    .hero {
+      background: var(--accent);
+      padding: 40px 24px 36px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: 28px; font-weight: 800; color: white;
+      letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px;
+    }
+    .hero-title span {
+      display: block; font-size: 18px; font-weight: 500; opacity: 0.85; margin-top: 6px;
+    }
+    .hero-sub {
+      font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.65;
+      max-width: 420px; margin: 0 auto;
+    }
+    .hero-pills {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px;
+    }
+    .hero-pill {
+      display: inline-block; background: rgba(255,255,255,0.18); color: white;
+      font-size: 12px; font-weight: 700; border-radius: 20px; padding: 5px 14px;
+    }
+
+    .content { max-width: 580px; margin: 0 auto; padding: 24px 16px 0; }
+
+    .progress-wrap {
+      background: var(--card); border-radius: 14px; box-shadow: var(--shadow);
+      padding: 16px 20px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .progress-bar-bg { flex: 1; height: 6px; background: #e5e5ea; border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill {
+      height: 100%; background: var(--accent); border-radius: 3px; width: 0%;
+      transition: width 0.3s ease;
+    }
+    .progress-label { font-size: 12px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+    .step-card {
+      background: var(--card); border-radius: 18px; box-shadow: var(--shadow);
+      margin-bottom: 14px; overflow: hidden; transition: opacity 0.2s;
+    }
+    .step-card.done { opacity: 0.6; }
+    .step-header { display: flex; align-items: flex-start; gap: 16px; padding: 20px 20px 0; }
+    .step-num {
+      width: var(--step-size); height: var(--step-size); border-radius: 50%;
+      background: var(--accent-light); color: var(--accent);
+      font-size: 22px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;
+    }
+    .step-card.done .step-num { background: var(--green-light); color: var(--green); font-size: 24px; }
+    .step-meta { flex: 1; padding-top: 6px; }
+    .step-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); margin-bottom: 4px; }
+    .step-title { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.25; }
+    .step-subtitle { font-size: 13px; color: var(--muted); margin-top: 3px; }
+    .step-body { padding: 14px 20px 0; }
+    .step-body p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 12px; }
+    .step-body p strong { color: var(--text); }
+
+    .cmd-block {
+      background: #f0f0f5; border: 1px solid #d2d2d7; border-radius: 10px;
+      padding: 12px 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .cmd-block code { font-family: 'SF Mono','Fira Code','Menlo',monospace; font-size: 13px; color: #1d1d1f; flex: 1; word-break: break-all; }
+    .copy-btn {
+      background: none; border: 1px solid #d2d2d7; border-radius: 6px;
+      padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--muted);
+      cursor: pointer; flex-shrink: 0; transition: all 0.15s;
+    }
+    .copy-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+    .copy-btn.copied { background: var(--green); color: white; border-color: var(--green); }
+
+    .note { border-radius: 10px; padding: 11px 13px; font-size: 12.5px; line-height: 1.6; margin-bottom: 12px; }
+    .note-amber { background: #fff9ec; border: 1px solid #ffd78a; color: #7a4f00; }
+    .note-amber strong { color: #5a3900; }
+    .note-blue { background: var(--accent-light); border: 1px solid #c8b8f5; color: #3d1a9e; }
+    .note-blue strong { color: #2a0f7a; }
+    .note-green { background: var(--green-light); border: 1px solid #bde5cb; color: #1a5c2e; }
+    .note-green strong { color: #0e3a1c; }
+    .note-grey { background: #f5f5f7; border: 1px solid #d2d2d7; color: #4a4a50; }
+    .note-grey strong { color: #1d1d1f; }
+
+    .link-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--accent); color: white; font-size: 14px; font-weight: 600;
+      border-radius: 10px; padding: 10px 18px; text-decoration: none;
+      margin-bottom: 14px; transition: opacity 0.15s;
+    }
+    .link-btn:hover { opacity: 0.88; }
+    .link-btn.ghost { background: none; border: 1.5px solid var(--accent); color: var(--accent); }
+
+    .substep { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
+    .substep-num {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: white;
+      font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .substep-body { flex: 1; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+    .substep-body strong { color: var(--text); }
+
+    .tick-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 20px 18px; cursor: pointer;
+      border-top: 1px solid var(--border); margin-top: 6px;
+    }
+    .tick-box {
+      width: 22px; height: 22px; border: 2px solid #d2d2d7; border-radius: 6px;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    .tick-box.ticked { background: var(--green); border-color: var(--green); }
+    .tick-box.ticked::after { content: '✓'; color: white; font-size: 13px; font-weight: 700; }
+    .tick-label { font-size: 13px; font-weight: 600; color: var(--muted); transition: color 0.15s; flex: 1; line-height: 1.4; }
+    .tick-row:hover .tick-label { color: var(--text); }
+    .tick-row.ticked .tick-label { text-decoration: line-through; color: var(--faint); }
+
+    .save-card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+    .save-header { padding: 16px 20px 10px; border-bottom: 1px solid var(--border); }
+    .save-header h3 { font-size: 15px; font-weight: 700; }
+    .save-header p { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .save-fields { padding: 14px 20px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .save-field label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); display: block; margin-bottom: 4px; }
+    .save-field input, .save-field textarea {
+      width: 100%; background: #f0f0f5; border: 1px solid #d2d2d7; border-radius: 8px;
+      padding: 9px 12px; font-family: 'SF Mono', monospace; font-size: 12px; color: var(--text);
+      resize: none; outline: none; transition: border-color 0.15s;
+    }
+    .save-field input:focus, .save-field textarea:focus { border-color: var(--accent); }
+    .save-field input::placeholder, .save-field textarea::placeholder { color: #b0b0b8; font-style: italic; }
+    .save-divider { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); padding: 4px 0 6px; border-top: 1px solid var(--border); margin-top: 4px; }
+
+    .about-card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+    .about-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); background: var(--accent-light); }
+    .about-header h3 { font-size: 15px; font-weight: 700; color: var(--accent); }
+    .about-header p { font-size: 12.5px; color: #4a2a9e; margin-top: 4px; line-height: 1.55; }
+    .about-fields { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .about-field label { font-size: 12px; font-weight: 700; color: var(--text); display: block; margin-bottom: 4px; }
+    .about-field .about-hint { font-size: 11.5px; color: var(--faint); margin-bottom: 6px; }
+    .about-field textarea {
+      width: 100%; background: #f8f8fa; border: 1px solid #d2d2d7; border-radius: 8px;
+      padding: 10px 12px; font-family: inherit; font-size: 13px; color: var(--text);
+      line-height: 1.6; resize: vertical; outline: none; transition: border-color 0.15s; min-height: 64px;
+    }
+    .about-field textarea:focus { border-color: var(--accent); }
+    .about-field textarea::placeholder { color: #b0b0b8; font-style: italic; }
+
+    .day-card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+    .day-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .day-header h3 { font-size: 15px; font-weight: 700; flex: 1; }
+    .day-badge { background: var(--orange-light); color: #7a3d00; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 3px 9px; }
+    .day-list { padding: 12px 20px 16px; display: flex; flex-direction: column; gap: 2px; }
+    .day-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .day-item:last-child { border-bottom: none; }
+    .day-box { width: 20px; height: 20px; border: 2px solid #d2d2d7; border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.15s; }
+    .day-box.ticked { background: var(--green); border-color: var(--green); }
+    .day-box.ticked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+    .day-text { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
+    .day-text strong { color: var(--text); }
+    .day-item.ticked .day-text { text-decoration: line-through; color: var(--faint); }
+
+    .expect-card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); padding: 20px; margin-bottom: 14px; }
+    .expect-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+    .expect-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .expect-item:last-child { border-bottom: none; }
+    .expect-time { font-size: 11px; font-weight: 700; color: var(--accent); width: 34px; flex-shrink: 0; padding-top: 1px; }
+    .expect-text { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
+    .expect-text strong { color: var(--text); }
+
+    .all-done { display: none; background: var(--green-light); border: 1px solid #bde5cb; border-radius: 18px; padding: 24px 20px; text-align: center; margin-bottom: 14px; }
+    .all-done-icon { font-size: 40px; margin-bottom: 10px; }
+    .all-done h3 { font-size: 18px; font-weight: 700; color: #1a5c2e; margin-bottom: 6px; }
+    .all-done p { font-size: 13.5px; color: #1a5c2e; line-height: 1.6; }
+
+    .section-header { padding: 8px 0 10px; margin-top: 8px; }
+    .section-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); }
+
+    .commands-card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+    .commands-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); }
+    .commands-header h3 { font-size: 15px; font-weight: 700; }
+    .commands-header p { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .commands-list { padding: 10px 20px 16px; }
+    .cmd-row { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); }
+    .cmd-row:last-child { border-bottom: none; }
+    .cmd-name { font-family: 'SF Mono','Fira Code','Menlo',monospace; font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); border-radius: 6px; padding: 2px 8px; white-space: nowrap; flex-shrink: 0; min-width: 90px; }
+    .cmd-desc { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
+    .cmd-desc strong { color: var(--text); }
+
+    .folder-tree { background: #1a1a2e; border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; overflow-x: auto; }
+    .folder-tree pre { font-family: 'SF Mono','Fira Code','Menlo',monospace; font-size: 12.5px; line-height: 1.8; color: #e8e8f0; margin: 0; }
+    .folder-tree .dir { color: #a78bfa; font-weight: 700; }
+    .folder-tree .file { color: #86efac; }
+    .folder-tree .tree-branch { color: #6e6e8a; }
+    .folder-tree .comment { color: #6e6e8a; font-style: italic; }
+    .folder-tree-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); margin-bottom: 8px; }
+
+    .use-case-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .use-chip { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 3px 10px; }
+    .use-chip-purple { background: var(--accent-light); color: var(--accent); }
+    .use-chip-green { background: var(--green-light); color: #1a5c2e; }
+    .use-chip-orange { background: var(--orange-light); color: #7a3d00; }
+
+    .footer { text-align: center; padding: 0 16px; }
+    .footer p { font-size: 12.5px; color: var(--faint); line-height: 1.7; }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .footer-phone { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border-radius: 12px; padding: 12px 20px; box-shadow: var(--shadow); font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; margin-top: 12px; }
+    .footer-phone:hover { opacity: 0.8; }
+
+    @media (min-width: 640px) {
+      .hero { padding: 52px 24px 48px; }
+      .hero-title { font-size: 34px; }
+      .hero-title span { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow" id="hero-eyebrow">FounderBud Setup: Mike @ Surfex</div>
+  <div class="hero-title">
+    Here's what to do before we start.
+    <span>30 mins prep. Session 1: bot live + first quote generated. Session 2: phase tracker + SMS.</span>
+  </div>
+  <div class="hero-sub">Do these before the session and we won't waste a second on setup admin. Walk in, wire up, and leave with a second brain that handles your quoting, job tracking, and client follow-up. Automatically..</div>
+  <div class="hero-pills">
+    <div class="hero-pill">&#x23F1; ~30 mins total prep</div>
+    <div class="hero-pill">&#x1F4BB; Mac required</div>
+    <div class="hero-pill">&#x1F4F1; Phone nearby</div>
+    <div class="hero-pill">&#x1F3D7;&#xFE0F; Surfex &middot; Epoxy &amp; Flooring</div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="progress-wrap">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-label" id="progress-label">0 of 10 done</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-card" id="card-1">
+    <div class="step-header">
+      <div class="step-num" id="num-1">1</div>
+      <div class="step-meta">
+        <div class="step-label">Step 1</div>
+        <div class="step-title">Check your Mac</div>
+        <div class="step-subtitle">macOS 12 Monterey or later</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>Click the Apple menu (top-left) then <strong>About This Mac</strong>. You need macOS 12 Monterey or later. Most Macs from 2018 onwards are fine.</p>
+      <div class="note note-amber">
+        <strong>Seeing macOS 11 or earlier?</strong> Message Baz before the call -- there are a couple of extra steps to sort first.
+      </div>
+      <p>Make sure your laptop is <strong>plugged into power</strong>. The install takes about 10 minutes and you don't want it sleeping halfway through.</p>
+    </div>
+    <div class="tick-row" id="tick-1" onclick="tick(1)">
+      <div class="tick-box" id="box-1"></div>
+      <div class="tick-label">Confirmed macOS 12+ -- laptop plugged in</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card" id="card-2">
+    <div class="step-header">
+      <div class="step-num" id="num-2">2</div>
+      <div class="step-meta">
+        <div class="step-label">Step 2</div>
+        <div class="step-title">Download Warp</div>
+        <div class="step-subtitle">The terminal we'll use together</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>Warp is the terminal app we'll use to install FounderBud. Free, drag to Applications. No need to open it yet.</p>
+      <a href="https://warp.dev" target="_blank" class="link-btn">&#x2197; Download Warp -- warp.dev</a>
+    </div>
+    <div class="tick-row" id="tick-2" onclick="tick(2)">
+      <div class="tick-box" id="box-2"></div>
+      <div class="tick-label">Warp downloaded and installed</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card" id="card-3">
+    <div class="step-header">
+      <div class="step-num" id="num-3">3</div>
+      <div class="step-meta">
+        <div class="step-label">Step 3</div>
+        <div class="step-title">Install Node.js</div>
+        <div class="step-subtitle">The engine that runs your assistant</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>Open Warp, paste this command, and press Enter:</p>
+      <div class="cmd-block">
+        <code>brew install node</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'brew install node')">Copy</button>
+      </div>
+      <div class="note note-amber">
+        <strong>Getting "command not found: brew"?</strong> Run this first -- it installs Homebrew, then run <code style="background:rgba(0,0,0,0.07);border-radius:3px;padding:1px 4px;font-family:monospace;font-size:11px;">brew install node</code> once done.
+        <div class="cmd-block" style="margin-top:8px;margin-bottom:0;">
+          <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>
+          <button class="copy-btn" onclick="copyCmd(this, '/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;')">Copy</button>
+        </div>
+      </div>
+      <p>Confirm it worked: type <code style="background:#f0f0f5;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:12px;">node --version</code> and press Enter. You should see something like <strong>v20.x.x</strong>.</p>
+    </div>
+    <div class="tick-row" id="tick-3" onclick="tick(3)">
+      <div class="tick-box" id="box-3"></div>
+      <div class="tick-label">Node.js installed -- confirmed with node --version</div>
+    </div>
+  </div>
+
+  <!-- STEP 4: CLAUDE PRO -->
+  <div class="step-card" id="card-4">
+    <div class="step-header">
+      <div class="step-num" id="num-4">4</div>
+      <div class="step-meta">
+        <div class="step-label">Step 4</div>
+        <div class="step-title">Sign up for Claude Pro</div>
+        <div class="step-subtitle">Your only cost -- ~$32/month AUD, billed direct to you by Anthropic</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p><strong>Claude Pro is the AI that powers FounderBud.</strong> It's your own subscription with Anthropic -- not a shared server, not a SaaS login that resets. Your jobs, your quotes, your data. This is the only thing you'll pay for.</p>
+      <div class="note note-blue">
+        <strong>Why not a regular API key?</strong> FounderBud runs on the Claude Agent SDK -- it authenticates via your Claude login, not an API key. The free plan won't work. Pro is the unlock -- $32/month covers everything on this stack.
+      </div>
+      <a href="https://claude.ai" target="_blank" class="link-btn">&#x2197; Sign up at claude.ai</a>
+      <p>Once you've signed up and chosen Pro, open <strong>Warp</strong> and paste this to log in:</p>
+      <div class="cmd-block">
+        <code>npx @anthropic-ai/claude-code</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'npx @anthropic-ai/claude-code')">Copy</button>
+      </div>
+      <div class="note note-blue">
+        <strong>A browser window will open.</strong> Sign in with the same account you just created. Once you see a response in the terminal, you're done -- close it and move on.
+      </div>
+    </div>
+    <div class="tick-row" id="tick-4" onclick="tick(4)">
+      <div class="tick-box" id="box-4"></div>
+      <div class="tick-label">Claude Pro signed up and logged in via terminal</div>
+    </div>
+  </div>
+
+  <!-- STEP 5: TELEGRAM -->
+  <div class="step-card" id="card-5">
+    <div class="step-header">
+      <div class="step-num" id="num-5">5</div>
+      <div class="step-meta">
+        <div class="step-label">Step 5</div>
+        <div class="step-title">Set up Telegram and your personal bot</div>
+        <div class="step-subtitle">How you'll send voice notes and talk to FounderBud from the job site</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>FounderBud lives in Telegram. You'll record a voice note from a job site, send it, and FounderBud transcribes it, extracts the job details, and generates a formatted quote. You'll also create a personal bot -- your dedicated line to the system.</p>
+
+      <p><strong>First: install Telegram on your phone</strong></p>
+      <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+        <a href="https://apps.apple.com/app/telegram-messenger/id686449807" target="_blank" class="link-btn" style="margin-bottom:0;">&#x2197; App Store (iPhone)</a>
+        <a href="https://play.google.com/store/apps/details?id=org.telegram.messenger" target="_blank" class="link-btn ghost" style="margin-bottom:0;">&#x2197; Google Play (Android)</a>
+      </div>
+      <div class="substep">
+        <div class="substep-num">1</div>
+        <div class="substep-body">Download Telegram and sign up with your phone number</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-body">Create a username -- takes 2 minutes</div>
+      </div>
+
+      <p style="margin-top:16px;"><strong>Next: create your bot via BotFather</strong></p>
+      <div class="note note-blue">
+        In Telegram, search for <strong>@BotFather</strong> (official -- blue verified tick). Open it and follow this exchange:
+      </div>
+      <div class="cmd-block" style="flex-direction:column;gap:6px;align-items:flex-start;">
+        <code><span style="color:#86868b;">You:</span> /newbot</code>
+        <code><span style="color:#86868b;">BotFather:</span> What's the name of your bot?</code>
+        <code><span style="color:#86868b;">You:</span> My FounderBud <span style="color:#86868b;">or</span> Surfex Assistant</code>
+        <code><span style="color:#86868b;">BotFather:</span> What username? (must end in "bot")</code>
+        <code><span style="color:#86868b;">You:</span> surfexbudXYZ_bot</code>
+        <code><span style="color:#86868b;">BotFather:</span> Done! Your token: 7234567890:AAFxBc...  <span style="color:#86868b;">&#x2190; SAVE THIS</span></code>
+      </div>
+      <div class="note note-amber">
+        <strong>Save that token.</strong> Paste it into the notepad below -- you'll need it on the call to wire up your bot.
+      </div>
+
+      <p style="margin-top:16px;"><strong>Finally: get your personal chat ID</strong></p>
+      <div class="substep">
+        <div class="substep-num">1</div>
+        <div class="substep-body">Search for <strong>@userinfobot</strong> in Telegram. It will instantly reply with your <strong>User ID</strong> number. Save it below.</div>
+      </div>
+    </div>
+    <div class="tick-row" id="tick-5" onclick="tick(5)">
+      <div class="tick-box" id="box-5"></div>
+      <div class="tick-label">Telegram installed, bot created via BotFather, token and chat ID saved below</div>
+    </div>
+  </div>
+
+  <!-- STEP 6: OBSIDIAN -- SURFEX-SPECIFIC VAULT STRUCTURE -->
+  <div class="step-card" id="card-6">
+    <div class="step-header">
+      <div class="step-num" id="num-6">6</div>
+      <div class="step-meta">
+        <div class="step-label">Step 6 -- Main one</div>
+        <div class="step-title">Set up your second brain -- Surfex job and quote vault</div>
+        <div class="step-subtitle">The permanent layer for every quote, job, and customer record</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>FounderBud has two memory layers. <strong>SQLite</strong> holds recent conversations -- auto-purges after 3 days. <strong>Obsidian</strong> is the permanent layer: voice-to-quote transcripts, pipeline records, job phase notes, customer records, content drafts, invoice records.</p>
+      <div class="use-case-chips">
+        <span class="use-chip use-chip-purple">&#x1F399;&#xFE0F; Voice-to-quote</span>
+        <span class="use-chip use-chip-green">&#x1F4CB; Quote pipeline</span>
+        <span class="use-chip use-chip-orange">&#x1F527; Job phase tracker</span>
+      </div>
+      <div class="note note-blue">
+        <strong>Every voice note Mike sends lands in inbox/.</strong> The bot transcribes it, extracts the job details, and routes it to the right folder -- <code style="font-family:monospace;font-size:11px;">quotes/draft/</code> if it's a new quote, <code style="font-family:monospace;font-size:11px;">jobs/active/</code> if the job is already booked. The quote pipeline tracks every open opportunity from first enquiry through to booked or dead. The multi-day phase tracker lives in <code style="font-family:monospace;font-size:11px;">jobs/active/</code> -- one file per job, phases: Prep, Primer, Base coat, Topcoat, Cure, with Mike and Callum assigned per phase.
+      </div>
+
+      <a href="https://obsidian.md" target="_blank" class="link-btn">&#x2197; Download Obsidian -- free at obsidian.md</a>
+
+      <div class="substep">
+        <div class="substep-num">1</div>
+        <div class="substep-body">Download and install Obsidian. Open it.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-body">Click <strong>Create new vault</strong>. Name it something simple -- <strong>"SurfexBrain"</strong> or your first name. Save it to your Documents folder.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">3</div>
+        <div class="substep-body">Note the full path and save it below. In Warp: type <code style="background:#f0f0f5;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:11px;">echo ~/Documents/SurfexBrain</code> (swap for your vault name). The path goes in the notepad -- you'll paste it on the call.</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">4</div>
+        <div class="substep-body"><strong>Create the folder structure below inside your vault.</strong> Right-click in the Obsidian sidebar and choose <strong>New folder</strong>. Create each folder exactly as named -- including the nested subfolders. The depth matters -- it's how the bot routes voice notes and quotes automatically.</div>
+      </div>
+
+      <div class="folder-tree-label">Your vault folder structure -- SurfexBrain</div>
+      <div class="folder-tree">
+        <pre><span class="dir">SurfexBrain/</span>
+<span class="tree-branch">├── </span><span class="dir">inbox/</span>                    <span class="comment"># voice note transcripts + quick captures</span>
+<span class="tree-branch">├── </span><span class="dir">daily/</span>                    <span class="comment"># daily briefs, YYYY-MM-DD.md</span>
+<span class="tree-branch">│</span>
+<span class="tree-branch">├── </span><span class="dir">projects/</span>
+<span class="tree-branch">│   └── </span><span class="dir">surfex/</span>
+<span class="tree-branch">│       ├── </span><span class="dir">enquiries/</span>        <span class="comment"># new inbound -- Odoo-schema fields per enquiry</span>
+<span class="tree-branch">│       ├── </span><span class="dir">quotes/</span>
+<span class="tree-branch">│       │   ├── </span><span class="dir">draft/</span>        <span class="comment"># voice-to-quote transcribed, not yet approved</span>
+<span class="tree-branch">│       │   ├── </span><span class="dir">sent/</span>         <span class="comment"># quote emailed, awaiting response</span>
+<span class="tree-branch">│       │   ├── </span><span class="dir">follow-up/</span>    <span class="comment"># 5/10-day auto-follow-up triggered</span>
+<span class="tree-branch">│       │   └── </span><span class="dir">closed/</span>       <span class="comment"># booked or dead</span>
+<span class="tree-branch">│       ├── </span><span class="dir">jobs/</span>
+<span class="tree-branch">│       │   ├── </span><span class="dir">active/</span>       <span class="comment"># multi-day phase tracker (Prep/Primer/Base/Topcoat/Cure)</span>
+<span class="tree-branch">│       │   └── </span><span class="dir">completed/</span>    <span class="comment"># post-close, awaiting invoice</span>
+<span class="tree-branch">│       ├── </span><span class="dir">customers/</span>        <span class="comment"># PII-aware client records</span>
+<span class="tree-branch">│       ├── </span><span class="dir">content/</span>          <span class="comment"># before/after photos -- Instagram pipeline</span>
+<span class="tree-branch">│       │   ├── </span><span class="dir">queue/</span>        <span class="comment"># drafted posts awaiting Mike's approval</span>
+<span class="tree-branch">│       │   └── </span><span class="dir">posted/</span>       <span class="comment"># confirmed published</span>
+<span class="tree-branch">│       ├── </span><span class="dir">finance/</span>          <span class="comment"># Xero integration (Phase 2+)</span>
+<span class="tree-branch">│       │   ├── </span><span class="dir">invoices/</span>
+<span class="tree-branch">│       │   └── </span><span class="dir">reconciliation/</span>
+<span class="tree-branch">│       └── </span><span class="file">rate-card.md</span>      <span class="comment"># Mike's rates -- loaded from his Word template</span>
+<span class="tree-branch">│</span>
+<span class="tree-branch">└── </span><span class="file">memory.md</span>                 <span class="comment"># long-term memory surface</span></pre>
+      </div>
+
+      <div class="note note-amber">
+        You don't need to put anything in these folders now. Just create them. On the call, Baz wires the vault path and your rate card into your bot config -- that's when voice-to-quote starts working on your actual numbers. The <code style="font-family:monospace;font-size:11px;">rate-card.md</code> file gets built from your Word quote template on the call.
+      </div>
+
+      <div class="note note-green">
+        <strong>One thing to do before the call: find your current Word quote template and have it ready to share via screen share.</strong> That's what makes Session 1 a live demo on your real jobs, not a placeholder.
+      </div>
+    </div>
+    <div class="tick-row" id="tick-6" onclick="tick(6)">
+      <div class="tick-box" id="box-6"></div>
+      <div class="tick-label">Obsidian installed, vault created, all folders set up, path saved below</div>
+    </div>
+  </div>
+
+  <!-- STEP 7: GROQ -->
+  <div class="step-card" id="card-7">
+    <div class="step-header">
+      <div class="step-num" id="num-7">7</div>
+      <div class="step-meta">
+        <div class="step-label">Step 7</div>
+        <div class="step-title">Get your Groq API key</div>
+        <div class="step-subtitle">So FounderBud can understand your voice notes from site</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>When Mike sends a voice note from a job site, Groq transcribes it to text. That text becomes the quote. Fast, accurate on trade terminology, and the free tier handles well above daily use.</p>
+      <div class="note note-blue">
+        <strong>What Groq does:</strong> Voice input only -- speech to text. Without it you can still type; you just can't use voice. Most people end up using voice for almost everything once it's running.
+      </div>
+      <a href="https://console.groq.com/keys" target="_blank" class="link-btn">&#x2197; Get API key at console.groq.com</a>
+      <div class="substep">
+        <div class="substep-num">1</div>
+        <div class="substep-body">Sign in with Google or create a free account</div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">2</div>
+        <div class="substep-body">Click <strong>API Keys</strong> in the left menu, then <strong>Create API key</strong></div>
+      </div>
+      <div class="substep">
+        <div class="substep-num">3</div>
+        <div class="substep-body">Copy the key (starts with <code style="background:#f0f0f5;border-radius:4px;padding:1px 4px;font-family:monospace;font-size:11px;">gsk_</code>) and paste it into the notepad below</div>
+      </div>
+    </div>
+    <div class="tick-row" id="tick-7" onclick="tick(7)">
+      <div class="tick-box" id="box-7"></div>
+      <div class="tick-label">Groq API key copied and saved below</div>
+    </div>
+  </div>
+
+  <!-- STEP 8: VOICE OUTPUT -->
+  <div class="step-card" id="card-8">
+    <div class="step-header">
+      <div class="step-num" id="num-8">8</div>
+      <div class="step-meta">
+        <div class="step-label">Step 8</div>
+        <div class="step-title">Get a voice output API key</div>
+        <div class="step-subtitle">So FounderBud can speak back to you -- pick one</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>This is the voice layer -- when you send a message or voice note, FounderBud can speak back as an audio reply in Telegram. Pick either ElevenLabs or Gradium. One key is enough.</p>
+      <div class="note note-blue">
+        <strong>On Mac, the built-in <code style="font-family:monospace;font-size:11px;">say</code> command is a free fallback</strong> if you want to skip this for now and add it later.
+      </div>
+      <p style="font-weight:700;">Option A -- ElevenLabs</p>
+      <a href="https://elevenlabs.io" target="_blank" class="link-btn" style="margin-bottom:14px;">&#x2197; Sign up at elevenlabs.io</a>
+      <div class="substep"><div class="substep-num">1</div><div class="substep-body">Create a free account</div></div>
+      <div class="substep"><div class="substep-num">2</div><div class="substep-body">Profile icon then <strong>Profile + API Key</strong></div></div>
+      <div class="substep"><div class="substep-num">3</div><div class="substep-body">Copy the key (starts with <code style="background:#f0f0f5;border-radius:4px;padding:1px 4px;font-family:monospace;font-size:11px;">sk_</code>) and paste below</div></div>
+      <p style="font-weight:700;margin-top:16px;">Option B -- Gradium</p>
+      <a href="https://gradium.ai" target="_blank" class="link-btn" style="margin-bottom:14px;">&#x2197; Sign up at gradium.ai</a>
+      <div class="substep"><div class="substep-num">1</div><div class="substep-body">Create an account, go to dashboard, generate API key, copy and paste below</div></div>
+    </div>
+    <div class="tick-row" id="tick-8" onclick="tick(8)">
+      <div class="tick-box" id="box-8"></div>
+      <div class="tick-label">ElevenLabs or Gradium API key copied and saved below</div>
+    </div>
+  </div>
+
+  <!-- STEP 9: GEMINI -->
+  <div class="step-card" id="card-9">
+    <div class="step-header">
+      <div class="step-num" id="num-9">9</div>
+      <div class="step-meta">
+        <div class="step-label">Step 9</div>
+        <div class="step-title">Get your Gemini API key</div>
+        <div class="step-subtitle">Job site photo reading + nightly memory consolidation</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>Gemini powers two things here: reading job site photos and nightly memory consolidation across sessions.</p>
+      <div class="note note-blue">
+        <strong>What Gemini does here:</strong><br><br>
+        <strong>Photo reading:</strong> Mike or Callum shoots a photo on site and sends it via Telegram. Gemini reads it -- surface type, condition, visible issues -- so the structured job record includes a visual reference automatically. That photo also goes into <code style="font-family:monospace;font-size:11px;">content/queue/</code> as a draft Instagram caption.<br><br>
+        <strong>Memory consolidation:</strong> Each night, Gemini scans conversation history and extracts patterns -- quote conversion rates, follow-up timing, job types -- so FounderBud stays sharp across sessions.
+      </div>
+      <a href="https://aistudio.google.com/app/apikey" target="_blank" class="link-btn">&#x2197; Get API key at aistudio.google.com</a>
+      <div class="substep"><div class="substep-num">1</div><div class="substep-body">Sign in with your Google account</div></div>
+      <div class="substep"><div class="substep-num">2</div><div class="substep-body">Click <strong>Create API key</strong> then <strong>Create API key in new project</strong></div></div>
+      <div class="substep"><div class="substep-num">3</div><div class="substep-body">Copy the key (starts with <code style="background:#f0f0f5;border-radius:4px;padding:1px 4px;font-family:monospace;font-size:11px;">AIza</code>) and paste below</div></div>
+      <div class="note note-green">
+        <strong>Free tier covers photo reading easily.</strong> No payment needed unless you're processing hundreds of images per day.
+      </div>
+    </div>
+    <div class="tick-row" id="tick-9" onclick="tick(9)">
+      <div class="tick-box" id="box-9"></div>
+      <div class="tick-label">Gemini API key copied and saved below</div>
+    </div>
+  </div>
+
+  <!-- STEP 10: GITHUB -->
+  <div class="step-card" id="card-10">
+    <div class="step-header">
+      <div class="step-num" id="num-10">10</div>
+      <div class="step-meta">
+        <div class="step-label">Step 10</div>
+        <div class="step-title">Set up GitHub access</div>
+        <div class="step-subtitle">How Baz gives you secure access to the private repo</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <p>FounderBud lives in a private GitHub repo. Baz adds you as a <strong>Collaborator</strong> -- scoped to just this repo. No shared passwords.</p>
+      <div class="note note-blue">
+        <strong>Two-part step.</strong> You set up the tools and send Baz your username. He invites you. You accept via email. Then you clone it together on the call -- 30 seconds.
+      </div>
+      <p><strong>1. Create a GitHub account</strong> (skip if you already have one)</p>
+      <a href="https://github.com/signup" target="_blank" class="link-btn">&#x2197; Sign up at github.com/signup</a>
+      <div class="substep"><div class="substep-num">1</div><div class="substep-body">Free account is all you need. Note your username and save it below.</div></div>
+
+      <p style="margin-top:16px;"><strong>2. Install GitHub CLI</strong></p>
+      <a href="https://cli.github.com" target="_blank" class="link-btn">&#x2197; Download at cli.github.com</a>
+      <div class="substep"><div class="substep-num">1</div><div class="substep-body">Download the <strong>.pkg</strong> and run the installer.</div></div>
+      <div class="substep"><div class="substep-num">2</div><div class="substep-body">Open <strong>Warp</strong> and run:</div></div>
+      <div class="cmd-block">
+        <code>gh auth login</code>
+        <button class="copy-btn" onclick="copyCmd(this, 'gh auth login')">Copy</button>
+      </div>
+      <div class="substep"><div class="substep-num">3</div><div class="substep-body">Choose <strong>GitHub.com then HTTPS then Login with a web browser</strong>. Authorize and done.</div></div>
+
+      <p style="margin-top:16px;"><strong>3. Send Baz your GitHub username</strong></p>
+      <div class="note note-green">
+        Message Baz your username via Telegram. He'll add you as a Collaborator -- you'll get an email from noreply@github.com. Accept it before the call.
+      </div>
+    </div>
+    <div class="tick-row" id="tick-10" onclick="tick(10)">
+      <div class="tick-box" id="box-10"></div>
+      <div class="tick-label">GitHub account ready, gh auth login done, username sent to Baz, invite accepted</div>
+    </div>
+  </div>
+
+  <!-- ALL DONE -->
+  <div class="all-done" id="all-done">
+    <div class="all-done-icon">&#x1F680;</div>
+    <h3>All 10 steps done. You're ready.</h3>
+    <p>Send Baz your GitHub username if you haven't already. Also share your Word quote template before the call -- it's the one thing that makes Session 1 a live demo.</p>
+  </div>
+
+  <!-- NOTEPAD -->
+  <div class="save-card">
+    <div class="save-header">
+      <h3>&#x1F4CB; Your notepad -- save keys and IDs here</h3>
+      <p>Nothing on this page is stored or sent anywhere. It's a local tab in your browser only. Close the tab and it's gone -- don't close until after the call.</p>
+    </div>
+    <div class="save-fields">
+      <div class="save-divider">Obsidian</div>
+      <div class="save-field">
+        <label>Vault path -- full folder path (from Step 6)</label>
+        <input type="text" placeholder="e.g. /Users/mike/Documents/SurfexBrain" />
+      </div>
+      <div class="save-divider">API Keys</div>
+      <div class="save-field">
+        <label>Groq API key -- voice input (from Step 7)</label>
+        <input type="text" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+      </div>
+      <div class="save-field">
+        <label>ElevenLabs API key -- voice output, Option A (from Step 8)</label>
+        <input type="text" placeholder="sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+      </div>
+      <div class="save-field">
+        <label>Gradium API key -- voice output, Option B (from Step 8)</label>
+        <input type="text" placeholder="gradium_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+      </div>
+      <div class="save-field">
+        <label>Gemini API key -- photo reading + memory (from Step 9)</label>
+        <input type="text" placeholder="AIzaxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+      </div>
+      <div class="save-divider">Telegram</div>
+      <div class="save-field">
+        <label>Telegram bot token (from BotFather -- Step 5)</label>
+        <input type="text" placeholder="e.g. 7234567890:AAFxBcxxxxxxxxxxxxxxxxxx" />
+      </div>
+      <div class="save-field">
+        <label>Telegram bot username (from BotFather -- Step 5)</label>
+        <input type="text" placeholder="e.g. @surfexbudXYZ_bot" />
+      </div>
+      <div class="save-field">
+        <label>Telegram Chat ID (from @userinfobot -- Step 5)</label>
+        <input type="text" placeholder="e.g. 1234567890" />
+      </div>
+      <div class="save-divider">GitHub (from Step 10)</div>
+      <div class="save-field">
+        <label>Your GitHub username</label>
+        <input type="text" placeholder="e.g. mikesurfex -- send this to Baz so he can add you as a Collaborator" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT SURFEX -->
+  <div class="about-card">
+    <div class="about-header">
+      <h3>&#x1F399;&#xFE0F; About Surfex -- 5 minutes that matter</h3>
+      <p>FounderBud is calibrated to your specific setup. Fill this in before the call and it will know Surfex, your quoting workflow, and your job types from the first message -- no re-explaining every session.</p>
+    </div>
+    <div class="about-fields">
+      <div class="about-field">
+        <label>Where are you at with ServiceM8 right now?</label>
+        <div class="about-hint">What's working, what isn't, what you're ready to be done with.</div>
+        <textarea rows="3" placeholder="e.g. Using it for scheduling but the quoting is clunky. Have to go back to the office to build quotes. Follow-up is manual and I drop the ball more than I'd like..."></textarea>
+      </div>
+      <div class="about-field">
+        <label>Walk me through how a typical quote happens</label>
+        <div class="about-hint">From the moment someone calls to when they get the quote. How long does it take? What's the friction?</div>
+        <textarea rows="3" placeholder="e.g. Someone calls, I take notes on my phone or in my head. Drive back to the office, open Word, put the quote together from my template. Email it. Takes a few hours from call to send..."></textarea>
+      </div>
+      <div class="about-field">
+        <label>What does a week of jobs look like?</label>
+        <div class="about-hint">Rough number, what types (epoxy, waterproofing, polished concrete), how many days per job, who's on site.</div>
+        <textarea rows="3" placeholder="e.g. 3-4 active jobs a week. Mix of residential epoxy and commercial waterproofing. Most jobs run 2-3 days. Usually Mike and Callum on site together for the bigger ones..."></textarea>
+      </div>
+      <div class="about-field">
+        <label>What's Callum's current workflow on a job?</label>
+        <div class="about-hint">What does he actually use day-to-day?</div>
+        <textarea rows="2" placeholder="e.g. Callum runs the on-site work. He calls or texts Mike for anything admin. No real system for tracking phases or handovers..."></textarea>
+      </div>
+      <div class="about-field">
+        <label>What's the biggest time sink right now?</label>
+        <div class="about-hint">Quoting, follow-up, scheduling, something else?</div>
+        <textarea rows="2" placeholder="e.g. Quoting takes too long and I lose jobs because I'm slow getting quotes out. Follow-up on sent quotes is also a mess -- I forget to chase..."></textarea>
+      </div>
+      <div class="about-field">
+        <label>How do you prefer to communicate?</label>
+        <div class="about-hint">Voice notes, typing, a mix? Mike is field-based so we build around how he actually works.</div>
+        <textarea rows="2" placeholder="e.g. Voice notes almost always -- I'm on site or driving. Typing is painful when I'm covered in product..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY OF CALL CHECKLIST -->
+  <div class="day-card">
+    <div class="day-header">
+      <h3>Day of the call -- have these ready</h3>
+      <div class="day-badge">Read before you join</div>
+    </div>
+    <div class="day-list">
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>Mac open and plugged into power</strong> -- setup takes about 20 minutes</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>Warp open</strong> -- launch it now so we're not waiting on startup</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>This browser tab open</strong> -- your API keys, Chat ID, and "About Surfex" answers are all here</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>GitHub collaborator invite accepted</strong> -- check email from noreply@github.com</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>Phone with Telegram nearby</strong> -- you'll send your first voice note from it during the call</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>Your Word quote template ready to share via screen share</strong> -- this is what we load the rate card from. Without it, Session 1 is a demo on placeholder numbers. With it, you could send a real quote to a real client before the call ends.</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>One real recent enquiry in mind</strong> -- we'll run it through voice-to-quote live. Think sqm, location, substrate type, system.</div>
+      </div>
+      <div class="day-item" onclick="dayTick(this)">
+        <div class="day-box"></div>
+        <div class="day-text"><strong>Zoom or Meet link open, audio tested, screen share the whole time</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSION 1 AGENDA -->
+  <div class="expect-card">
+    <h3>Session 1 -- 30 minutes: bot live + first quote generated</h3>
+    <div class="expect-item">
+      <div class="expect-time">0:00</div>
+      <div class="expect-text"><strong>Clone and install</strong> -- one git clone, npm install. FounderBud running on your machine in under 5 minutes.</div>
+    </div>
+    <div class="expect-item">
+      <div class="expect-time">0:08</div>
+      <div class="expect-text"><strong>Wire in your config</strong> -- paste API keys and vault path from the notepad into .env. One command to start. Bot is live in Telegram.</div>
+    </div>
+    <div class="expect-item">
+      <div class="expect-time">0:13</div>
+      <div class="expect-text"><strong>First message test</strong> -- type anything in Telegram. FounderBud responds. Confirm it knows Surfex, Mike, Callum, epoxy flooring.</div>
+    </div>
+    <div class="expect-item">
+      <div class="expect-time">0:15</div>
+      <div class="expect-text"><strong>Voice-to-quote live</strong> -- Mike records a voice note describing a real enquiry: sqm, location, substrate, system type. FounderBud transcribes, extracts structured fields, generates formatted quote with line items from the rate card. Mike reads it, approves in Telegram, it goes from Gmail. That's the moment ServiceM8 stops being the quoting tool.</div>
+    </div>
+    <div class="expect-item">
+      <div class="expect-time">0:22</div>
+      <div class="expect-text"><strong>Quote pipeline CRM set up</strong> -- open browser, see every open quote, pipeline stages from New enquiry through to Booked. 5-day auto-follow-up confirmed.</div>
+    </div>
+    <div class="expect-item">
+      <div class="expect-time">0:26</div>
+      <div class="expect-text"><strong>Session 2 scoped</strong> -- Twilio SMS (On the Way + confirmations + reminders), multi-day phase tracker, before/after photo pipeline. Leave knowing exactly what to bring.</div>
+    </div>
+    <div class="expect-item">
+      <div class="expect-time">0:30</div>
+      <div class="expect-text"><strong>Done -- quoting is no longer a Word doc problem.</strong></div>
+    </div>
+  </div>
+
+  <!-- BOT COMMANDS -->
+  <div class="section-header">
+    <h2>Reference -- bot commands</h2>
+  </div>
+  <div class="commands-card">
+    <div class="commands-header">
+      <h3>Commands you'll use from day one</h3>
+      <p>Type any of these in Telegram to control your bot. Or just talk -- commands are shortcuts.</p>
+    </div>
+    <div class="commands-list">
+      <div class="cmd-row">
+        <div class="cmd-name">/help</div>
+        <div class="cmd-desc">Lists all available commands</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/status</div>
+        <div class="cmd-desc">Shows if the bot is running, which model, and memory stats</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/model</div>
+        <div class="cmd-desc">Switch between Claude models -- faster for quick tasks, Opus for complex analysis</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/voice</div>
+        <div class="cmd-desc">Toggle voice output on or off</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/newchat</div>
+        <div class="cmd-desc">Fresh session. Memory persists; active context resets. Good for switching between quoting mode and job tracking.</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/memory</div>
+        <div class="cmd-desc">Show what FounderBud knows about your setup -- Surfex, rates, job types, quote pipeline</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/stop</div>
+        <div class="cmd-desc">Interrupt a running task</div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd-name">/dashboard</div>
+        <div class="cmd-desc">Get a link to the live web dashboard -- scheduled tasks, memory, conversation history</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Any questions before the call? &#x1F4DE; Call Baz -- 0466 804 199</p>
+    <a href="tel:0466804199" class="footer-phone">&#x1F4DE; Call Baz -- 0466 804 199</a>
+    <p style="margin-top:12px;color:#b0b0b5;font-size:11.5px;">Nothing on this page is stored or sent anywhere. Close the tab after the call.</p>
+  </div>
+
+</div>
+
+<script>
+  const totalSteps = 10;
+  const state = {};
+  for (let i = 1; i <= totalSteps; i++) state[i] = false;
+
+  function tick(n) {
+    state[n] = !state[n];
+    document.getElementById('box-' + n).classList.toggle('ticked', state[n]);
+    document.getElementById('tick-' + n).classList.toggle('ticked', state[n]);
+    document.getElementById('card-' + n).classList.toggle('done', state[n]);
+    const num = document.getElementById('num-' + n);
+    num.textContent = state[n] ? '&#x2713;' : n;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = Object.values(state).filter(Boolean).length;
+    const pct = (done / totalSteps) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    const fill = document.getElementById('progress-fill');
+    const label = document.getElementById('progress-label');
+    if (done === totalSteps) {
+      fill.style.background = '#34c759';
+      label.style.color = '#34c759';
+      label.textContent = 'All done!';
+      document.getElementById('all-done').style.display = 'block';
+    } else {
+      fill.style.background = 'var(--accent)';
+      label.style.color = 'var(--accent)';
+      label.textContent = done + ' of ' + totalSteps + ' done';
+      document.getElementById('all-done').style.display = 'none';
+    }
+  }
+
+  function dayTick(row) {
+    const box = row.querySelector('.day-box');
+    const isTicked = box.classList.contains('ticked');
+    box.classList.toggle('ticked', !isTicked);
+    row.classList.toggle('ticked', !isTicked);
+  }
+
+  function copyCmd(btn, text) {
+    const decoded = text.replace(/&quot;/g, '"');
+    navigator.clipboard.writeText(decoded).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
