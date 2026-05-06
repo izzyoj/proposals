@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surfex Session 1 SOP — Baz</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --accent-light: #e8f1fb;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --faint: #86868b;
+      --border: #d2d2d7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+      --green: #34c759;
+      --green-light: #f0faf3;
+      --orange: #ff9500;
+      --orange-light: #fff8f0;
+      --red: #ff3b30;
+      --red-light: #fff5f5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: var(--accent);
+      padding: 20px 24px 0;
+    }
+    .header-top {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    }
+    .header-badge {
+      background: rgba(255,255,255,0.2); color: white;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; border-radius: 20px; padding: 4px 12px;
+    }
+    .header-title {
+      font-size: 22px; font-weight: 700; color: white; letter-spacing: -0.01em;
+    }
+    .header-sub {
+      font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 2px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex; gap: 0; margin-top: 16px;
+    }
+    .tab-btn {
+      padding: 10px 20px; font-size: 14px; font-weight: 600;
+      color: rgba(255,255,255,0.65); background: none; border: none;
+      cursor: pointer; border-bottom: 3px solid transparent;
+      transition: all 0.15s; white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: white; border-bottom-color: white;
+    }
+    .tab-btn:hover:not(.active) { color: rgba(255,255,255,0.85); }
+
+    /* Content */
+    .content { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Progress bar */
+    .progress-wrap {
+      background: var(--card); border-radius: 12px; box-shadow: var(--shadow-sm);
+      padding: 14px 18px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .progress-bar-bg { flex: 1; height: 6px; background: #e5e5ea; border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; width: 0%; transition: width 0.3s; }
+    .progress-label { font-size: 12px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+    /* Section header */
+    .section-header {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--faint); margin: 24px 0 10px;
+    }
+
+    /* Step cards */
+    .step-card {
+      background: var(--card); border-radius: 14px; box-shadow: var(--shadow-sm);
+      margin-bottom: 10px; overflow: hidden;
+    }
+    .step-card.confirmed { opacity: 0.65; }
+    .step-main {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 18px; cursor: pointer; user-select: none;
+    }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent-light); color: var(--accent);
+      font-size: 14px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .step-card.confirmed .step-num {
+      background: var(--green-light); color: var(--green); font-size: 16px;
+    }
+    .step-info { flex: 1; }
+    .step-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .step-ask { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .step-ask strong { color: var(--text); }
+    .step-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .confirm-btn {
+      font-size: 12px; font-weight: 600; padding: 6px 14px;
+      border-radius: 20px; border: none; cursor: pointer;
+      background: var(--green-light); color: var(--green);
+      transition: all 0.15s;
+    }
+    .confirm-btn:hover { background: #d4f5e2; }
+    .step-card.confirmed .confirm-btn {
+      background: var(--green); color: white;
+    }
+    .fix-toggle {
+      font-size: 12px; font-weight: 600; color: var(--orange);
+      background: var(--orange-light); border: none; border-radius: 20px;
+      padding: 6px 12px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .fix-toggle:hover { background: #ffe8cc; }
+    .fix-toggle.open { background: var(--orange); color: white; }
+
+    /* Fix-it panel */
+    .fix-panel {
+      display: none; border-top: 1px solid #f0f0f5;
+      padding: 14px 18px 16px; background: #fffbf5;
+    }
+    .fix-panel.open { display: block; }
+    .fix-panel h4 {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--orange); margin-bottom: 10px;
+    }
+    .fix-item {
+      font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 8px;
+    }
+    .fix-item strong { color: var(--text); }
+    .skip-badge {
+      display: inline-block; background: #f5f5f7; color: var(--faint);
+      font-size: 11px; font-weight: 700; border-radius: 6px; padding: 2px 8px;
+      margin-left: 6px; vertical-align: middle;
+    }
+
+    /* Command block */
+    .cmd-block {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #f0f0f5; border: 1px solid #d2d2d7; border-radius: 8px;
+      padding: 9px 12px; margin: 8px 0; gap: 10px;
+    }
+    .cmd-block code {
+      font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+      font-size: 12px; color: #1d1d1f; flex: 1; word-break: break-all;
+    }
+    .copy-btn {
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      background: white; border: 1px solid var(--border); border-radius: 6px;
+      padding: 4px 10px; cursor: pointer; flex-shrink: 0; transition: all 0.15s;
+    }
+    .copy-btn:hover { background: var(--accent-light); }
+    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+    /* Phase blocks (Tab 2) */
+    .phase-block {
+      background: var(--card); border-radius: 14px; box-shadow: var(--shadow-sm);
+      margin-bottom: 12px; overflow: hidden;
+    }
+    .phase-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-bottom: 1px solid #f0f0f5; background: #f9f9fb;
+    }
+    .phase-tag {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+      color: white; background: var(--accent); border-radius: 6px; padding: 3px 9px;
+    }
+    .phase-title { font-size: 15px; font-weight: 700; }
+    .phase-time { font-size: 12px; color: var(--faint); margin-left: auto; font-weight: 600; }
+
+    .setup-step {
+      padding: 14px 18px; border-bottom: 1px solid #f5f5f7;
+    }
+    .setup-step:last-child { border-bottom: none; }
+    .setup-step-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--faint); margin-bottom: 4px;
+    }
+    .setup-step-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .setup-note {
+      font-size: 13px; color: var(--muted); line-height: 1.6; margin: 6px 0;
+    }
+    .setup-note strong { color: var(--text); }
+
+    /* Timeline */
+    .timeline {
+      display: flex; gap: 0; background: var(--card);
+      border-radius: 14px; box-shadow: var(--shadow-sm);
+      margin-bottom: 16px; overflow-x: auto; padding: 14px 16px;
+    }
+    .tl-item {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; min-width: 70px; position: relative; text-align: center;
+    }
+    .tl-item:not(:last-child)::after {
+      content: ''; position: absolute; top: 11px; left: 55%;
+      width: 90%; height: 2px; background: #e5e5ea; z-index: 0;
+    }
+    .tl-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--accent-light); border: 2px solid var(--accent);
+      z-index: 1; flex-shrink: 0;
+    }
+    .tl-time { font-size: 10px; font-weight: 700; color: var(--accent); margin-top: 5px; }
+    .tl-label { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+
+    /* .env preview */
+    .env-block {
+      background: #1d1d1f; border-radius: 10px; padding: 14px 16px; margin: 8px 0;
+    }
+    .env-line { font-family: 'SF Mono', 'Menlo', monospace; font-size: 12px; line-height: 1.8; }
+    .env-key { color: #64d2ff; }
+    .env-val { color: #98c379; }
+    .env-comment { color: #6e6e73; }
+
+    /* Troubleshoot */
+    .trouble-card {
+      background: var(--card); border-radius: 14px; box-shadow: var(--shadow-sm);
+      overflow: hidden; margin-bottom: 10px;
+    }
+    .trouble-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 18px; border-bottom: 1px solid #f5f5f7;
+    }
+    .trouble-row:last-child { border-bottom: none; }
+    .trouble-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0; margin-top: 5px;
+    }
+    .trouble-q { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .trouble-a { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* Session 2 checklist */
+    .s2-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid #f5f5f7; font-size: 14px;
+    }
+    .s2-item:last-child { border-bottom: none; }
+    .s2-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+
+    /* Highlight note */
+    .hl-note {
+      background: var(--accent-light); border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0;
+      font-size: 13px; color: var(--text); line-height: 1.6;
+    }
+    .warn-note {
+      background: var(--orange-light); border-left: 3px solid var(--orange);
+      border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 8px 0;
+      font-size: 13px; color: var(--text); line-height: 1.6;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <span class="header-badge">Baz's SOP</span>
+  </div>
+  <div class="header-title">Surfex Session 1</div>
+  <div class="header-sub">Mike @ Surfex &nbsp;·&nbsp; 30 min &nbsp;·&nbsp; Voice-to-quote demo</div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('precheck')">Pre-call Check</button>
+    <button class="tab-btn" onclick="switchTab('setup')">On-call Setup</button>
+    <button class="tab-btn" onclick="switchTab('troubleshoot')">Troubleshoot</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: PRE-CALL CHECK -->
+  <div class="tab-panel active" id="tab-precheck">
+
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label" id="progress-label">0 of 10 confirmed</div>
+    </div>
+
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">
+      Go through these with Mike at the start of the call. Tick each one confirmed. Expand <span style="color:var(--orange);font-weight:600;">Fix it</span> for anything not done — most are fixable in 2-3 min.
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step-card" id="sc-1">
+      <div class="step-main">
+        <div class="step-num" id="sn-1">1</div>
+        <div class="step-info">
+          <div class="step-title">macOS 12 Monterey or later</div>
+          <div class="step-ask">Ask: <strong>"Click the Apple menu top-left, then About This Mac — what macOS version does it show?"</strong></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-1" onclick="toggleFix(1)">Fix it</button>
+          <button class="confirm-btn" id="cb-1" onclick="confirm(1)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-1">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>macOS 11 or earlier:</strong> Apple menu → System Preferences → Software Update. Takes 20-30 min — reschedule the call if needed. Not worth fighting it.</div>
+        <div class="fix-item"><strong>macOS 12-14:</strong> Good to go.</div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card" id="sc-2">
+      <div class="step-main">
+        <div class="step-num" id="sn-2">2</div>
+        <div class="step-info">
+          <div class="step-title">Warp installed</div>
+          <div class="step-ask">Ask: <strong>"Press Cmd+Space, type Warp — does it appear in Spotlight?"</strong></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-2" onclick="toggleFix(2)">Fix it</button>
+          <button class="confirm-btn" id="cb-2" onclick="confirm(2)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-2">
+        <h4>Fix it</h4>
+        <div class="fix-item">Go to <strong>warp.dev</strong> → Download → drag to Applications. 2 min. Ask him to open it before moving on.</div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card" id="sc-3">
+      <div class="step-main">
+        <div class="step-num" id="sn-3">3</div>
+        <div class="step-info">
+          <div class="step-title">Node.js installed (v20+)</div>
+          <div class="step-ask">Ask: <strong>"Open Warp and run this:"</strong></div>
+          <div class="cmd-block"><code>node --version</code><button class="copy-btn" onclick="cp(this,'node --version')">Copy</button></div>
+          <div class="step-ask" style="margin-top:4px;">Should see <strong>v20.x.x</strong> or higher.</div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-3" onclick="toggleFix(3)">Fix it</button>
+          <button class="confirm-btn" id="cb-3" onclick="confirm(3)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-3">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>Nothing shows / command not found:</strong> Go to <strong>nodejs.org/en/download</strong> — download macOS Installer (.pkg), LTS version. Double-click, follow prompts, takes 2 min. Restart Warp after install.</div>
+        <div class="fix-item"><strong>Shows v18 or lower:</strong> Run upgrade:</div>
+        <div class="cmd-block"><code>sudo npm install -g n && sudo n lts</code><button class="copy-btn" onclick="cp(this,'sudo npm install -g n && sudo n lts')">Copy</button></div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card" id="sc-4">
+      <div class="step-main">
+        <div class="step-num" id="sn-4">4</div>
+        <div class="step-info">
+          <div class="step-title">Claude Pro signed up + logged in</div>
+          <div class="step-ask">Ask: <strong>"In Warp, type claude — does it respond?"</strong></div>
+          <div class="cmd-block"><code>claude</code><button class="copy-btn" onclick="cp(this,'claude')">Copy</button></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-4" onclick="toggleFix(4)">Fix it</button>
+          <button class="confirm-btn" id="cb-4" onclick="confirm(4)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-4">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>Not signed up yet:</strong> claude.ai → sign up → choose Pro plan ($32/mo). Then run:</div>
+        <div class="cmd-block"><code>npx @anthropic-ai/claude-code</code><button class="copy-btn" onclick="cp(this,'npx @anthropic-ai/claude-code')">Copy</button></div>
+        <div class="fix-item">Browser window opens — sign in with same account. Once terminal responds, done.</div>
+        <div class="fix-item"><strong>Command not found:</strong> Same command above installs it.</div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step-card" id="sc-5">
+      <div class="step-main">
+        <div class="step-num" id="sn-5">5</div>
+        <div class="step-info">
+          <div class="step-title">Telegram bot created — token + chat ID saved</div>
+          <div class="step-ask">Ask: <strong>"Search your bot username in Telegram — does it come up?"</strong><br>Ask: <strong>"Do you have your bot token (numbers:AAF...) and chat ID saved?"</strong></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-5" onclick="toggleFix(5)">Fix it</button>
+          <button class="confirm-btn" id="cb-5" onclick="confirm(5)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-5">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>No bot:</strong> Telegram → search <strong>@BotFather</strong> → /newbot → name: "Surfex Assistant" → username: surfexbudXYZ_bot → copy the token it gives you.</div>
+        <div class="fix-item"><strong>No chat ID:</strong> Search <strong>@userinfobot</strong> in Telegram → send any message → copy the number it replies with.</div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step-card" id="sc-6">
+      <div class="step-main">
+        <div class="step-num" id="sn-6">6</div>
+        <div class="step-info">
+          <div class="step-title">Obsidian vault + SurfexBrain folders created</div>
+          <div class="step-ask">Ask: <strong>"Open Obsidian — can you see the SurfexBrain vault?"</strong><br>Ask: <strong>"Can you see projects/surfex/ folders inside it?"</strong></div>
+          <div class="cmd-block" style="margin-top:6px;"><code>ls ~/Documents/SurfexBrain/projects/surfex</code><button class="copy-btn" onclick="cp(this,'ls ~/Documents/SurfexBrain/projects/surfex')">Copy</button></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-6" onclick="toggleFix(6)">Fix it</button>
+          <button class="confirm-btn" id="cb-6" onclick="confirm(6)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-6">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>No Obsidian:</strong> obsidian.md → download free → create vault named "SurfexBrain" → save to Documents folder.</div>
+        <div class="fix-item"><strong>Missing folders:</strong> Run this to create the full structure in one shot:</div>
+        <div class="cmd-block"><code>mkdir -p ~/Documents/SurfexBrain/{inbox,daily,"projects/surfex/enquiries","projects/surfex/quotes/draft","projects/surfex/quotes/sent","projects/surfex/quotes/follow-up","projects/surfex/quotes/closed","projects/surfex/jobs/active","projects/surfex/jobs/completed","projects/surfex/customers","projects/surfex/content/queue","projects/surfex/content/posted","projects/surfex/finance/invoices","projects/surfex/finance/reconciliation"} && touch ~/Documents/SurfexBrain/memory.md ~/Documents/SurfexBrain/projects/surfex/rate-card.md</code><button class="copy-btn" onclick="cp(this,`mkdir -p ~/Documents/SurfexBrain/{inbox,daily,'projects/surfex/enquiries','projects/surfex/quotes/draft','projects/surfex/quotes/sent','projects/surfex/quotes/follow-up','projects/surfex/quotes/closed','projects/surfex/jobs/active','projects/surfex/jobs/completed','projects/surfex/customers','projects/surfex/content/queue','projects/surfex/content/posted','projects/surfex/finance/invoices','projects/surfex/finance/reconciliation'} && touch ~/Documents/SurfexBrain/memory.md ~/Documents/SurfexBrain/projects/surfex/rate-card.md`)">Copy</button></div>
+        <div class="fix-item" style="margin-top:6px;">Then refresh Obsidian (Cmd+R) — the folders appear automatically.</div>
+      </div>
+    </div>
+
+    <!-- Step 7 -->
+    <div class="step-card" id="sc-7">
+      <div class="step-main">
+        <div class="step-num" id="sn-7">7</div>
+        <div class="step-info">
+          <div class="step-title">Groq API key <span class="skip-badge">Optional S1</span></div>
+          <div class="step-ask">Ask: <strong>"Do you have a Groq API key starting with gsk_?"</strong></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-7" onclick="toggleFix(7)">Fix it</button>
+          <button class="confirm-btn" id="cb-7" onclick="confirm(7)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-7">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>Not done:</strong> console.groq.com → sign in with Google → API Keys → Create API key → copy (starts with gsk_).</div>
+        <div class="fix-item" style="color:var(--green);font-weight:600;">Skip for now if needed. Without it, voice notes won't transcribe but typing works. Add in Session 2.</div>
+      </div>
+    </div>
+
+    <!-- Step 8 -->
+    <div class="step-card" id="sc-8">
+      <div class="step-main">
+        <div class="step-num" id="sn-8">8</div>
+        <div class="step-info">
+          <div class="step-title">Voice output key (ElevenLabs or Gradium) <span class="skip-badge">Skip S1</span></div>
+          <div class="step-ask">Ask: <strong>"Do you have an ElevenLabs or Gradium API key?"</strong></div>
+        </div>
+        <div class="step-right">
+          <button class="confirm-btn" id="cb-8" onclick="confirm(8)">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 9 -->
+    <div class="step-card" id="sc-9">
+      <div class="step-main">
+        <div class="step-num" id="sn-9">9</div>
+        <div class="step-info">
+          <div class="step-title">Gemini API key <span class="skip-badge">Optional S1</span></div>
+          <div class="step-ask">Ask: <strong>"Do you have a Google/Gemini API key starting with AIza?"</strong></div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-9" onclick="toggleFix(9)">Fix it</button>
+          <button class="confirm-btn" id="cb-9" onclick="confirm(9)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-9">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>Not done:</strong> aistudio.google.com → sign in with Google → Create API key. 2 min.</div>
+        <div class="fix-item" style="color:var(--green);font-weight:600;">Skip if not done — doesn't block voice-to-quote demo. Needed for job site photo reading in Session 2.</div>
+      </div>
+    </div>
+
+    <!-- Step 10 -->
+    <div class="step-card" id="sc-10">
+      <div class="step-main">
+        <div class="step-num" id="sn-10">10</div>
+        <div class="step-info">
+          <div class="step-title">GitHub account + gh auth login + invite accepted</div>
+          <div class="step-ask">Ask: <strong>"In Warp, run this:"</strong></div>
+          <div class="cmd-block"><code>gh auth status</code><button class="copy-btn" onclick="cp(this,'gh auth status')">Copy</button></div>
+          <div class="step-ask" style="margin-top:4px;">Should say: "Logged in to github.com account [username]"</div>
+        </div>
+        <div class="step-right">
+          <button class="fix-toggle" id="ft-10" onclick="toggleFix(10)">Fix it</button>
+          <button class="confirm-btn" id="cb-10" onclick="confirm(10)">Confirm</button>
+        </div>
+      </div>
+      <div class="fix-panel" id="fp-10">
+        <h4>Fix it</h4>
+        <div class="fix-item"><strong>No GitHub account:</strong> github.com/signup — free account, 2 min.</div>
+        <div class="fix-item"><strong>gh not installed:</strong></div>
+        <div class="cmd-block"><code>brew install gh</code><button class="copy-btn" onclick="cp(this,'brew install gh')">Copy</button></div>
+        <div class="fix-item"><strong>Not authenticated:</strong></div>
+        <div class="cmd-block"><code>gh auth login</code><button class="copy-btn" onclick="cp(this,'gh auth login')">Copy</button></div>
+        <div class="fix-item">Choose: GitHub.com → HTTPS → Login with a web browser → authorize.</div>
+        <div class="fix-item"><strong>Invite not accepted:</strong> Check email from noreply@github.com — accept the collaborator invite before cloning.</div>
+      </div>
+    </div>
+
+  </div><!-- end tab-precheck -->
+
+
+  <!-- TAB 2: ON-CALL SETUP -->
+  <div class="tab-panel" id="tab-setup">
+
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">
+      Mike screen shares. You guide. Run through in order — each step has the exact command.
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:00</div><div class="tl-label">Clone</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:08</div><div class="tl-label">Config</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:13</div><div class="tl-label">Test</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:15</div><div class="tl-label">Voice demo</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:22</div><div class="tl-label">CRM</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:26</div><div class="tl-label">Scope S2</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">0:30</div><div class="tl-label">Done</div></div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 1</span>
+        <span class="phase-title">Clone and install</span>
+        <span class="phase-time">0:00 – 0:08</span>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step A</div>
+        <div class="setup-step-title">Clone the repo</div>
+        <div class="setup-note">Mike runs this in Warp. Uses his GitHub account (collaborator access you already granted).</div>
+        <div class="cmd-block"><code>git clone https://github.com/izzyoj/claudeclaw.git ~/claudeclaw</code><button class="copy-btn" onclick="cp(this,'git clone https://github.com/izzyoj/claudeclaw.git ~/claudeclaw')">Copy</button></div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step B</div>
+        <div class="setup-step-title">Install dependencies</div>
+        <div class="cmd-block"><code>cd ~/claudeclaw && npm install</code><button class="copy-btn" onclick="cp(this,'cd ~/claudeclaw && npm install')">Copy</button></div>
+        <div class="setup-note">Takes 1-2 min. Normal to see warnings — ignore unless it says <strong>error</strong>.</div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step C</div>
+        <div class="setup-step-title">Copy the .env template</div>
+        <div class="cmd-block"><code>cp ~/claudeclaw/.env.example ~/claudeclaw/.env</code><button class="copy-btn" onclick="cp(this,'cp ~/claudeclaw/.env.example ~/claudeclaw/.env')">Copy</button></div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 2</span>
+        <span class="phase-title">Wire in Mike's config</span>
+        <span class="phase-time">0:08 – 0:13</span>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step D</div>
+        <div class="setup-step-title">Open .env in TextEdit</div>
+        <div class="cmd-block"><code>open -e ~/claudeclaw/.env</code><button class="copy-btn" onclick="cp(this,'open -e ~/claudeclaw/.env')">Copy</button></div>
+        <div class="setup-note">Mike pastes values from his precall notepad. Fill in these fields:</div>
+        <div class="env-block">
+          <div class="env-line"><span class="env-key">TELEGRAM_BOT_TOKEN</span>=<span class="env-val">       </span><span class="env-comment">  # bot token from BotFather (Step 5)</span></div>
+          <div class="env-line"><span class="env-key">ALLOWED_CHAT_ID</span>=<span class="env-val">          </span><span class="env-comment">  # chat ID from @userinfobot (Step 5)</span></div>
+          <div class="env-line"><span class="env-key">VAULT_PATH</span>=<span class="env-val">~/Documents/SurfexBrain</span></div>
+          <div class="env-line"><span class="env-key">GROQ_API_KEY</span>=<span class="env-val">             </span><span class="env-comment">  # from Step 7 (skip if not done)</span></div>
+          <div class="env-line"><span class="env-key">GOOGLE_API_KEY</span>=<span class="env-val">           </span><span class="env-comment">  # from Step 9 (skip if not done)</span></div>
+          <div class="env-line"><span class="env-key">ELEVENLABS_API_KEY</span>=<span class="env-val">       </span><span class="env-comment">  # from Step 8 (skip if not done)</span></div>
+        </div>
+        <div class="setup-note" style="margin-top:6px;">Save the file (Cmd+S), close TextEdit.</div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step E</div>
+        <div class="setup-step-title">Start the bot</div>
+        <div class="cmd-block"><code>cd ~/claudeclaw && npm start</code><button class="copy-btn" onclick="cp(this,'cd ~/claudeclaw && npm start')">Copy</button></div>
+        <div class="setup-note">Bot starts and sends a message to Mike's Telegram within 10 seconds. If it errors — check the Troubleshoot tab.</div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 3</span>
+        <span class="phase-title">First test + CLAUDE.md</span>
+        <span class="phase-time">0:13 – 0:15</span>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step F</div>
+        <div class="setup-step-title">Send a test message in Telegram</div>
+        <div class="setup-note">Mike types anything to his bot. If it replies — you're live. Ask him: <strong>"Does it introduce itself and mention Surfex?"</strong></div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step G</div>
+        <div class="setup-step-title">Set up CLAUDE.md (personal context)</div>
+        <div class="setup-note">The personal config lives at <strong>~/.claudeclaw/CLAUDE.md</strong> — separate from the repo, never overwritten by updates.</div>
+        <div class="cmd-block"><code>mkdir -p ~/.claudeclaw && open -e ~/.claudeclaw/CLAUDE.md</code><button class="copy-btn" onclick="cp(this,'mkdir -p ~/.claudeclaw && open -e ~/.claudeclaw/CLAUDE.md')">Copy</button></div>
+        <div class="setup-note">TextEdit creates a new file if it doesn't exist. Add this block (customise on the call):</div>
+        <div class="env-block" style="line-height:1.8;">
+          <div class="env-line" style="color:#e5c07b;">## Client Context</div>
+          <div class="env-line" style="color:#abb2bf;">You are Mike's AI assistant for Surfex — an epoxy and flooring business in Sydney.</div>
+          <div class="env-line" style="color:#abb2bf;">Mike and Callin are field operators. Non-desk workflow, everything via Telegram.</div>
+          <div class="env-line" style="color:#abb2bf;">Vault: ~/Documents/SurfexBrain</div>
+          <div class="env-line" style="color:#abb2bf;">Current focus: Voice-to-quote, quote pipeline, ServiceM8 exit.</div>
+        </div>
+        <div class="setup-note" style="margin-top:6px;">Save, close, then restart the bot so it picks up the new context:</div>
+        <div class="cmd-block"><code>cd ~/claudeclaw && npm start</code><button class="copy-btn" onclick="cp(this,'cd ~/claudeclaw && npm start')">Copy</button></div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 4</span>
+        <span class="phase-title">Voice-to-quote demo</span>
+        <span class="phase-time">0:15 – 0:22</span>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step H</div>
+        <div class="setup-step-title">Load the rate card</div>
+        <div class="hl-note"><strong>Ask Mike to screen share his Word quote template first.</strong> You build rate-card.md together from his actual numbers — sqm rates by system type, labour rates, standard line items. This makes the demo run on real data, not placeholders.</div>
+        <div class="cmd-block"><code>open ~/Documents/SurfexBrain/projects/surfex/rate-card.md</code><button class="copy-btn" onclick="cp(this,'open ~/Documents/SurfexBrain/projects/surfex/rate-card.md')">Copy</button></div>
+        <div class="setup-note">Transcribe Mike's rates into this file live. Save it.</div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step I</div>
+        <div class="setup-step-title">Voice note demo</div>
+        <div class="hl-note"><strong>This is the moment.</strong> Ask Mike to record a voice note in Telegram to his bot. Use a real recent enquiry. Something like: "Waterproofing, bathroom, 45 sqm, Moore Park, needs grinding first, 3 days labour, Callin on days 2 and 3."</div>
+        <div class="setup-note" style="margin-top:8px;">The bot transcribes it, extracts structured fields, generates quote line items from the rate card, and drafts the client email. Mike reads it, approves in Telegram, sends from Gmail.</div>
+        <div class="warn-note"><strong>When he sees it work — ServiceM8 is done as his quoting tool.</strong> Don't oversell it. Just let him watch it happen.</div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step J</div>
+        <div class="setup-step-title">Confirm quote landed in vault</div>
+        <div class="cmd-block"><code>ls ~/Documents/SurfexBrain/projects/surfex/quotes/draft/</code><button class="copy-btn" onclick="cp(this,'ls ~/Documents/SurfexBrain/projects/surfex/quotes/draft/')">Copy</button></div>
+        <div class="setup-note">Should see a new .md file with today's date and client/job name.</div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 5</span>
+        <span class="phase-title">Quote pipeline CRM</span>
+        <span class="phase-time">0:22 – 0:26</span>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">Step K</div>
+        <div class="setup-step-title">Open the pipeline dashboard</div>
+        <div class="setup-note">Ask Mike to type in Telegram: <strong>/dashboard</strong> — opens the browser-based pipeline CRM.</div>
+        <div class="setup-note" style="margin-top:6px;">Walk him through the stages: <strong>New enquiry → Site visit booked → Site visited → Quote sent → Follow-up 1 → Follow-up 2 → Booked / Dead.</strong></div>
+        <div class="setup-note">Point out the 5-day auto-follow-up — this alone replaces the most painful part of ServiceM8.</div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-tag">Phase 6</span>
+        <span class="phase-title">Scope Session 2</span>
+        <span class="phase-time">0:26 – 0:30</span>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">What Session 2 builds</div>
+        <div class="setup-step-title" style="margin-bottom:10px;"></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>Twilio SMS — On the Way, booking confirmations, reminders (replaces the one ServiceM8 feature Mike actually uses)</div></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>Multi-day job phase tracker — Prep / Primer / Base coat / Topcoat / Cure with Callin/Mike assignees per phase</div></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>Before/after photo pipeline — Telegram photos file to jobs/active/, optional Instagram caption draft</div></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>Google review automation — 2 days post-job, personalised SMS request, straight to their review link</div></div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-label">What Mike needs before Session 2</div>
+        <div class="setup-step-title" style="margin-bottom:10px;"></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>Twilio account created at <strong>twilio.com</strong> (free trial works to start)</div></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>A real booked job as test data for the phase tracker</div></div>
+        <div class="s2-item"><div class="s2-dot"></div><div>Groq + Gemini keys if not done in Session 1</div></div>
+      </div>
+    </div>
+
+  </div><!-- end tab-setup -->
+
+
+  <!-- TAB 3: TROUBLESHOOT -->
+  <div class="tab-panel" id="tab-troubleshoot">
+
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">
+      Common issues during setup. Find the symptom, run the fix.
+    </div>
+
+    <div class="trouble-card">
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">npm install fails with permission error</div>
+          <div class="trouble-a">Run with sudo:</div>
+          <div class="cmd-block"><code>sudo npm install</code><button class="copy-btn" onclick="cp(this,'sudo npm install')">Copy</button></div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">Bot starts but doesn't respond in Telegram</div>
+          <div class="trouble-a">Two most common causes: (1) TELEGRAM_BOT_TOKEN is wrong — must match exactly what BotFather gave. (2) ALLOWED_CHAT_ID is wrong — must be the number from @userinfobot, not a username. Check both in .env, restart bot.</div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">Error: ENOENT — vault path not found</div>
+          <div class="trouble-a">The VAULT_PATH in .env doesn't match the actual folder. Confirm exact path:</div>
+          <div class="cmd-block"><code>ls ~/Documents/SurfexBrain</code><button class="copy-btn" onclick="cp(this,'ls ~/Documents/SurfexBrain')">Copy</button></div>
+          <div class="trouble-a" style="margin-top:6px;">Copy the output exactly into VAULT_PATH= in .env. No trailing slash.</div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">node --version not found after installing Node.js</div>
+          <div class="trouble-a">Close Warp completely and reopen it. The PATH updates on new shell sessions only.</div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">gh auth status shows not logged in</div>
+          <div class="trouble-a">Run the auth flow:</div>
+          <div class="cmd-block"><code>gh auth login</code><button class="copy-btn" onclick="cp(this,'gh auth login')">Copy</button></div>
+          <div class="trouble-a" style="margin-top:4px;">Choose: GitHub.com → HTTPS → Login with a web browser → authorize in browser.</div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">git clone fails: repository not found</div>
+          <div class="trouble-a">Collaborator invite not yet accepted. Check Mike's email for noreply@github.com — he needs to accept before cloning.</div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">Error: Cannot find module on npm start</div>
+          <div class="trouble-a">npm install didn't complete cleanly. Run it again:</div>
+          <div class="cmd-block"><code>cd ~/claudeclaw && npm install</code><button class="copy-btn" onclick="cp(this,'cd ~/claudeclaw && npm install')">Copy</button></div>
+        </div>
+      </div>
+      <div class="trouble-row">
+        <div class="trouble-dot"></div>
+        <div>
+          <div class="trouble-q">Voice note arrives but no transcription</div>
+          <div class="trouble-a">GROQ_API_KEY missing or blank in .env. Add it and restart the bot. Without Groq, text messages work but voice notes skip transcription.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tab-troubleshoot -->
+
+</div><!-- end content -->
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function toggleFix(n) {
+    const panel = document.getElementById('fp-' + n);
+    const btn = document.getElementById('ft-' + n);
+    const open = panel.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.textContent = open ? 'Close' : 'Fix it';
+  }
+
+  let confirmed = new Set(JSON.parse(localStorage.getItem('s1_confirmed') || '[]'));
+
+  function confirm(n) {
+    const card = document.getElementById('sc-' + n);
+    const num = document.getElementById('sn-' + n);
+    const btn = document.getElementById('cb-' + n);
+    if (confirmed.has(n)) {
+      confirmed.delete(n);
+      card.classList.remove('confirmed');
+      num.textContent = n;
+      btn.textContent = 'Confirm';
+    } else {
+      confirmed.add(n);
+      card.classList.add('confirmed');
+      num.textContent = '✓';
+      btn.textContent = 'Done';
+      // close fix panel if open
+      const fp = document.getElementById('fp-' + n);
+      const ft = document.getElementById('ft-' + n);
+      if (fp) { fp.classList.remove('open'); }
+      if (ft) { ft.classList.remove('open'); ft.textContent = 'Fix it'; }
+    }
+    updateProgress();
+    localStorage.setItem('s1_confirmed', JSON.stringify([...confirmed]));
+  }
+
+  function updateProgress() {
+    const count = confirmed.size;
+    const pct = (count / 10) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = count + ' of 10 confirmed';
+  }
+
+  function cp(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+
+  // Restore state
+  confirmed.forEach(n => {
+    const card = document.getElementById('sc-' + n);
+    const num = document.getElementById('sn-' + n);
+    const btn = document.getElementById('cb-' + n);
+    if (card) { card.classList.add('confirmed'); num.textContent = '✓'; btn.textContent = 'Done'; }
+  });
+  updateProgress();
+</script>
+</body>
+</html>
