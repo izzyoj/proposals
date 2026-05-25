@@ -54,10 +54,67 @@
     }
     .print-btn:hover { opacity: 0.75; }
 
-    @media print {
-      body { background: white; padding: 0; }
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      body { padding: 0; background: #1a1a1a; gap: 0; }
       .print-bar { display: none; }
-      .page { box-shadow: none; border-radius: 0; }
+      .page { border-radius: 0; }
+      .header { padding: 24px 20px 20px; flex-direction: column; gap: 16px; }
+      .avatar { width: 64px; height: 64px; }
+      .header-name { font-size: 24px; }
+      .header-title { font-size: 11px; }
+      .contact-row { gap: 6px; }
+      .contact-chip { font-size: 11px; padding: 4px 10px; }
+      .clearance-badge { align-self: flex-start; }
+      .body { padding: 20px; }
+      .tagline { font-size: 13px; margin-bottom: 20px; }
+      .numbers { grid-template-columns: repeat(3, 1fr); }
+      .num-cell { padding: 12px 6px; }
+      .num-value { font-size: 22px; }
+      .num-label { font-size: 9px; }
+      .achievements { grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+      .quotes { grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+      .footer-row { flex-direction: column; gap: 8px; }
+      .creds-block { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    }
+
+    /* ── PRINT / A4 ── */
+    @media print {
+      @page { size: A4 portrait; margin: 8mm; }
+      body { background: white; padding: 0; margin: 0; }
+      .print-bar { display: none; }
+      .page { box-shadow: none; border-radius: 0; max-width: 100%; width: 100%; }
+      .header { padding: 18px 28px 16px; gap: 18px; }
+      .avatar { width: 62px; height: 62px; }
+      .header-name { font-size: 22px; }
+      .header-title { font-size: 10px; margin-top: 3px; }
+      .contact-row { gap: 5px; margin-top: 8px; }
+      .contact-chip { font-size: 10.5px; padding: 3px 9px; }
+      .clearance-badge { padding: 6px 11px; }
+      .clearance-value { font-size: 10px; }
+      .body { padding: 16px 28px 18px; }
+      .tagline { font-size: 12px; line-height: 1.55; margin-bottom: 16px; padding-left: 10px; }
+      .section-label { margin-bottom: 8px; font-size: 9px; }
+      .numbers { margin-bottom: 16px; }
+      .num-cell { padding: 10px 6px; }
+      .num-value { font-size: 22px; margin-bottom: 3px; }
+      .num-label { font-size: 9px; }
+      .achievements { gap: 7px; margin-bottom: 16px; }
+      .ach-item { padding: 9px 11px; border-radius: 8px; }
+      .ach-org { font-size: 10px; margin-bottom: 3px; }
+      .ach-text { font-size: 11px; line-height: 1.4; }
+      .quotes { gap: 7px; margin-bottom: 14px; }
+      .quote-card { padding: 10px 12px; border-radius: 8px; }
+      .quote-mark { font-size: 18px; margin-bottom: 4px; }
+      .quote-text { font-size: 10.5px; line-height: 1.45; margin-bottom: 6px; }
+      .quote-attr { font-size: 10px; }
+      .quote-role { font-size: 10px; }
+      .footer-row { gap: 7px; }
+      .award-block { padding: 12px 14px; border-radius: 8px; }
+      .award-icon { font-size: 22px; }
+      .award-text .award-title { font-size: 11.5px; }
+      .award-text .award-sub { font-size: 10px; }
+      .cred-badge { font-size: 10.5px; padding: 4px 12px; }
     }
 
     /* PAGE — A4 proportions */
@@ -361,7 +418,7 @@
         <div class="header-title">Senior PM &nbsp;·&nbsp; Delivery Lead &nbsp;·&nbsp; Agile Coach</div>
         <div class="contact-row">
           <div class="contact-chip">📧 <a href="mailto:baz.customer.whisperer@gmail.com">baz.customer.whisperer@gmail.com</a></div>
-          <div class="contact-chip">📱 <a href="tel:+61493216070">0493 216 070</a></div>
+          <div class="contact-chip">📱 <a href="tel:+61466804199">0466 804 199</a></div>
           <div class="contact-chip">🔗 <a href="https://linkedin.com/in/baz-ozturk" target="_blank">linkedin.com/in/baz-ozturk</a></div>
           <div class="contact-chip">🌐 <a href="https://linktr.ee/bazozturk" target="_blank">linktr.ee/bazozturk</a></div>
         </div>
