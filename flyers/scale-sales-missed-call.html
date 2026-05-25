@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scale Sales - You Didn't Pick Up</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vp:         #1a1a1a;
+      --gold:       #c6973f;
+      --gold-light: #fdf5e4;
+      --green:      #1a5c35;
+      --green-light:#eef7f1;
+      --green-border:#b3d9c0;
+      --yellow:     #ffd60a;
+      --text:       #1a1a1a;
+      --sub:        #4a4a52;
+      --muted:      #86868b;
+      --border:     #e8e8ed;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: #fff;
+      color: var(--text);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* ── DARK TOP BAR ── */
+    .top-bar { background: var(--vp); height: 5px; width: 100%; }
+
+    /* ── STICKY NOTE SECTION ── */
+    .sticky-wrap {
+      background: #f0ede8;
+      padding: 36px 36px 28px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .sticky {
+      background: var(--yellow);
+      padding: 22px 26px 20px;
+      border-radius: 3px;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.08);
+      transform: rotate(-0.7deg);
+      max-width: 380px;
+      width: 100%;
+      position: relative;
+    }
+
+    .sticky-pin {
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #c0392b;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+
+    .sticky-header {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .sticky-row {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 6px;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.55;
+      margin-bottom: 4px;
+    }
+
+    .sticky-row .lbl { font-weight: 700; color: rgba(0,0,0,0.55); }
+
+    .sticky-note {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      font-size: 12px;
+      color: rgba(0,0,0,0.5);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .inner { padding: 44px 36px 56px; }
+
+    h1 {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .subhead {
+      font-size: 17px;
+      color: var(--sub);
+      line-height: 1.6;
+      max-width: 540px;
+      margin-bottom: 32px;
+    }
+
+    /* ── IRONY BLOCK ── */
+    .irony-block {
+      background: var(--vp);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .irony-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .irony-text {
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
+    }
+
+    .irony-text strong { color: #fff; }
+
+    /* ── CTA SECTION ── */
+    .cta-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .cta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .cta-btn {
+      display: block;
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 18px 20px;
+      transition: opacity 0.15s;
+    }
+    .cta-btn:hover { opacity: 0.88; }
+
+    .cta-btn .btn-label {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .cta-btn .btn-sub {
+      font-size: 12px;
+      line-height: 1.4;
+      opacity: 0.75;
+    }
+
+    .cta-founding {
+      background: var(--vp);
+      border-top: 2.5px solid var(--gold);
+      color: #fff;
+    }
+
+    .cta-founding .btn-label { color: #fff; }
+
+    .cta-trial {
+      background: var(--green-light);
+      border: 1.5px solid var(--green-border);
+      border-top: 2.5px solid var(--green);
+      color: var(--text);
+    }
+
+    .cta-trial .btn-label { color: var(--green); }
+    .cta-trial .btn-sub   { color: var(--sub); opacity: 1; }
+
+    .cta-irony {
+      background: #f4f4f4;
+      border: 1.5px solid #d0d0d0;
+      border-top: 2.5px solid #aaa;
+      color: var(--text);
+    }
+    .cta-irony .btn-label { color: var(--muted); }
+    .cta-irony .btn-sub   { color: var(--muted); opacity: 1; font-style: italic; }
+
+    /* ── CLOSER ── */
+    .closer-line {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .footer-brand { font-size: 13.5px; font-weight: 800; color: var(--text); }
+    .footer-sub   { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+    .footer-contact { font-size: 12.5px; color: var(--sub); text-align: right; line-height: 1.6; }
+
+    @media print {
+      .sticky-wrap { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .irony-block { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .cta-founding { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    @media (max-width: 540px) {
+      .inner { padding: 32px 22px 40px; }
+      h1 { font-size: 30px; }
+      .cta-row { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; }
+      .footer-contact { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <!-- STICKY NOTE -->
+  <div class="sticky-wrap">
+    <div class="sticky">
+      <div class="sticky-pin"></div>
+      <div class="sticky-header">☎ Missed Call</div>
+      <div class="sticky-row"><span class="lbl">From:</span><span>Baz @ Scale Sales</span></div>
+      <div class="sticky-row"><span class="lbl">Re:</span><span>Your missed calls problem</span></div>
+      <div class="sticky-row"><span class="lbl">Time:</span><span>During your next inspection, probably</span></div>
+      <div class="sticky-note">* Irony fully intended. We'll explain below.</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="inner">
+
+    <h1>You didn't pick up.<br>That's exactly the point.</h1>
+
+    <p class="subhead">
+      That call you just missed from us? Same thing is happening to your buyers every week. Can you believe it, forty percent of buyer calls hit at the most inconvenient of times (*nodding in agreement, aren't you?) - after 6pm, during inspections, at dinner, on weekends. The moments when you're actually selling or thinking about selling.
+    </p>
+
+    <!-- IRONY BLOCK -->
+    <div class="irony-block">
+      <div class="irony-icon">📞</div>
+      <div class="irony-text">
+        Scale Sales answers every call you can't. <strong>24/7, fully qualified, brief in your inbox</strong> before you call them back. No voicemail. No missed buyer. No harder close on Monday when their conviction has already halved.
+      </div>
+    </div>
+
+    <div class="cta-label">Two ways to look at it:</div>
+
+    <div class="cta-row">
+      <a class="cta-btn cta-irony" href="#">
+        <div class="btn-label">Keep wrestling voicemails</div>
+        <div class="btn-sub">Like the late Steve Irwin. And lose. I know it's dark, but most croc-infested voicemail waters are.</div>
+      </a>
+      <a class="cta-btn cta-trial" href="https://izzyoj.github.io/proposals/scale-sales-costbase.html">
+        <div class="btn-label">Try first, zero risk</div>
+        <div class="btn-sub">Free setup. Pay for what you use. One honest testimonial, that's the deal.</div>
+      </a>
+    </div>
+
+    <div class="closer-line">Or just call me back. I'll definitely answer.</div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div>
+        <div class="footer-brand">Scale Sales</div>
+        <div class="footer-sub">Sydney</div>
+      </div>
+      <div class="footer-contact">
+        Baz 0466 804 199 &nbsp;·&nbsp; Harry 0432 982 680
+      </div>
+    </div>
+
+  </div><!-- /inner -->
+
+</body>
+</html>

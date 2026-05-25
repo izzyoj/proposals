@@ -1,248 +1,271 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+<!--
+  VERSIONS
+  v4 — 2026-05-05 — New H1/subhead; stats moved above scenario; DOM line restored; usage reframed as Shazza disclaimers
+  v3 — 2026-05-05 — Em dashes removed; psychic/cold plunge; Van Damme; matchmaker; sickie; olympics; Shazza column
+  v2 — 2026-05-05 — Shazza brand voice aligned throughout
+  v1 — Original zero-risk start flyer
+-->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scale Sales - You Didn't Pick Up</title>
+  <title>Scale Sales - Zero-Risk Start</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --vp:         #1a1a1a;
-      --gold:       #c6973f;
-      --gold-light: #fdf5e4;
-      --green:      #1a5c35;
-      --green-light:#eef7f1;
-      --green-border:#b3d9c0;
-      --yellow:     #ffd60a;
-      --text:       #1a1a1a;
-      --sub:        #4a4a52;
-      --muted:      #86868b;
-      --border:     #e8e8ed;
+      --green:         #1a5c35;
+      --green-mid:     #2d8a50;
+      --green-light:   #eef7f1;
+      --green-border:  #b3d9c0;
+      --warm:          #faf8f4;
+      --warm-card:     #fff;
+      --text:          #1a1a1a;
+      --sub:           #4a4a52;
+      --muted:         #86868b;
+      --border:        #e3dfd6;
+      --red:           #c0392b;
+      --good-green:    #1a8a38;
     }
 
     html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-      background: #fff;
+      background: var(--warm);
       color: var(--text);
       max-width: 700px;
       margin: 0 auto;
     }
 
-    /* ── DARK TOP BAR ── */
-    .top-bar { background: var(--vp); height: 5px; width: 100%; }
+    /* ── TOP BAR (green) ── */
+    .top-bar { background: var(--green); height: 5px; width: 100%; }
 
-    /* ── STICKY NOTE SECTION ── */
-    .sticky-wrap {
-      background: #f0ede8;
-      padding: 36px 36px 28px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .sticky {
-      background: var(--yellow);
-      padding: 22px 26px 20px;
-      border-radius: 3px;
-      box-shadow: 2px 4px 14px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.08);
-      transform: rotate(-0.7deg);
-      max-width: 380px;
-      width: 100%;
-      position: relative;
-    }
-
-    .sticky-pin {
-      position: absolute;
-      top: -9px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #c0392b;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.35);
-      border: 2px solid rgba(255,255,255,0.4);
-    }
-
-    .sticky-header {
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.4);
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(0,0,0,0.12);
-    }
-
-    .sticky-row {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 6px;
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.55;
-      margin-bottom: 4px;
-    }
-
-    .sticky-row .lbl { font-weight: 700; color: rgba(0,0,0,0.55); }
-
-    .sticky-note {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(0,0,0,0.1);
-      font-size: 12px;
-      color: rgba(0,0,0,0.5);
-      font-style: italic;
-      line-height: 1.5;
-    }
-
-    /* ── MAIN CONTENT ── */
     .inner { padding: 44px 36px 56px; }
 
+    /* ── LABEL ── */
+    .label {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .label::before {
+      content: ''; display: inline-block; width: 20px; height: 2px;
+      background: var(--green); flex-shrink: 0;
+    }
+
+    /* ── TRUST BADGE ── */
+    .trust-badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid var(--green-border);
+      font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 10px;
+      border-radius: 4px; margin-bottom: 18px;
+    }
+
     h1 {
-      font-size: 46px;
+      font-size: 52px;
       font-weight: 800;
-      line-height: 1.06;
-      letter-spacing: -0.8px;
+      line-height: 1.05;
+      letter-spacing: -1px;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .subhead {
       font-size: 17px;
       color: var(--sub);
-      line-height: 1.6;
-      max-width: 540px;
-      margin-bottom: 32px;
-    }
-
-    /* ── IRONY BLOCK ── */
-    .irony-block {
-      background: var(--vp);
-      border-radius: 12px;
-      padding: 20px 24px;
+      line-height: 1.55;
+      max-width: 520px;
+      font-weight: 400;
       margin-bottom: 36px;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
     }
 
-    .irony-icon {
-      font-size: 28px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .irony-text {
-      font-size: 14.5px;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.65;
-    }
-
-    .irony-text strong { color: #fff; }
-
-    /* ── CTA SECTION ── */
-    .cta-label {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    .cta-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 32px;
-    }
-
-    .cta-btn {
-      display: block;
-      text-decoration: none;
-      border-radius: 12px;
-      padding: 18px 20px;
-      transition: opacity 0.15s;
-    }
-    .cta-btn:hover { opacity: 0.88; }
-
-    .cta-btn .btn-label {
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-
-    .cta-btn .btn-sub {
-      font-size: 12px;
-      line-height: 1.4;
-      opacity: 0.75;
-    }
-
-    .cta-founding {
-      background: var(--vp);
-      border-top: 2.5px solid var(--gold);
-      color: #fff;
-    }
-
-    .cta-founding .btn-label { color: #fff; }
-
-    .cta-trial {
+    /* ── SCENARIO BOX ── */
+    .scenario-box {
+      border-left: 3px solid var(--green);
       background: var(--green-light);
-      border: 1.5px solid var(--green-border);
+      border-radius: 0 10px 10px 0;
+      padding: 18px 20px;
+      margin-bottom: 36px;
+    }
+
+    .scenario-time {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.6px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+    }
+
+    .scenario-body {
+      font-size: 13.5px; color: var(--sub); line-height: 1.7; margin-bottom: 12px;
+    }
+
+    .scenario-punch {
+      font-size: 13.5px; font-weight: 700; color: var(--text);
+      line-height: 1.6; border-top: 1px solid var(--green-border); padding-top: 12px;
+    }
+    .scenario-punch span {
+      display: block; font-weight: 400; color: var(--sub); margin-top: 4px;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border: 1.5px solid var(--border);
       border-top: 2.5px solid var(--green);
-      color: var(--text);
+      border-radius: 12px; overflow: hidden; margin-bottom: 44px;
     }
 
-    .cta-trial .btn-label { color: var(--green); }
-    .cta-trial .btn-sub   { color: var(--sub); opacity: 1; }
-    .cta-irony {
-      background: #f4f4f4;
-      border: 1.5px solid #d0d0d0;
-      border-top: 2.5px solid #aaa;
-      color: var(--text);
+    .stat-block {
+      padding: 22px 16px; border-right: 1px solid var(--border);
+      text-align: center; background: var(--warm-card);
     }
-    .cta-irony .btn-label { color: var(--muted); }
-    .cta-irony .btn-sub   { color: var(--muted); opacity: 1; font-style: italic; }
+    .stat-block:last-child { border-right: none; }
 
+    .stat-n { font-size: 32px; font-weight: 800; line-height: 1; color: var(--text); letter-spacing: -0.5px; }
+    .stat-n.green { color: var(--green); }
+    .stat-n.red   { color: var(--red); }
+
+    .stat-label {
+      font-size: 10.5px; color: var(--muted); font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.4px; margin-top: 6px; line-height: 1.4;
+    }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+    .section-title {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 18px;
+    }
+
+    /* ── WHAT IT DOES ── */
+    .do-list { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 36px; }
+    .do-list li { display: flex; align-items: flex-start; gap: 13px; font-size: 15.5px; line-height: 1.5; color: var(--text); }
+    .do-icon {
+      flex-shrink: 0; width: 26px; height: 26px;
+      background: var(--green-light); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; margin-top: 1px;
+    }
+    .do-strong { font-weight: 700; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-wrap { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 36px; }
+    .compare-hdr { display: grid; grid-template-columns: 1fr 1fr 1fr; background: var(--green-light); border-bottom: 1px solid var(--green-border); }
+    .compare-hdr div { padding: 10px 16px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-right: 1px solid var(--border); }
+    .compare-hdr div:last-child { border-right: none; }
+    .compare-hdr div.sr-col { color: var(--green); font-weight: 800; }
+    .compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row div { padding: 11px 16px; font-size: 13.5px; border-right: 1px solid var(--border); color: var(--sub); line-height: 1.4; }
+    .compare-row div:last-child { border-right: none; }
+    .compare-row div:first-child { font-weight: 600; color: var(--text); }
+    .compare-row div.sr-val { background: #f7fbf8; }
+    .bad  { color: var(--red)        !important; font-weight: 600 !important; }
+    .good { color: var(--good-green) !important; font-weight: 700 !important; }
+
+    /* ── OFFER BOX (white card, green border) ── */
+    .offer-box {
+      background: var(--warm-card);
+      border: 1.5px solid var(--green-border);
+      border-top: 3px solid var(--green);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 28px;
+    }
+
+    .offer-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+    }
+
+    .offer-headline {
+      font-size: 26px; font-weight: 800; line-height: 1.1;
+      color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px;
+    }
+
+    .offer-body {
+      font-size: 14px; color: var(--sub); line-height: 1.65; margin-bottom: 18px;
+    }
+    .offer-body strong { color: var(--text); }
+
+    /* ── USAGE CARDS ── */
+    .usage-row {
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;
+    }
+    .usage-label {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.3px; margin-bottom: 4px; font-style: italic;
+    }
+
+    .usage-eg {
+      background: var(--warm);
+      border: 1.5px solid var(--green-border);
+      border-radius: 10px; padding: 12px 18px;
+      display: flex; flex-direction: column; gap: 2px; flex: 1;
+    }
+
+    .usage-vol {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.4px; color: var(--muted);
+    }
+    .usage-min { font-size: 12px; color: var(--sub); }
+    .usage-cost {
+      font-size: 22px; font-weight: 800;
+      color: var(--green); letter-spacing: -0.3px; margin-top: 3px;
+    }
+
+    .usage-sep { font-size: 13px; color: var(--muted); font-weight: 600; flex-shrink: 0; }
+
+    .fx-note {
+      font-size: 11.5px; color: var(--muted); line-height: 1.5;
+      margin-bottom: 14px; font-style: italic;
+    }
+
+    /* ── DEAL SECTION ── */
+    .offer-deal {
+      border-top: 1px solid var(--green-border);
+      padding-top: 14px; margin-bottom: 14px;
+    }
+
+    .offer-deal-line { font-size: 14px; color: var(--sub); line-height: 1.6; margin-bottom: 4px; }
+    .offer-deal-ask { font-size: 14px; font-weight: 700; color: var(--green); line-height: 1.5; }
+
+    .offer-scarcity {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 12.5px; font-weight: 700;
+      border-radius: 8px; padding: 8px 14px;
+    }
 
     /* ── CLOSER ── */
-    .closer-line {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--muted);
-      font-style: italic;
-      margin-bottom: 40px;
-    }
+    .closer { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+    .closer-sub { font-size: 14px; color: var(--muted); }
 
     /* ── FOOTER ── */
     .footer {
-      padding-top: 20px;
+      margin-top: 40px; padding-top: 20px;
       border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
     }
-
-    .footer-brand { font-size: 13.5px; font-weight: 800; color: var(--text); }
-    .footer-sub   { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+    .footer-brand { font-size: 13.5px; font-weight: 800; color: var(--text); letter-spacing: -0.2px; }
+    .footer-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
     .footer-contact { font-size: 12.5px; color: var(--sub); text-align: right; line-height: 1.6; }
 
     @media print {
-      .sticky-wrap { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .irony-block { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .cta-founding { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { background: white; }
+      .inner { padding: 24px 28px 32px; }
     }
 
     @media (max-width: 540px) {
       .inner { padding: 32px 22px 40px; }
       h1 { font-size: 30px; }
-      .cta-row { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-block:nth-child(2) { border-right: none; }
+      .usage-row { flex-direction: column; align-items: stretch; }
+      .compare-hdr div, .compare-row div { padding: 9px 10px; font-size: 12px; }
       .footer { flex-direction: column; }
       .footer-contact { text-align: left; }
     }
@@ -253,19 +276,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #fff;
+      background: var(--warm);
     }
     .header-brand {
       font-size: 13px;
       font-weight: 800;
-      color: var(--vp);
+      color: var(--green);
       letter-spacing: 0.2px;
     }
     .header-avatar {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 2px solid var(--gold);
+      border: 2px solid var(--green);
       object-fit: cover;
       display: block;
     }
@@ -298,116 +321,188 @@
       font-weight: 700;
       color: var(--text);
     }
-
-    /* ── INCLUDES BLOCK ── */
-    .includes-block {
-      background: var(--gold-light);
-      border: 1.5px solid rgba(198,151,63,0.25);
-      border-radius: 12px;
-      padding: 20px 22px;
-      margin-bottom: 32px;
+    /* ── CONVERSION PATH ── */
+    .conversion-path {
+      background: var(--green-light);
+      border: 1.5px solid var(--green-border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin-top: 14px;
+      margin-bottom: 4px;
     }
-    .includes-label {
-      font-size: 10.5px;
+    .conversion-path .cp-label {
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
+      color: var(--green);
+      margin-bottom: 6px;
     }
-    .includes-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .include-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-    .include-icon {
-      font-size: 16px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .include-text {
+    .conversion-path .cp-body {
       font-size: 13.5px;
       color: var(--sub);
-      line-height: 1.5;
+      line-height: 1.6;
     }
-    .include-text strong {
+    .conversion-path .cp-body strong {
       color: var(--text);
-      display: block;
-      margin-bottom: 1px;
     }
-    /* ── URGENCY STRIP ── */
-    .urgency-strip {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--vp);
-      border-radius: 10px;
-      padding: 10px 16px;
-      margin-bottom: 14px;
-    }
-    .urgency-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-      animation: pulse 1.6s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
-    }
-    .urgency-text {
-      font-size: 12.5px;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.4;
-    }
-    .urgency-text strong { color: #fff; }
   </style>
 </head>
 <body>
 
-  <div class="top-bar"></div>
+
   <!-- PAGE HEADER -->
   <div class="page-header">
     <div class="header-brand">Scale Sales</div>
     <img class="header-avatar" src="data:image/jpeg;base64,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" alt="Baz">
   </div>
+  <div class="top-bar"></div>
 
-
-  <!-- STICKY NOTE -->
-  <div class="sticky-wrap">
-    <div class="sticky">
-      <div class="sticky-pin"></div>
-      <div class="sticky-header">☎ Missed Call</div>
-      <div class="sticky-row"><span class="lbl">From:</span><span>Baz @ Scale Sales</span></div>
-      <div class="sticky-row"><span class="lbl">Re:</span><span>Your missed calls problem</span></div>
-      <div class="sticky-row"><span class="lbl">Time:</span><span>During your next inspection, probably</span></div>
-      <div class="sticky-note">* Irony fully intended. We'll explain below.</div>
-    </div>
-  </div>
-
-  <!-- MAIN CONTENT -->
   <div class="inner">
 
-    <h1>You didn't pick up.<br>That's exactly the point.</h1>
+    <div class="label">Scale Sales</div>
+    <div class="trust-badge">Zero-Risk Start</div>
+
+    <h1>Voicemail had<br>a good run.</h1>
 
     <p class="subhead">
-      That call you just missed from us? Same thing is happening to your buyers every week. Can you believe it, forty percent of buyer calls hit at the most inconvenient of times (*nodding in agreement, aren't you?) - after 6pm, during inspections, at dinner, on weekends. The moments when you're actually selling or thinking about selling.
+      Buyers don't leave them anymore. They move to the next listing. Shazza gets em while they're hot and emotionally charged... qualifies every call ... around the clock and drops the brief in your inbox before you call them back.
     </p>
 
-    <!-- IRONY BLOCK -->
-    <div class="irony-block">
-      <div class="irony-icon">📞</div>
-      <div class="irony-text">
-        AI Sales Associate answers every call you can't. <strong>24/7, fully qualified, brief in your inbox</strong> before you call them back. No voicemail. No missed buyer. No harder close on Monday when their conviction has already halved. Don't forget about the covert vendor missed calls, those sneaky vendors are testing you.
+    <!-- STAT ROW -->
+    <div class="stat-row">
+      <div class="stat-block">
+        <div class="stat-n red">40%</div>
+        <div class="stat-label">Buyer calls after 6pm</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-n">$25k</div>
+        <div class="stat-label">Avg Mosman commission</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-n green">1</div>
+        <div class="stat-label">Call recovered = 4 years covered</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-n green">24/7</div>
+        <div class="stat-label">Always on. Never voicemail.</div>
       </div>
     </div>
-    <div class="closer-line">Just call me back. I'll definitely answer.</div>
+
+    <!-- SCENARIO -->
+    <div class="scenario-box">
+      <div class="scenario-time">9pm Saturday</div>
+      <div class="scenario-body">
+        Buyer calls after your open home. Gets voicemail. They're not gone yet; but by Monday they've seen two more properties, talked to their broker, consulted their psychic, cold plunged, and the conviction you had them at Saturday is half what it was.
+      </div>
+      <div class="scenario-punch">
+        That's not a lost buyer. That's a harder close. And harder closes stretch your days on market.
+        <span>DOM is the number you walk into every listing presentation with. One stretched close moves it.</span>
+      </div>
+    </div>
+
+    <div class="section-title">What Shazza actually does</div>
+
+    <ul class="do-list">
+      <li>
+        <span class="do-icon">📞</span>
+        <span><span class="do-strong">Shazza picks up every call you miss.</span> At dinner, mid-inspection, on another call. After hours. Saturday night. She's undefeated in the "available when you're not" category.</span>
+      </li>
+      <li>
+        <span class="do-icon">🏠</span>
+        <span><span class="do-strong">Qualifies the buyer.</span> Budget, timeline, what they're looking for... matched against your live listings. She's a matchmaker.</span>
+      </li>
+      <li>
+        <span class="do-icon">📋</span>
+        <span><span class="do-strong">Sends you a structured brief.</span> Caller's name, number, intent, and best callback time. Before you even pick up the phone.</span>
+      </li>
+      <li>
+        <span class="do-icon">📅</span>
+        <span><span class="do-strong">Books the viewing.</span> If availability is set, it locks in the inspection on the spot. No back-and-forth. She just gets it done.</span>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- COMPARISON -->
+    <div class="section-title">The real comparison</div>
+
+    <div class="compare-wrap">
+      <div class="compare-hdr">
+        <div></div>
+        <div>Part-time receptionist</div>
+        <div class="sr-col">Shazza</div>
+      </div>
+      <div class="compare-row">
+        <div>Monthly cost</div>
+        <div class="bad">$2,500 to $3,500</div>
+        <div class="good sr-val">Pay for what you use</div>
+      </div>
+      <div class="compare-row">
+        <div>Hours of cover</div>
+        <div class="bad">9am to 5pm only</div>
+        <div class="good sr-val">24 hours, 7 days</div>
+      </div>
+      <div class="compare-row">
+        <div>Sick days, leave</div>
+        <div class="bad">Yes</div>
+        <div class="good sr-val">She hasn't chucked a sickie yet.</div>
+      </div>
+      <div class="compare-row">
+        <div>Books viewings</div>
+        <div class="bad">Maybe</div>
+        <div class="good sr-val">Every time</div>
+      </div>
+      <div class="compare-row">
+        <div>Structured call brief</div>
+        <div class="bad">No</div>
+        <div class="good sr-val">Auto to your phone</div>
+      </div>
+      <div class="compare-row">
+        <div>Cancel anytime</div>
+        <div class="bad">Notice period</div>
+        <div class="good sr-val">No lock-in</div>
+      </div>
+    </div>
+
+    <!-- OFFER BOX (cost base) -->
+    <div class="offer-box">
+      <div class="offer-label">Zero-Risk Start</div>
+      <div class="offer-headline">Free setup. Pay only for what you use.</div>
+      <div class="offer-body">
+        You don't know us from a bar of soap. Fair. So here's how we earn it: meet Shazza. <strong>Setup is free, and you only pay the actual service costs</strong> based on what she handles. No monthly fee to start.
+      </div>
+      <div class="usage-row">
+        <div class="usage-eg">
+          <div class="usage-label">Shazza's best guess if you miss ...</div>
+          <div class="usage-vol">~60 calls</div>
+          <div class="usage-min">~210 min</div>
+          <div class="usage-cost">~$55 AUD</div>
+        </div>
+        <div class="usage-eg">
+          <div class="usage-label">And if you're really making Shazza work</div>
+          <div class="usage-vol">~150 calls</div>
+          <div class="usage-min">~500+ min</div>
+          <div class="usage-cost">~$130 AUD</div>
+        </div>
+      </div>
+      <div class="fx-note">* Service tools are US-based. No local AU equivalent. FX moves do impact these estimates.</div>
+      <div class="offer-deal">
+        <div class="offer-deal-line">You tell me honestly what Shazza got right and what she didn't. That's the deal.</div>
+        <div class="offer-deal-ask">One thing in return. One honest testimonial after 30 days of use.</div>
+      </div>
+      <!-- CONVERSION PATH -->
+      <div class="conversion-path">
+        <div class="cp-label">After 30 days</div>
+        <div class="cp-body">Lock in at <strong>$399/month for 6 months</strong>, 20% below standard pricing, setup still waived. That's <strong>$1,499 less than coming in cold</strong> later. Or walk. No contracts, no pressure.</div>
+      </div>
+      <div class="offer-scarcity">Trial spots are limited. First in, first served.</div>
+    </div>
+
+    <!-- CLOSER -->
+    <div class="closer">Let Shazza prove it first. Commit when you're ready.</div>
+    <div class="closer-sub">No contracts. No monthly fee. One recovered call covers four years of service costs. Then we can all go to the olympics.</div>
 
     <!-- FOOTER -->
     <div class="footer">
@@ -435,5 +530,6 @@
 
   </div><!-- /inner -->
 
-</body>
-</html>
+
+
+</body></html>

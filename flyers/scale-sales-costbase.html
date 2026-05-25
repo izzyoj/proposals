@@ -1,0 +1,313 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width�vice-width, initial-scale=1.0">
+  <title>Scale Sales - Zero-Risk Start</title>
+  
+<style>
+@charset "utf-8";
+
+*, ::before, ::after { box-sizing: border-box; margin: 0px; padding: 0px; }
+
+:root { --green: #1a5c35; --green-mid: #2d8a50; --green-light: #eef7f1; --green-border: #b3d9c0; --warm: #faf8f4; --warm-card: #fff; --text: #1a1a1a; --sub: #4a4a52; --muted: #86868b; --border: #e3dfd6; --red: #c0392b; --good-green: #1a8a38; }
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; background: var(--warm); color: var(--text); max-width: 700px; margin: 0px auto; }
+
+.top-bar { background: var(--green); height: 5px; width: 100%; }
+
+.inner { padding: 44px 36px 56px; }
+
+.label { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+.label::before { content: ""; display: inline-block; width: 20px; height: 2px; background: var(--green); flex-shrink: 0; }
+
+.trust-badge { display: inline-block; background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 18px; }
+
+h1 { font-size: 52px; font-weight: 800; line-height: 1.05; letter-spacing: -1px; color: var(--text); margin-bottom: 16px; }
+
+.subhead { font-size: 17px; color: var(--sub); line-height: 1.55; max-width: 520px; font-weight: 400; margin-bottom: 36px; }
+
+.scenario-box { border-left: 3px solid var(--green); background: var(--green-light); border-radius: 0px 10px 10px 0px; padding: 18px 20px; margin-bottom: 36px; }
+
+.scenario-time { font-size: 10.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+
+.scenario-body { font-size: 13.5px; color: var(--sub); line-height: 1.7; margin-bottom: 12px; }
+
+.scenario-punch { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.6; border-top: 1px solid var(--green-border); padding-top: 12px; }
+
+.scenario-punch span { display: block; font-weight: 400; color: var(--sub); margin-top: 4px; }
+
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-top: 2.5px solid var(--green); border-radius: 12px; overflow: hidden; margin-bottom: 44px; }
+
+.stat-block { padding: 22px 16px; border-right: 1px solid var(--border); text-align: center; background: var(--warm-card); }
+
+.stat-block:last-child { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; }
+
+.stat-n { font-size: 32px; font-weight: 800; line-height: 1; color: var(--text); letter-spacing: -0.5px; }
+
+.stat-n.green { color: var(--green); }
+
+.stat-n.red { color: var(--red); }
+
+.stat-label { font-size: 10.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 6px; line-height: 1.4; }
+
+hr { border-right-width: medium; border-bottom-width: medium; border-left-width: medium; border-right-style: none; border-bottom-style: none; border-left-style: none; border-right-color: currentcolor; border-bottom-color: currentcolor; border-left-color: currentcolor; border-image: initial; border-top: 1px solid var(--border); margin: 36px 0px; }
+
+.section-title { font-size: 10.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+
+.do-list { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 36px; }
+
+.do-list li { display: flex; align-items: flex-start; gap: 13px; font-size: 15.5px; line-height: 1.5; color: var(--text); }
+
+.do-icon { flex-shrink: 0; width: 26px; height: 26px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; margin-top: 1px; }
+
+.do-strong { font-weight: 700; }
+
+.compare-wrap { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 36px; }
+
+.compare-hdr { display: grid; grid-template-columns: 1fr 1fr 1fr; background: var(--green-light); border-bottom: 1px solid var(--green-border); }
+
+.compare-hdr div { padding: 10px 16px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-right: 1px solid var(--border); }
+
+.compare-hdr div:last-child { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; }
+
+.compare-hdr div.sr-col { color: var(--green); font-weight: 800; }
+
+.compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+
+.compare-row:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+
+.compare-row div { padding: 11px 16px; font-size: 13.5px; border-right: 1px solid var(--border); color: var(--sub); line-height: 1.4; }
+
+.compare-row div:last-child { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; }
+
+.compare-row div:first-child { font-weight: 600; color: var(--text); }
+
+.compare-row div.sr-val { background: rgb(247, 251, 248); }
+
+.bad { color: var(--red) !important; font-weight: 600 !important; }
+
+.good { color: var(--good-green) !important; font-weight: 700 !important; }
+
+.offer-box { background: var(--warm-card); border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-top: 3px solid var(--green); border-radius: 16px; padding: 30px; margin-bottom: 28px; }
+
+.offer-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+
+.offer-headline { font-size: 26px; font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px; }
+
+.offer-body { font-size: 14px; color: var(--sub); line-height: 1.65; margin-bottom: 18px; }
+
+.offer-body strong { color: var(--text); }
+
+.usage-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+
+.usage-eg { background: var(--warm); border: 1.5px solid var(--green-border); border-radius: 10px; padding: 12px 18px; display: flex; flex-direction: column; gap: 2px; flex: 1 1 0%; }
+
+.usage-vol { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
+
+.usage-min { font-size: 12px; color: var(--sub); }
+
+.usage-cost { font-size: 22px; font-weight: 800; color: var(--green); letter-spacing: -0.3px; margin-top: 3px; }
+
+.usage-sep { font-size: 13px; color: var(--muted); font-weight: 600; flex-shrink: 0; }
+
+.fx-note { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; font-style: italic; }
+
+.offer-deal { border-top: 1px solid var(--green-border); padding-top: 14px; margin-bottom: 14px; }
+
+.offer-deal-line { font-size: 14px; color: var(--sub); line-height: 1.6; margin-bottom: 4px; }
+
+.offer-deal-ask { font-size: 14px; font-weight: 700; color: var(--green); line-height: 1.5; }
+
+.offer-scarcity { display: inline-block; background: var(--green); color: rgb(255, 255, 255); font-size: 12.5px; font-weight: 700; border-radius: 8px; padding: 8px 14px; }
+
+.closer { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+
+.closer-sub { font-size: 14px; color: var(--muted); }
+
+.footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+
+.footer-brand { font-size: 13.5px; font-weight: 800; color: var(--text); letter-spacing: -0.2px; }
+
+.footer-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+.footer-contact { font-size: 12.5px; color: var(--sub); text-align: right; line-height: 1.6; }
+
+@media print {
+  body { background: white; }
+  .inner { padding: 24px 28px 32px; }
+}
+
+@media (max-width: 540px) {
+  .inner { padding: 32px 22px 40px; }
+  h1 { font-size: 30px; }
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+  .stat-block:nth-child(2) { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; }
+  .usage-row { flex-direction: column; align-items: stretch; }
+  .compare-hdr div, .compare-row div { padding: 9px 10px; font-size: 12px; }
+  .footer { flex-direction: column; }
+  .footer-contact { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <div class="inner">
+
+    <div class="label">Scale Sales</div>
+    <div class="trust-badge">Zero-Risk Start</div>
+
+    <h1>Every missed call<br>is a missed commission.</h1>
+
+    <p class="subhead">
+      Buyers don't leave voicemails. They move to the next listing. Scale Sales answers every call you can't. 24/7, fully qualified, brief in your inbox before you call them back.
+    </p>
+
+    <!-- SCENARIO -->
+    <div class="scenario-box">
+      <div class="scenario-time">9pm Saturday</div>
+      <div class="scenario-body">
+        Buyer calls after your open home. Gets voicemail. They're not gone yet; but by Monday they've seen two more properties, talked to their broker, and the conviction you had them at Saturday is half what it was.
+      </div>
+      <div class="scenario-punch">
+        That's not a lost buyer. That's a harder close. And harder closes stretch your days on market.
+        <span>DOM is the number you walk into every listing presentation with. One stretched close moves it.</span>
+      </div>
+    </div>
+
+    <!-- STAT ROW -->
+    <div class="stat-row">
+      <div class="stat-block">
+        <div class="stat-n red">40%</div>
+        <div class="stat-label">Buyer calls after 6pm</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-n">$25k</div>
+        <div class="stat-label">Avg Mosman commission</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-n green">1</div>
+        <div class="stat-label">Call recovered = 4 years covered</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-n green">24/7</div>
+        <div class="stat-label">Always on. Never voicemail.</div>
+      </div>
+    </div>
+
+    <div class="section-title">What it actually does</div>
+
+    <ul class="do-list">
+      <li>
+        <span class="do-icon">📞</span>
+        <span><span class="do-strong">Picks up every call you miss.</span> At dinner, in an inspection, on another call. After hours. Weekends.</span>
+      </li>
+      <li>
+        <span class="do-icon">🏠</span>
+        <span><span class="do-strong">Qualifies the buyer.</span> Budget, timeline, what they're looking for... matched against your live listings.</span>
+      </li>
+      <li>
+        <span class="do-icon">📋</span>
+        <span><span class="do-strong">Sends you a structured brief.</span> Caller's name, number, intent, and best callback time. Before you even pick up the phone.</span>
+      </li>
+      <li>
+        <span class="do-icon">📅</span>
+        <span><span class="do-strong">Books the viewing.</span> If availability is set, it locks in the inspection on the spot. No back-and-forth.</span>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- COMPARISON -->
+    <div class="section-title">The real comparison</div>
+
+    <div class="compare-wrap">
+      <div class="compare-hdr">
+        <div></div>
+        <div>Part-time receptionist</div>
+        <div class="sr-col">Scale Sales</div>
+      </div>
+      <div class="compare-row">
+        <div>Monthly cost</div>
+        <div class="bad">$2,500 to $3,500</div>
+        <div class="good sr-val">Pay for what you use</div>
+      </div>
+      <div class="compare-row">
+        <div>Hours of cover</div>
+        <div class="bad">9am to 5pm only</div>
+        <div class="good sr-val">24 hours, 7 days</div>
+      </div>
+      <div class="compare-row">
+        <div>Sick days, leave</div>
+        <div class="bad">Yes</div>
+        <div class="good sr-val">Never</div>
+      </div>
+      <div class="compare-row">
+        <div>Books viewings</div>
+        <div class="bad">Maybe</div>
+        <div class="good sr-val">Every time</div>
+      </div>
+      <div class="compare-row">
+        <div>Structured call brief</div>
+        <div class="bad">No</div>
+        <div class="good sr-val">Auto to your phone</div>
+      </div>
+      <div class="compare-row">
+        <div>Cancel anytime</div>
+        <div class="bad">Notice period</div>
+        <div class="good sr-val">No lock-in</div>
+      </div>
+    </div>
+
+    <!-- OFFER BOX (cost base) -->
+    <div class="offer-box">
+      <div class="offer-label">Zero-Risk Start</div>
+      <div class="offer-headline">Free setup. Pay only for what you use.</div>
+      <div class="offer-body">
+        You don't know us from a bar of soap. So here's how we earn it: <strong>setup is free, and you only pay the actual service costs</strong> based on what your AI assistant handles. No monthly fee to start.
+      </div>
+      <div class="usage-row">
+        <div class="usage-eg">
+          <div class="usage-vol">~60 calls</div>
+          <div class="usage-min">~210 min</div>
+          <div class="usage-cost">~$55 AUD</div>
+        </div>
+        <div class="usage-sep">or</div>
+        <div class="usage-eg">
+          <div class="usage-vol">~150 calls</div>
+          <div class="usage-min">~500+ min</div>
+          <div class="usage-cost">~$130 AUD</div>
+        </div>
+      </div>
+      <div class="fx-note">* Service tools are US-based. No local AU equivalent. FX moves do impact these estimates.</div>
+      <div class="offer-deal">
+        <div class="offer-deal-line">You tell me honestly what's working, what's not. That's the deal.</div>
+        <div class="offer-deal-ask">One thing in return. One honest testimonial after 30 days of use.</div>
+      </div>
+      <div class="offer-scarcity">Limited spots for the trial. First in, first served.</div>
+    </div>
+
+    <!-- CLOSER -->
+    <div class="closer">See it work first. Commit when you're ready.</div>
+    <div class="closer-sub">No contracts. No monthly fee. One recovered call covers months of service costs.</div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div>
+        <div class="footer-brand">Scale Sales</div>
+        <div class="footer-sub">Sydney</div>
+      </div>
+      <div class="footer-contact">
+        Questions? Reply to this message<br>
+        Baz 0466 804 199 &nbsp;·&nbsp; Harry 0432 982 680
+      </div>
+    </div>
+
+  </div><!-- /inner -->
+
+
+
+</body></html>
