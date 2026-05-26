@@ -367,6 +367,123 @@
       .footer { flex-direction: column; }
       .footer-contact { text-align: left; }
     }
+
+    /* ── PRICING CARD ── */
+    .price-card {
+      background: #fff;
+      border: 1.5px solid rgba(198,151,63,0.3);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 14px 0;
+    }
+
+    .price-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(198,151,63,0.12);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .price-amount {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .price-period {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .price-was {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .price-was s { color: var(--muted); }
+
+    .price-setup {
+      font-size: 12.5px;
+      color: var(--green);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .price-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .price-features {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px 16px;
+    }
+
+    .price-features li {
+      font-size: 13px;
+      color: var(--sub);
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.4;
+    }
+
+    .price-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 800;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .price-bonus {
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reframe-box {
+      background: var(--vp);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 14px 0 10px;
+    }
+
+    .reframe-box p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .reframe-box p + p { margin-top: 8px; }
+
+    .reframe-box strong { color: #fff; }
   </style>
 </head>
 <body>
@@ -423,9 +540,38 @@
       <div>
         <div class="section-head">The deal.</div>
         <div class="section-body">
-          <p>I'm looking for 5 founding agents who'll give her a genuine shot. Free setup. You only pay for what Shazza handles; we're talking $55 to $130 a month depending on your call volume.</p>
-          <p>If she doesn't prove herself in 30 days, coffee's on me. I'm taking you to Roastville. Best coffee in town.</p>
+
+          <div class="price-card">
+            <div class="price-badge">Founding Price</div>
+            <div class="price-row">
+              <span class="price-amount">$399</span>
+              <span class="price-period">per month · AUD</span>
+            </div>
+            <div class="price-was"><s>Usually $499/mo</s></div>
+            <div class="price-setup">✦ $500 setup fee — waived for Founding Clients</div>
+            <div class="price-divider"></div>
+            <ul class="price-features">
+              <li>1 AI Voice Agent</li>
+              <li>Standard voice quality</li>
+              <li>500 call minutes/month</li>
+              <li>Business hours support</li>
+              <li>Basic call analytics</li>
+              <li>Calendar integration</li>
+              <li>2 revision rounds</li>
+              <li>Perfect for solo agents</li>
+            </ul>
+            <div class="price-bonus">★ 20% off retainer for first 6 months</div>
+          </div>
+
+          <div class="reframe-box">
+            <p><strong>What are you actually paying for?</strong></p>
+            <p>The calls cost about $130 a month at high volume. The other $270 is the system that's already built and running, revision rounds when you want to adjust something, and the guarantee. If Shazza doesn't catch a deal in month one, you walk. I carry that risk, not you.</p>
+            <p>One missed vendor call at a $15k commission funds three years of this service. <strong>You're not paying for minutes. You're paying for the catch.</strong></p>
+          </div>
+
+          <p>If she doesn't prove herself in 30 days, coffee's on me. I'm taking you to Roastville.</p>
           <p><strong>One thing in return: one honest testimonial.</strong> You tell me what's working, what's not. That's the deal.</p>
+
         </div>
       </div>
     </div>
