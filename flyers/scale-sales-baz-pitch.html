@@ -451,45 +451,76 @@
 
     @page {
       size: A4 portrait;
-      margin: 8mm 8mm 8mm 8mm;
+      margin: 5mm 6mm 5mm 6mm;
     }
 
     @media print {
-      .masthead { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 20px 22px 18px; }
-      .masthead h1 { font-size: 30px; margin-bottom: 6px; }
-      .masthead-sub { font-size: 13px; }
-      .masthead-kicker { margin-bottom: 10px; }
-      .shazza-strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 14px 16px; margin-bottom: 14px; }
-      .shazza-avatar { width: 34px; height: 34px; font-size: 14px; }
-      .shazza-text { font-size: 11.5px; }
-      .calendar-section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      body { background: white; font-size: 13px; }
-      .inner { padding: 14px 22px 24px; }
-      .section-card { padding: 14px 16px; margin-bottom: 8px; gap: 12px; border-radius: 10px; }
-      .section-head { font-size: 13px; margin-bottom: 6px; }
-      .section-body { font-size: 12px; line-height: 1.55; }
-      .section-body p + p { margin-top: 6px; }
-      .price-card { padding: 14px 16px; border-radius: 9px; }
-      .price-amount { font-size: 28px; }
-      .price-period { font-size: 11px; }
-      .price-was { font-size: 10.5px; margin-bottom: 4px; }
-      .price-setup { font-size: 10.5px; margin-bottom: 10px; }
-      .price-divider { margin: 10px 0; }
-      .price-features { gap: 5px 12px; }
-      .price-features li { font-size: 11px; }
-      .price-bonus { font-size: 11px; margin-top: 8px; }
-      .price-badge { font-size: 9px; margin-bottom: 8px; }
-      .profile-section { padding: 16px; margin-bottom: 10px; gap: 14px; border-radius: 10px; }
-      .profile-photo { width: 52px; height: 52px; }
-      .profile-name { font-size: 16px; }
-      .profile-title { font-size: 11px; }
-      .profile-bio { font-size: 11.5px; line-height: 1.5; }
-      .profile-link { font-size: 11px; padding: 5px 10px; }
-      .footer { padding: 12px 22px; }
-      .footer-brand { font-size: 11px; }
-      .footer-contact { font-size: 11px; white-space: nowrap; }
-      .section-num { font-size: 9.5px; }
-      .section-card, .profile-section, .price-card { page-break-inside: avoid; }
+      /* colour preservation */
+      .masthead, .shazza-strip, .calendar-section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      body { background: white; font-size: 12px; }
+
+      /* masthead — tighter */
+      .masthead { padding: 16px 20px 14px; }
+      .masthead h1 { font-size: 26px; margin-bottom: 4px; }
+      .masthead-sub { font-size: 12px; }
+      .masthead-kicker { margin-bottom: 8px; font-size: 8.5px; }
+      .masthead-avatar { width: 42px; height: 42px; top: 14px; right: 20px; }
+
+      /* body container */
+      .inner { padding: 10px 18px 12px; }
+
+      /* numbered sections */
+      .section-card { padding: 10px 14px; margin-bottom: 6px; gap: 10px; border-radius: 9px; }
+      .section-num { font-size: 9px; }
+      .section-head { font-size: 12px; margin-bottom: 4px; }
+      .section-body { font-size: 11px; line-height: 1.5; }
+      .section-body p + p { margin-top: 5px; }
+
+      /* shazza strip */
+      .shazza-strip { padding: 10px 14px; margin-bottom: 8px; gap: 10px; }
+      .shazza-avatar { width: 30px; height: 30px; font-size: 13px; }
+      .shazza-name { font-size: 9px; margin-bottom: 4px; }
+      .shazza-text { font-size: 10.5px; line-height: 1.5; }
+
+      /* pricing card */
+      .price-card { padding: 10px 14px; border-radius: 8px; margin: 8px 0; }
+      .price-badge { font-size: 8.5px; margin-bottom: 6px; padding: 2px 8px; }
+      .price-amount { font-size: 24px; }
+      .price-period { font-size: 10px; }
+      .price-was { font-size: 9.5px; margin-bottom: 3px; }
+      .price-setup { font-size: 9.5px; margin-bottom: 8px; }
+      .price-divider { margin: 8px 0; }
+      .price-features { gap: 4px 10px; }
+      .price-features li { font-size: 10px; gap: 5px; }
+      .price-features li::before { font-size: 10px; }
+      .price-bonus { font-size: 10px; margin-top: 6px; }
+
+      /* profile section */
+      .profile-section { padding: 12px 14px; margin-bottom: 6px; gap: 12px; border-radius: 9px; }
+      .profile-photo { width: 44px; height: 44px; }
+      .profile-name { font-size: 14px; }
+      .profile-title { font-size: 10px; margin-bottom: 4px; }
+      .profile-bio { font-size: 10.5px; line-height: 1.45; margin-bottom: 8px; }
+      .profile-links { gap: 6px; }
+      .profile-link { font-size: 10px; padding: 4px 8px; }
+
+      /* calendar section — was totally uncompressed, biggest fix */
+      .calendar-section { padding: 14px 18px 12px; margin-bottom: 8px; border-radius: 10px; }
+      .calendar-headline { font-size: 16px; margin-bottom: 4px; }
+      .calendar-sub { font-size: 10.5px; margin-bottom: 12px; line-height: 1.45; }
+      .calendar-btn { font-size: 11px; padding: 8px 18px; border-radius: 7px; }
+      .calendar-note { font-size: 9.5px; margin-top: 8px; }
+
+      /* footer */
+      .footer { padding: 8px 18px 4px; }
+      .footer-brand { font-size: 10.5px; }
+      .footer-sub { font-size: 9.5px; }
+      .footer-contact { font-size: 10px; white-space: nowrap; line-height: 1.5; }
+      .footer-avatar { width: 26px; height: 26px; }
+
+      /* prevent mid-card page breaks */
+      .section-card, .profile-section, .price-card, .calendar-section { page-break-inside: avoid; }
     }
 
     @media (max-width: 540px) {
