@@ -402,10 +402,45 @@
     .footer-contact a { display: block; font-size: 11px; color: rgba(255,255,255,0.4); text-decoration: none; }
 
     @media print {
-      body { background: white; padding: 0; }
-      .print-bar, .intel-bar { display: none; }
+      @page { size: A4; margin: 6mm 8mm; }
+      body { background: white; padding: 0; margin: 0; }
+      .print-bar, .intel-bar, .bday-bar { display: none !important; }
       .page { box-shadow: none; border-radius: 0; max-width: 100%; width: 100%; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .header { padding: 18px 24px 16px; gap: 16px; }
+      .header-name { font-size: 22px; }
+      .header-title { font-size: 11px; margin-top: 3px; }
+      .header-agency { font-size: 11px; }
+      .avatar { width: 66px; height: 66px; }
+      .contact-row { gap: 8px; margin-top: 8px; }
+      .contact-chip { font-size: 10px; padding: 3px 9px; }
+      .profile-links { margin-top: 6px; gap: 4px; }
+      .profile-link { font-size: 10px; padding: 2px 8px; }
+      .stat { padding: 10px 8px; }
+      .stat-n { font-size: 16px; }
+      .stat-l { font-size: 9px; }
+      .two-col { gap: 20px; padding: 16px 24px; }
+      .section-label { font-size: 9px; margin-bottom: 12px; }
+      .attr-item { gap: 10px; margin-bottom: 12px; }
+      .attr-num { font-size: 18px; width: 24px; }
+      .attr-title { font-size: 12px; }
+      .attr-body { font-size: 11px; }
+      .win-item { gap: 8px; margin-bottom: 12px; }
+      .win-icon { width: 26px; height: 26px; font-size: 12px; }
+      .win-title { font-size: 11px; }
+      .win-body { font-size: 10.5px; }
+      .ceo-quote-section { padding: 14px 24px; }
+      .ceo-quote { font-size: 11px; line-height: 1.5; }
+      .footer { padding: 14px 24px; }
+      .qr-wrap img { width: 52px; height: 52px; }
+      .footer-scan { font-size: 8px; }
+      .footer-name { font-size: 11px; }
+      .footer-title { font-size: 8px; }
+      .footer-url { font-size: 9px; }
+      .footer-logo { font-size: 12px; }
+      .footer-tagline { font-size: 8px; }
+      .footer-contact a { font-size: 9px; }
+      .two-col, .ceo-quote-section { page-break-inside: avoid; }
     }
     @media (max-width: 600px) {
       .header { padding: 20px 18px; gap: 14px; flex-wrap: wrap; }
