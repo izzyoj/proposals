@@ -349,11 +349,47 @@
     .footer-sub   { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
     .footer-contact { font-size: 12.5px; color: var(--sub); text-align: right; line-height: 1.6; }
 
+    @page {
+      size: A4 portrait;
+      margin: 8mm 8mm 8mm 8mm;
+    }
+
     @media print {
-      .masthead { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .shazza-strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .masthead { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 20px 22px 18px; }
+      .masthead h1 { font-size: 30px; margin-bottom: 6px; }
+      .masthead-sub { font-size: 13px; }
+      .masthead-kicker { margin-bottom: 10px; }
+      .shazza-strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 14px 16px; margin-bottom: 14px; }
+      .shazza-avatar { width: 34px; height: 34px; font-size: 14px; }
+      .shazza-text { font-size: 11.5px; }
       .calendar-section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      body { background: white; }
+      body { background: white; font-size: 13px; }
+      .inner { padding: 14px 22px 24px; }
+      .section-card { padding: 14px 16px; margin-bottom: 8px; gap: 12px; border-radius: 10px; }
+      .section-head { font-size: 13px; margin-bottom: 6px; }
+      .section-body { font-size: 12px; line-height: 1.55; }
+      .section-body p + p { margin-top: 6px; }
+      .price-card { padding: 14px 16px; border-radius: 9px; }
+      .price-amount { font-size: 28px; }
+      .price-period { font-size: 11px; }
+      .price-was { font-size: 10.5px; margin-bottom: 4px; }
+      .price-setup { font-size: 10.5px; margin-bottom: 10px; }
+      .price-divider { margin: 10px 0; }
+      .price-features { gap: 5px 12px; }
+      .price-features li { font-size: 11px; }
+      .price-bonus { font-size: 11px; margin-top: 8px; }
+      .price-badge { font-size: 9px; margin-bottom: 8px; }
+      .profile-section { padding: 16px; margin-bottom: 10px; gap: 14px; border-radius: 10px; }
+      .profile-photo { width: 52px; height: 52px; }
+      .profile-name { font-size: 16px; }
+      .profile-title { font-size: 11px; }
+      .profile-bio { font-size: 11.5px; line-height: 1.5; }
+      .profile-link { font-size: 11px; padding: 5px 10px; }
+      .footer { padding: 12px 22px; }
+      .footer-brand { font-size: 11px; }
+      .footer-contact { font-size: 11px; white-space: nowrap; }
+      .section-num { font-size: 9.5px; }
+      .section-card, .profile-section, .price-card { page-break-inside: avoid; }
     }
 
     @media (max-width: 540px) {
@@ -368,122 +404,6 @@
       .footer-contact { text-align: left; }
     }
 
-    /* ── PRICING CARD ── */
-    .price-card {
-      background: #fff;
-      border: 1.5px solid rgba(198,151,63,0.3);
-      border-radius: 12px;
-      padding: 20px 22px;
-      margin: 14px 0;
-    }
-
-    .price-badge {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(198,151,63,0.12);
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 12px;
-    }
-
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 4px;
-    }
-
-    .price-amount {
-      font-size: 38px;
-      font-weight: 900;
-      color: var(--text);
-      letter-spacing: -1px;
-      line-height: 1;
-    }
-
-    .price-period {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .price-was {
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .price-was s { color: var(--muted); }
-
-    .price-setup {
-      font-size: 12.5px;
-      color: var(--green);
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-
-    .price-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 14px 0;
-    }
-
-    .price-features {
-      list-style: none;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px 16px;
-    }
-
-    .price-features li {
-      font-size: 13px;
-      color: var(--sub);
-      display: flex;
-      align-items: flex-start;
-      gap: 7px;
-      line-height: 1.4;
-    }
-
-    .price-features li::before {
-      content: '✓';
-      color: var(--green);
-      font-weight: 800;
-      font-size: 12px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .price-bonus {
-      margin-top: 10px;
-      font-size: 12.5px;
-      color: var(--gold);
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .reframe-box {
-      background: var(--vp);
-      border-radius: 10px;
-      padding: 16px 18px;
-      margin: 14px 0 10px;
-    }
-
-    .reframe-box p {
-      font-size: 13.5px;
-      color: rgba(255,255,255,0.72);
-      line-height: 1.65;
-      margin: 0;
-    }
-
-    .reframe-box p + p { margin-top: 8px; }
-
-    .reframe-box strong { color: #fff; }
   </style>
 </head>
 <body>
@@ -561,12 +481,6 @@
               <li>Perfect for solo agents</li>
             </ul>
             <div class="price-bonus">★ 20% off retainer for first 6 months</div>
-          </div>
-
-          <div class="reframe-box">
-            <p><strong>What are you actually paying for?</strong></p>
-            <p>The calls cost about $130 a month at high volume. The other $270 is the system that's already built and running, revision rounds when you want to adjust something, and the guarantee. If Shazza doesn't catch a deal in month one, you walk. I carry that risk, not you.</p>
-            <p>One missed vendor call at a $15k commission funds three years of this service. <strong>You're not paying for minutes. You're paying for the catch.</strong></p>
           </div>
 
           <p>If she doesn't prove herself in 30 days, coffee's on me. I'm taking you to Roastville.</p>
