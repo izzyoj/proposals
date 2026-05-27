@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max Wagschall — Agent Profile</title>
+  <style>
+    :root {
+      --murphy:       #32373c;
+      --murphy-dark:  #282d31;
+      --murphy-deep:  #1e2226;
+      --murphy-gold:  #f0b849;
+      --murphy-light: #fef9ec;
+      --white:        #ffffff;
+      --off:          #f7f6f3;
+      --text:         #1a1a1f;
+      --sub:          #4a4a52;
+      --muted:        #86868b;
+      --border:       #e8e8ed;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Segoe UI', sans-serif;
+      background: #e8e8ed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px 16px 40px;
+      gap: 16px;
+    }
+
+    /* PRINT BAR */
+    .print-bar {
+      width: 100%;
+      max-width: 794px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .print-btn {
+      background: var(--murphy);
+      color: var(--white);
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+      transition: opacity 0.15s;
+    }
+    .print-btn:hover { opacity: 0.85; }
+    .note-btn {
+      background: var(--white);
+      color: var(--sub);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* PAGE */
+    .page {
+      width: 100%;
+      max-width: 794px;
+      background: var(--white);
+      box-shadow: 0 8px 40px rgba(50,55,60,0.22);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--murphy);
+      padding: 36px 40px 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,184,73,0.12) 0%, transparent 70%);
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 30%;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      border: 2px solid rgba(240,184,73,0.5);
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      background: var(--murphy-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .avatar-initials {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--murphy-gold);
+      letter-spacing: -1px;
+    }
+
+    .header-info { flex: 1; position: relative; z-index: 1; min-width: 0; }
+    .header-name {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .header-title {
+      font-size: 13px;
+      color: var(--murphy-gold);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+    .header-agency {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 3px;
+    }
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .contact-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+    }
+    .contact-chip a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      word-break: break-all;
+      overflow-wrap: break-word;
+    }
+
+    /* PROFILE LINKS */
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .profile-link {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.15s, color 0.15s;
+    }
+    .profile-link:hover {
+      background: rgba(240,184,73,0.15);
+      color: var(--murphy-gold);
+    }
+
+    /* WATERMARK BADGE */
+    .vp-badge {
+      position: relative; z-index: 1;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: rgba(240,184,73,0.2);
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+    }
+
+    /* STATS STRIP */
+    .stats {
+      background: var(--murphy-dark);
+      display: flex;
+    }
+    .stat {
+      flex: 1;
+      padding: 16px 12px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--murphy-gold);
+      line-height: 1;
+    }
+    .stat-l {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* BODY */
+    .body-section { padding: 32px 40px; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--murphy);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--murphy), transparent);
+      opacity: 0.2;
+    }
+
+    /* TWO-COL GRID */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ATTRIBUTES */
+    .attr-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .attr-item:last-child { margin-bottom: 0; }
+    .attr-num {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--murphy-gold);
+      opacity: 0.5;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 32px;
+    }
+    .attr-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .attr-body {
+      font-size: 12px;
+      color: var(--sub);
+      line-height: 1.55;
+    }
+
+    /* WINS */
+    .win-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .win-item:last-child { margin-bottom: 0; }
+    .win-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--murphy-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .win-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+    .win-body {
+      font-size: 11.5px;
+      color: var(--sub);
+      line-height: 1.4;
+    }
+
+    /* QUOTES */
+    .quotes-section {
+      background: var(--off);
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .quote-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .quote-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .quote-mark {
+      font-size: 36px;
+      color: var(--murphy-gold);
+      line-height: 0.8;
+      font-family: Georgia, serif;
+      margin-bottom: 6px;
+      display: block;
+      opacity: 0.6;
+    }
+    .quote-text {
+      font-size: 11.5px;
+      color: var(--text);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .quote-source {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--murphy-deep);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .qr-wrap {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .qr-wrap img { display: block; width: 72px; height: 72px; }
+    .footer-scan {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+    .footer-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .footer-title {
+      font-size: 9px;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+    .footer-url {
+      font-size: 11px;
+      color: var(--murphy-gold);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .footer-suburbs {
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+      margin-top: 6px;
+      letter-spacing: 0.02em;
+    }
+    .footer-right { text-align: right; }
+    .footer-logo {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.08em;
+    }
+    .footer-logo span { color: var(--murphy-gold); }
+    .footer-tagline {
+      font-size: 10px;
+      color: rgba(255,255,255,0.28);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+    .footer-contact { margin-top: 10px; }
+    .footer-contact a {
+      display: block;
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+    }
+    .footer-contact a:hover { color: var(--murphy-gold); }
+
+    /* PRINT: A4 fit */
+    @media print {
+      @page { size: A4; margin: 6mm 8mm; }
+      body { background: white; padding: 0; margin: 0; }
+      .print-bar { display: none !important; }
+      .page { box-shadow: none; border-radius: 0; max-width: 100%; width: 100%; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      .header { padding: 18px 24px 16px; gap: 16px; }
+      .header-name { font-size: 22px; }
+      .header-title { font-size: 11px; margin-top: 3px; }
+      .header-agency { font-size: 11px; }
+      .avatar { width: 66px; height: 66px; }
+      .contact-row { gap: 8px; margin-top: 8px; }
+      .contact-chip { font-size: 10px; padding: 3px 9px; }
+      .profile-links { margin-top: 6px; gap: 4px; }
+      .profile-link { font-size: 10px; padding: 2px 8px; }
+
+      .stat { padding: 10px 8px; }
+      .stat-n { font-size: 16px; }
+      .stat-l { font-size: 9px; }
+
+      .body-section { padding: 14px 24px; }
+      .two-col { gap: 20px; padding: 16px 24px; }
+      .section-label { font-size: 9px; margin-bottom: 12px; }
+      .attr-item { gap: 10px; margin-bottom: 12px; }
+      .attr-num { font-size: 18px; width: 24px; }
+      .attr-title { font-size: 12px; }
+      .attr-body { font-size: 11px; }
+      .win-item { gap: 8px; margin-bottom: 12px; }
+      .win-icon { width: 26px; height: 26px; font-size: 12px; }
+      .win-title { font-size: 11px; }
+      .win-body { font-size: 10.5px; }
+
+      .quotes-section { padding: 14px 24px; }
+      .quote-mark { font-size: 24px; margin-bottom: 4px; }
+      .quote-card { padding: 10px 12px; }
+      .quote-text { font-size: 10.5px; }
+      .quote-source { font-size: 9px; margin-top: 6px; }
+
+      .footer { padding: 14px 24px; }
+      .qr-wrap img { width: 52px; height: 52px; }
+      .footer-scan { font-size: 8px; }
+      .footer-name { font-size: 11px; }
+      .footer-title { font-size: 8px; }
+      .footer-url { font-size: 9px; }
+      .footer-logo { font-size: 12px; }
+      .footer-tagline { font-size: 8px; }
+      .footer-contact a { font-size: 9px; }
+
+      .two-col, .body-section, .quote-card, .attr-item, .win-item { page-break-inside: avoid; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      body { padding: 12px 10px 32px; gap: 10px; }
+
+      .header { padding: 20px 18px; gap: 14px; flex-wrap: wrap; }
+      .header-info { min-width: 0; }
+      .header-name { font-size: 22px; }
+      .header-title { font-size: 11px; }
+      .avatar { width: 72px; height: 72px; }
+      .vp-badge { display: none; }
+
+      .contact-row { gap: 8px; margin-top: 10px; }
+      .contact-chip { font-size: 11px; padding: 4px 10px; max-width: 100%; }
+      .contact-chip a { word-break: break-all; overflow-wrap: break-word; }
+
+      .stats { flex-wrap: wrap; }
+      .stat { flex: 1 1 33%; padding: 10px 8px; min-width: 0; }
+      .stat-n { font-size: 14px; overflow-wrap: break-word; }
+      .stat-l { font-size: 8px; letter-spacing: 0.03em; }
+
+      .two-col { grid-template-columns: 1fr; gap: 20px; padding: 20px 18px; }
+      .body-section { padding: 20px 18px; }
+      .quotes-section { padding: 20px 18px; }
+      .quote-grid { grid-template-columns: 1fr; }
+
+      .footer { padding: 18px; flex-direction: column; align-items: flex-start; gap: 14px; }
+      .footer-right { display: none; }
+      .footer-left { gap: 12px; }
+      .qr-wrap img { width: 56px; height: 56px; }
+      .footer-url { word-break: break-all; font-size: 10px; }
+      .footer-suburbs { word-break: break-word; font-size: 10px; }
+      .footer-name { font-size: 12px; }
+      .footer-title { font-size: 9px; }
+    }
+
+    @media (max-width: 380px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      .stat-n { font-size: 16px; }
+      .stat-l { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar">
+  <button class="note-btn" onclick="window.open('https://www.murphyresidential.com.au/707511/max-wagschall','_blank')">View Live Profile</button>
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="avatar"><span class="avatar-initials">MW</span></div>
+    <div class="header-info">
+      <div class="header-name">Max Wagschall</div>
+      <div class="header-title">Real Estate Agent</div>
+      <div class="header-agency">Murphy Residential · Mosman NSW</div>
+      <div class="contact-row">
+        <div class="contact-chip">📞 <a href="tel:0401859103">0401 859 103</a></div>
+        <div class="contact-chip">📍 40 Cabramatta Road, Mosman NSW 2088</div>
+      </div>
+      <div class="profile-links">
+        <a href="https://www.murphyresidential.com.au/707511/max-wagschall" target="_blank" class="profile-link">Murphy Residential</a>
+        <a href="https://www.linkedin.com/in/max-wagschall-68a35825/" target="_blank" class="profile-link">LinkedIn</a>
+        <a href="https://www.realestate.com.au/agent/max-wagschall-3527944" target="_blank" class="profile-link">REA</a>
+        <a href="https://www.domain.com.au/real-estate-agent/max-wagschall-1984586/" target="_blank" class="profile-link">Domain</a>
+        <a href="https://www.ratemyagent.com.au/real-estate-agent/max-wagschall-bg860/sales/overview" target="_blank" class="profile-link">RateMyAgent</a>
+        <a href="https://www.instagram.com/maxwagschall_propertypartner/" target="_blank" class="profile-link">Instagram</a>
+      </div>
+    </div>
+    <div class="vp-badge">Murphy</div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-n">69</div>
+      <div class="stat-l">Sold (12 mo)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">$2.7M</div>
+      <div class="stat-l">Avg Sale Price</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">29</div>
+      <div class="stat-l">Days on Market</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">5.0★</div>
+      <div class="stat-l">38 Reviews</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">$177M</div>
+      <div class="stat-l">Total Sales Value</div>
+    </div>
+  </div>
+
+  <!-- TWO COLUMN: ATTRIBUTES + WINS -->
+  <div class="two-col">
+
+    <!-- ATTRIBUTES -->
+    <div>
+      <div class="section-label">What defines him</div>
+
+      <div class="attr-item">
+        <div class="attr-num">01</div>
+        <div>
+          <div class="attr-title">Calm and precise when it counts</div>
+          <div class="attr-body">Clients specifically call out his ability to deal calmly with unexpected scenarios and a fast-moving process. He doesn't just hold things together under pressure, he steers them. That's a rare quality in a high-volume market.</div>
+        </div>
+      </div>
+
+      <div class="attr-item">
+        <div class="attr-num">02</div>
+        <div>
+          <div class="attr-title">Everyone stays in the loop, always</div>
+          <div class="attr-body">Communication isn't an afterthought for Max, it's the strategy. Keeping sellers, buyers, and all parties informed throughout a campaign is what he's consistently credited for delivering results.</div>
+        </div>
+      </div>
+
+      <div class="attr-item">
+        <div class="attr-num">03</div>
+        <div>
+          <div class="attr-title">Listens, then politely challenges</div>
+          <div class="attr-body">He takes client feedback seriously and builds trust by listening first. But he's not a yes-man. When he sees a better path, he'll steer you toward it, politely and with full reasoning behind him.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WINS -->
+    <div>
+      <div class="section-label">Top achievements</div>
+
+      <div class="win-item">
+        <div class="win-icon">🏠</div>
+        <div>
+          <div class="win-title">$7.8M Highest Sale — 41 Bardwell Road</div>
+          <div class="win-body">Part of the Murphy Residential team behind the agency's highest recorded sale. A 5-bedroom Mosman property sold by private treaty, November 2025.</div>
+        </div>
+      </div>
+
+      <div class="win-item">
+        <div class="win-icon">📈</div>
+        <div>
+          <div class="win-title">69 Properties Sold — $177M Total Value</div>
+          <div class="win-body">69 settled sales in the last 12 months across houses and apartments, with a $2.7M average. Strong volume across North Sydney and the Lower North Shore.</div>
+        </div>
+      </div>
+
+      <div class="win-item">
+        <div class="win-icon">🎓</div>
+        <div>
+          <div class="win-title">REINSW Member — 5.0 Stars, 38 Reviews</div>
+          <div class="win-body">Member of the Real Estate Institute of NSW and holds a perfect 5.0 rating across 38 verified client reviews. Consistently rated on communication and results.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTES -->
+  <div class="quotes-section">
+    <div class="section-label">What clients say</div>
+    <div class="quote-grid">
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <div class="quote-text">Max was a fabulous partner throughout our sale process. He provided industry insights and advice, while always seeking our perspective. His focus on keeping everyone in the loop was key to our successful outcome.</div>
+        <div class="quote-source">⭐⭐⭐⭐⭐ · Seller, North Sydney NSW</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <div class="quote-text">Brilliantly knowledgeable and very efficient with communication during the campaign. His willingness to listen, combined with a great ability to politely steer us in the right direction, made for a great experience.</div>
+        <div class="quote-source">⭐⭐⭐⭐⭐ · Seller, North Sydney NSW</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <div class="quote-text">We were impressed by his capacity to deal calmly with an unexpectedly quick sale process and to address multiple scenarios along the way. A great result in a competitive market.</div>
+        <div class="quote-source">⭐⭐⭐⭐⭐ · RateMyAgent · 5.0 Stars</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="qr-wrap">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=144x144&amp;data=https://www.murphyresidential.com.au/707511/max-wagschall&amp;color=32373c&amp;bgcolor=ffffff" alt="QR code" />
+      </div>
+      <div class="footer-text">
+        <div class="footer-scan">Scan to view profile</div>
+        <div class="footer-name">Max Wagschall</div>
+        <div class="footer-title">Real Estate Agent</div>
+        <div class="footer-url">murphyresidential.com.au</div>
+        <div class="footer-suburbs">Mosman · Cremorne · Neutral Bay · North Sydney</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-logo">MURPHY<span>.</span></div>
+      <div class="footer-tagline">Mosman · Independent</div>
+      <div class="footer-contact">
+        <a href="tel:0401859103">0401 859 103</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
