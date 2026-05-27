@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taylor Cranwell — Agent Profile</title>
+  <style>
+    :root {
+      --murphy:       #32373c;
+      --murphy-dark:  #282d31;
+      --murphy-deep:  #1e2226;
+      --murphy-gold:  #f0b849;
+      --murphy-light: #fef9ec;
+      --white:        #ffffff;
+      --off:          #f7f6f3;
+      --text:         #1a1a1f;
+      --sub:          #4a4a52;
+      --muted:        #86868b;
+      --border:       #e8e8ed;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Segoe UI', sans-serif;
+      background: #e8e8ed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px 16px 40px;
+      gap: 16px;
+    }
+    .print-bar { width: 100%; max-width: 794px; display: flex; justify-content: flex-end; gap: 10px; }
+    .print-btn { background: var(--murphy); color: var(--white); border: none; border-radius: 20px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; letter-spacing: 0.02em; transition: opacity 0.15s; }
+    .print-btn:hover { opacity: 0.85; }
+    .note-btn { background: var(--white); color: var(--sub); border: 1px solid var(--border); border-radius: 20px; padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+    .page { width: 100%; max-width: 794px; background: var(--white); box-shadow: 0 8px 40px rgba(50,55,60,0.22); border-radius: 4px; overflow: hidden; }
+    .header { background: var(--murphy); padding: 36px 40px 32px; display: flex; align-items: center; gap: 28px; position: relative; overflow: hidden; }
+    .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(240,184,73,0.12) 0%, transparent 70%); }
+    .header::after { content: ''; position: absolute; bottom: -40px; left: 30%; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%); }
+    .avatar { width: 88px; height: 88px; border-radius: 50%; border: 2px solid rgba(240,184,73,0.5); overflow: hidden; flex-shrink: 0; position: relative; z-index: 1; background: var(--murphy-dark); display: flex; align-items: center; justify-content: center; }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .avatar-initials { font-size: 28px; font-weight: 800; color: var(--murphy-gold); letter-spacing: -1px; }
+    .header-info { flex: 1; position: relative; z-index: 1; min-width: 0; }
+    .header-name { font-size: 32px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; line-height: 1.1; }
+    .header-title { font-size: 13px; color: var(--murphy-gold); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 5px; }
+    .header-agency { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+    .contact-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .contact-chip { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.16); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: rgba(255,255,255,0.85); }
+    .contact-chip a { color: rgba(255,255,255,0.85); text-decoration: none; }
+    .profile-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .profile-link { display: inline-flex; align-items: center; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 3px 10px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.65); text-decoration: none; letter-spacing: 0.02em; transition: background 0.15s, color 0.15s; }
+    .profile-link:hover { background: rgba(240,184,73,0.15); color: var(--murphy-gold); }
+    .vp-badge { position: relative; z-index: 1; font-size: 11px; font-weight: 800; letter-spacing: 0.18em; color: rgba(240,184,73,0.2); text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); align-self: stretch; display: flex; align-items: center; }
+    .stats { background: var(--murphy-dark); display: flex; }
+    .stat { flex: 1; padding: 16px 12px; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-size: 22px; font-weight: 800; color: var(--murphy-gold); line-height: 1; }
+    .stat-l { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--murphy); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--murphy), transparent); opacity: 0.2; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 28px 40px; border-bottom: 1px solid var(--border); }
+    .attr-item { display: flex; gap: 14px; margin-bottom: 20px; }
+    .attr-item:last-child { margin-bottom: 0; }
+    .attr-num { font-size: 24px; font-weight: 900; color: var(--murphy-gold); opacity: 0.5; line-height: 1; flex-shrink: 0; width: 32px; }
+    .attr-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 4px; }
+    .attr-body { font-size: 12px; color: var(--sub); line-height: 1.55; }
+    .win-item { display: flex; gap: 12px; margin-bottom: 18px; align-items: flex-start; }
+    .win-item:last-child { margin-bottom: 0; }
+    .win-icon { width: 32px; height: 32px; background: var(--murphy-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .win-title { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 3px; }
+    .win-body { font-size: 11.5px; color: var(--sub); line-height: 1.4; }
+    .quotes-section { background: var(--off); padding: 28px 40px; border-bottom: 1px solid var(--border); }
+    .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .quote-card { background: var(--white); border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .quote-mark { font-size: 36px; color: var(--murphy-gold); line-height: 0.8; font-family: Georgia, serif; margin-bottom: 6px; display: block; opacity: 0.6; }
+    .quote-text { font-size: 11.5px; color: var(--text); line-height: 1.6; font-style: italic; }
+    .quote-source { font-size: 10px; color: var(--muted); margin-top: 8px; font-weight: 600; letter-spacing: 0.04em; }
+    .footer { background: var(--murphy-deep); padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-left { display: flex; align-items: center; gap: 16px; }
+    .qr-wrap { background: var(--white); border-radius: 8px; padding: 6px; flex-shrink: 0; }
+    .qr-wrap img { display: block; width: 72px; height: 72px; }
+    .footer-scan { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+    .footer-name { font-size: 13px; font-weight: 700; color: var(--white); }
+    .footer-title { font-size: 9px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+    .footer-url { font-size: 11px; color: var(--murphy-gold); font-weight: 600; margin-top: 4px; }
+    .footer-suburbs { font-size: 11px; color: rgba(255,255,255,0.28); margin-top: 6px; letter-spacing: 0.02em; }
+    .footer-right { text-align: right; }
+    .footer-logo { font-size: 17px; font-weight: 900; color: var(--white); letter-spacing: 0.08em; }
+    .footer-logo span { color: var(--murphy-gold); }
+    .footer-tagline { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 4px; letter-spacing: 0.05em; }
+    .footer-contact { margin-top: 10px; }
+    .footer-contact a { display: block; font-size: 11px; color: rgba(255,255,255,0.45); text-decoration: none; }
+    .footer-contact a:hover { color: var(--murphy-gold); }
+    @media print {
+      @page { size: A4; margin: 6mm 8mm; }
+      body { background: white; padding: 0; margin: 0; }
+      .print-bar { display: none !important; }
+      .page { box-shadow: none; border-radius: 0; max-width: 100%; width: 100%; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .header { padding: 18px 24px 16px; gap: 16px; }
+      .header-name { font-size: 22px; }
+      .header-title { font-size: 11px; margin-top: 3px; }
+      .header-agency { font-size: 11px; }
+      .avatar { width: 66px; height: 66px; }
+      .contact-row { gap: 8px; margin-top: 8px; }
+      .contact-chip { font-size: 10px; padding: 3px 9px; }
+      .profile-links { margin-top: 6px; gap: 4px; }
+      .profile-link { font-size: 10px; padding: 2px 8px; }
+      .stat { padding: 10px 8px; }
+      .stat-n { font-size: 16px; }
+      .stat-l { font-size: 9px; }
+      .two-col { gap: 20px; padding: 16px 24px; }
+      .section-label { font-size: 9px; margin-bottom: 12px; }
+      .attr-item { gap: 10px; margin-bottom: 12px; }
+      .attr-num { font-size: 18px; width: 24px; }
+      .attr-title { font-size: 12px; }
+      .attr-body { font-size: 11px; }
+      .win-item { gap: 8px; margin-bottom: 12px; }
+      .win-icon { width: 26px; height: 26px; font-size: 12px; }
+      .win-title { font-size: 11px; }
+      .win-body { font-size: 10.5px; }
+      .quotes-section { padding: 14px 24px; }
+      .quote-mark { font-size: 24px; margin-bottom: 4px; }
+      .quote-card { padding: 10px 12px; }
+      .quote-text { font-size: 10.5px; }
+      .quote-source { font-size: 9px; margin-top: 6px; }
+      .footer { padding: 14px 24px; }
+      .qr-wrap img { width: 52px; height: 52px; }
+      .footer-scan { font-size: 8px; }
+      .footer-name { font-size: 11px; }
+      .footer-title { font-size: 8px; }
+      .footer-url { font-size: 9px; }
+      .footer-logo { font-size: 12px; }
+      .footer-tagline { font-size: 8px; }
+      .footer-contact a { font-size: 9px; }
+      .two-col, .quote-card, .attr-item, .win-item { page-break-inside: avoid; }
+    }
+    @media (max-width: 600px) {
+      body { padding: 12px 10px 32px; gap: 10px; }
+      .header { padding: 20px 18px; gap: 14px; flex-wrap: wrap; }
+      .header-name { font-size: 22px; }
+      .header-title { font-size: 11px; }
+      .avatar { width: 72px; height: 72px; }
+      .vp-badge { display: none; }
+      .stats { flex-wrap: wrap; }
+      .stat { flex: 1 1 33%; padding: 10px 8px; min-width: 0; }
+      .stat-n { font-size: 14px; overflow-wrap: break-word; }
+      .stat-l { font-size: 8px; }
+      .two-col { grid-template-columns: 1fr; gap: 20px; padding: 20px 18px; }
+      .quotes-section { padding: 20px 18px; }
+      .quote-grid { grid-template-columns: 1fr; }
+      .footer { padding: 18px; flex-direction: column; align-items: flex-start; gap: 14px; }
+      .footer-right { display: none; }
+    }
+    @media (max-width: 380px) {
+      .header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="print-bar">
+  <button class="note-btn" onclick="window.open('https://www.murphyresidential.com.au/707512/taylor-cranwell','_blank')">View Live Profile</button>
+  <button class="print-btn" onclick="window.print()">&#128424; Print / Save PDF</button>
+</div>
+
+<div class="page">
+
+  <div class="header">
+    <div class="avatar"><img src="data:image/jpeg;base64,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" alt="Taylor Cranwell" /></div>
+    <div class="header-info">
+      <div class="header-name">Taylor Cranwell</div>
+      <div class="header-title">Real Estate Agent</div>
+      <div class="header-agency">Murphy Residential &middot; Mosman NSW</div>
+      <div class="contact-row">
+        <div class="contact-chip">&#128222; <a href="tel:0414364222">0414 364 222</a></div>
+        <div class="contact-chip">&#128205; 40 Cabramatta Road, Mosman NSW 2088</div>
+      </div>
+      <div class="profile-links">
+        <a href="https://www.murphyresidential.com.au/707512/taylor-cranwell" target="_blank" class="profile-link">Murphy Residential</a>
+        <a href="https://www.linkedin.com/in/taylor-cranwell-a1912a348/" target="_blank" class="profile-link">LinkedIn</a>
+        <a href="https://www.realestate.com.au/agent/taylor-cranwell-3508124" target="_blank" class="profile-link">REA</a>
+        <a href="https://www.domain.com.au/real-estate-agent/taylor-cranwell-1996197/" target="_blank" class="profile-link">Domain</a>
+        <a href="https://www.ratemyagent.com.au/real-estate-agent/taylor-cranwell-mr600/sales/overview" target="_blank" class="profile-link">RateMyAgent</a>
+      </div>
+    </div>
+    <div class="vp-badge">Murphy</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">25</div><div class="stat-l">Sold (12 mo)</div></div>
+    <div class="stat"><div class="stat-n">.6M</div><div class="stat-l">Avg Sale Price</div></div>
+    <div class="stat"><div class="stat-n">25</div><div class="stat-l">Days on Market</div></div>
+    <div class="stat"><div class="stat-n">5.0&#9733;</div><div class="stat-l">Verified Reviews</div></div>
+    <div class="stat"><div class="stat-n">M</div><div class="stat-l">Total Sales Value</div></div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-label">What defines her</div>
+      <div class="attr-item">
+        <div class="attr-num">01</div>
+        <div>
+          <div class="attr-title">Puts people at ease from the first moment</div>
+          <div class="attr-body">Clients consistently describe Taylor as warm, kind, and instantly reassuring. She has a natural ability to calm anxiety around the buying and selling process, especially for first-timers navigating it for the first time.</div>
+        </div>
+      </div>
+      <div class="attr-item">
+        <div class="attr-num">02</div>
+        <div>
+          <div class="attr-title">Always available, across every channel</div>
+          <div class="attr-body">Phone, text, email. In person, between viewings, after hours. Clients don't wait for Taylor. She stays across every moving part of a campaign and makes sure no question goes unanswered.</div>
+        </div>
+      </div>
+      <div class="attr-item">
+        <div class="attr-num">03</div>
+        <div>
+          <div class="attr-title">Deep market knowledge, sharp professional instincts</div>
+          <div class="attr-body">Excellent knowledge of the local market and the properties she sells. Her pleasant professional manner and informative approach means clients feel confident, not just comfortable, throughout the process.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Top achievements</div>
+      <div class="win-item">
+        <div class="win-icon">&#127968;</div>
+        <div>
+          <div class="win-title">.6M Highest Sale &mdash; 8 Cobar Street</div>
+          <div class="win-body">Highest recorded sale in her career. A 3-bedroom Willoughby home sold by auction in September 2025, on the market for just 23 days. Part of the Murphy Residential team effort that keeps the North Shore benchmark high.</div>
+        </div>
+      </div>
+      <div class="win-item">
+        <div class="win-icon">&#128200;</div>
+        <div>
+          <div class="win-title">25 Properties, M in 12 Months</div>
+          <div class="win-body">25 settled sales including 5 houses and 20 apartments across Mosman, Willoughby and surrounds. Every sale completed at an average of 25 days on market.</div>
+        </div>
+      </div>
+      <div class="win-item">
+        <div class="win-icon">&#11088;</div>
+        <div>
+          <div class="win-title">Perfect Ratings &mdash; First-Home Buyer Specialist</div>
+          <div class="win-body">Five stars across every verified review. Repeatedly chosen by first-home buyers who specifically credit Taylor's patience and availability as the reason they felt confident making one of the biggest decisions of their lives.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quotes-section">
+    <div class="section-label">What clients say</div>
+    <div class="quote-grid">
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <div class="quote-text">Taylor is kind and patient and we really appreciated all her work. Buying your first property can be daunting, so it was great to have an agent who is always available and genuinely cares about the outcome.</div>
+        <div class="quote-source">&#11088;&#11088;&#11088;&#11088;&#11088; &middot; Buyer, Mosman NSW</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <div class="quote-text">She answered every question we had, not only when we met but over the phone, via texts and emails. She was always available and helped talk us through the process. No higher praise. I would recommend her to others.</div>
+        <div class="quote-source">&#11088;&#11088;&#11088;&#11088;&#11088; &middot; Buyer, Mosman NSW</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <div class="quote-text">Extremely informative with a pleasant professional manner, and didn't mind multiple calls to reassure on points I was unsure about. The kind of agent you want beside you for a significant purchase.</div>
+        <div class="quote-source">&#11088;&#11088;&#11088;&#11088;&#11088; &middot; RateMyAgent</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <div class="qr-wrap">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=144x144&data=https://www.murphyresidential.com.au/707512/taylor-cranwell&color=32373c&bgcolor=ffffff" alt="QR code" />
+      </div>
+      <div class="footer-text">
+        <div class="footer-scan">Scan to view profile</div>
+        <div class="footer-name">Taylor Cranwell</div>
+        <div class="footer-title">Real Estate Agent</div>
+        <div class="footer-url">murphyresidential.com.au</div>
+        <div class="footer-suburbs">Mosman &middot; Willoughby &middot; Cremorne &middot; Lower North Shore</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-logo">MURPHY<span>.</span></div>
+      <div class="footer-tagline">Mosman &middot; Independent</div>
+      <div class="footer-contact">
+        <a href="tel:0414364222">0414 364 222</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
