@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>57 Dalton Rd, Mosman — Lifestyle Intelligence Brief</title>
+  <style>
+    :root {
+      --vp: #1a1a1a;
+      --vp-dark: #0d0d0d;
+      --vp-deep: #111111;
+      --vp-light: #a0a0a5;
+      --vp-pale: #f5f5f7;
+      --white: #ffffff;
+      --off: #f7f6f3;
+      --text: #1a1a1f;
+      --sub: #4a4a52;
+      --muted: #86868b;
+      --border: #e8e8ed;
+      --accent: #d4a843;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Segoe UI', sans-serif;
+      background: #d8d8da;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px 16px 40px;
+      gap: 16px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 794px;
+      background: var(--white);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.28);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--vp);
+      padding: 18px 40px 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .header-main { flex: 1; position: relative; z-index: 1; }
+    .header-agent {
+      flex-shrink: 0;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding-top: 4px;
+    }
+    .agent-photo {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 8%;
+      border: 2px solid rgba(255,255,255,0.25);
+      display: block;
+      margin: 0 auto 6px;
+    }
+    .agent-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+    }
+    .agent-title-small {
+      font-size: 9px;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 30%;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    }
+    .header-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .header-address {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .header-suburb {
+      font-size: 14px;
+      color: var(--vp-light);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+    .header-descriptor {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+    .header-prepared {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .prepared-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .prepared-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+    }
+    .prepared-sep { color: rgba(255,255,255,0.2); font-size: 11px; }
+    .prepared-agency { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+    /* SCORE STRIP */
+    .score-strip {
+      background: var(--vp-dark);
+      display: flex;
+      align-items: stretch;
+    }
+    .score-main {
+      padding: 10px 18px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .score-num {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .score-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .score-sublabel {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 3px;
+    }
+    .score-stats { display: flex; flex: 1; }
+    .stat {
+      flex: 1;
+      padding: 8px 8px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--vp-light);
+      line-height: 1;
+    }
+    .stat-l {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--vp-light);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--vp-light), transparent);
+      opacity: 0.2;
+    }
+
+    /* BODY */
+    .body-section { padding: 17px 40px; }
+    .body-section.border-b { border-bottom: 1px solid var(--border); }
+
+    /* SCORECARD */
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .score-row:last-child { border-bottom: none; }
+    .score-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--vp-pale);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .score-info { flex: 1; }
+    .score-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .score-detail {
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+    .score-bar-wrap { width: 100px; flex-shrink: 0; }
+    .score-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      text-align: right;
+      margin-bottom: 5px;
+    }
+    .score-bar-bg {
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--accent);
+    }
+    .score-bar-fill.high { background: #34c759; }
+    .score-bar-fill.med { background: var(--accent); }
+    .score-bar-fill.low { background: #ff9500; }
+
+    /* PAGE CONTINUATION HEADER */
+    .page-header {
+      background: var(--vp);
+      padding: 22px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .page-header-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.05em;
+    }
+    .page-header-address {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 2px;
+    }
+    .page-num { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
+
+    /* TWO-COL */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* DETAIL CARDS */
+    .detail-card {
+      background: var(--vp-pale);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .detail-card:last-child { margin-bottom: 0; }
+    .detail-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .detail-card-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--white);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .detail-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .detail-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .detail-list li {
+      font-size: 12px;
+      color: var(--sub);
+      line-height: 1.45;
+      padding-left: 14px;
+      position: relative;
+    }
+    .detail-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--vp-light);
+      font-size: 10px;
+      top: 1px;
+    }
+
+    /* OFF-WHITE SECTION */
+    .off-section {
+      background: var(--off);
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* LOCAL GEMS */
+    .gems-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .gem-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .gem-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+    .gem-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .gem-desc { font-size: 11px; color: var(--sub); line-height: 1.45; }
+    .gem-dist { font-size: 10px; color: var(--muted); font-weight: 600; margin-top: 6px; letter-spacing: 0.03em; }
+
+    /* DEMOGRAPHIC STRIP */
+    .demo-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .demo-stat {
+      padding: 20px 16px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .demo-stat:last-child { border-right: none; }
+    .demo-n {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+    }
+    .demo-n.accent { color: var(--accent); }
+    .demo-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 5px;
+    }
+    .demo-sub { font-size: 11px; color: var(--sub); margin-top: 3px; }
+
+    /* ATTR ITEM */
+    .attr-item { display: flex; gap: 14px; margin-bottom: 20px; }
+    .attr-item:last-child { margin-bottom: 0; }
+    .attr-num {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--vp-light);
+      opacity: 0.35;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 32px;
+    }
+    .attr-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 4px; }
+    .attr-body { font-size: 12px; color: var(--sub); line-height: 1.55; }
+
+    /* WATCH-OUTS */
+    .watchout-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .watchout-row:last-child { border-bottom: none; }
+    .watchout-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff9500;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .watchout-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .watchout-body { font-size: 12px; color: var(--sub); line-height: 1.5; }
+
+    /* INSIGHT STRIP */
+    .insight-strip {
+      background: var(--vp);
+      padding: 12px 40px;
+    }
+    .insight-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+    }
+    .insight-quote {
+      font-size: 14px;
+      font-style: italic;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.55;
+    }
+    .insight-quote strong { color: var(--vp-light); font-style: normal; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--vp-deep);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .footer-left { display: flex; align-items: center; gap: 16px; }
+    .qr-wrap {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .qr-wrap img { display: block; width: 72px; height: 72px; }
+    .footer-scan {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+    .footer-name { font-size: 16px; font-weight: 800; color: var(--white); margin-bottom: 2px; }
+    .footer-url { font-size: 11px; color: var(--vp-light); font-weight: 600; }
+    .footer-suburbs { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 8px; letter-spacing: 0.03em; }
+    .footer-right { text-align: right; }
+    .footer-logo {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .footer-logo span { color: var(--vp-light); }
+    .footer-tagline { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 4px; letter-spacing: 0.05em; }
+    .footer-contact { margin-top: 10px; }
+    .footer-contact a { display: block; font-size: 11px; color: rgba(255,255,255,0.45); text-decoration: none; }
+    .footer-contact a:hover { color: var(--vp-light); }
+
+    /* HEALTHCARE GRID */
+    .health-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    .health-card {
+      padding: 16px;
+      background: var(--vp-pale);
+      border-radius: 10px;
+    }
+    .health-icon { font-size: 22px; margin-bottom: 8px; }
+    .health-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+    .health-body { font-size: 11.5px; color: var(--sub); line-height: 1.45; }
+
+    /* PRINT */
+    @media print {
+      body { background: white; padding: 0; gap: 0; display: block; }
+.page {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: 100%;
+        width: 100%;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
+      .footer { page-break-inside: avoid; break-inside: avoid; }
+      .insight-strip { page-break-inside: avoid; break-inside: avoid; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 24px 20px; }
+      .header-address { font-size: 24px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+      .body-section { padding: 24px 20px; }
+      .off-section { padding: 24px 20px; }
+      .gems-grid { grid-template-columns: 1fr 1fr; }
+      .demo-strip { grid-template-columns: repeat(2, 1fr); }
+      .health-grid { grid-template-columns: 1fr; }
+      .footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+      .footer-right { display: none; }
+      .score-main { padding: 16px 20px; }
+      .stat-n { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <!-- ═══════════ PAGE 1: Cover + Liveability Scorecard ═══════════ -->
+  <div class="page">
+
+    <div class="header">
+      <div class="header-main">
+        <div class="header-eyebrow">Lifestyle Intelligence Brief</div>
+        <div class="header-address">57 Dalton Rd</div>
+        <div class="header-suburb">Mosman, NSW 2088</div>
+        <div class="header-descriptor">
+          A data-led liveability profile for buyers considering this property. Covers transport, healthcare, recreation, schools, and planning context: the factors that shape daily life on this street.
+        </div>
+        <div class="header-prepared">
+          <span class="prepared-label">Prepared by</span>
+          <span class="prepared-name">Richie Tramontana</span>
+          <span class="prepared-sep">·</span>
+          <span class="prepared-agency">Senior Sales Consultant, Vernon Partners</span>
+        </div>
+      </div>
+      <div class="header-agent">
+        <img src="data:image/jpeg;base64,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" class="agent-photo" alt="Richie Tramontana" />
+        <div class="agent-label">Richie Tramontana</div>
+        <div class="agent-title-small">Vernon Partners</div>
+      </div>
+    </div>
+
+    <!-- SCORE STRIP -->
+    <div class="score-strip">
+      <div class="score-main">
+        <div class="score-num">84</div>
+        <div>
+          <div class="score-label">Overall Score</div>
+          <div class="score-sublabel">20-min Liveability</div>
+        </div>
+      </div>
+      <div class="score-stats">
+        <div class="stat">
+          <div class="stat-n">21 min</div>
+          <div class="stat-l">to CBD</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">4–6 min</div>
+          <div class="stat-l">Walk to shops</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">15</div>
+          <div class="stat-l">Playgrounds</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">99/100</div>
+          <div class="stat-l">Affluence</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCORECARD -->
+    <div class="body-section">
+      <div class="section-label">Liveability scorecard — Dalton Rd benchmark</div>
+
+      <div class="score-row">
+        <div class="score-icon">⛴</div>
+        <div class="score-info">
+          <div class="score-name">Ferry Access</div>
+          <div class="score-detail">Multiple Mosman wharves within reach. South Mosman Wharf upgrade currently underway, improving amenity and commuter utility.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">8 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill high" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">🚌</div>
+        <div class="score-info">
+          <div class="score-name">Bus Connections</div>
+          <div class="score-detail">Bridgepoint, Spit Rd, and Moruben Rd stops all within 4–6 min walk. Routes to CBD, North Sydney, and Chatswood corridors.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">8 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill high" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">🛍</div>
+        <div class="score-info">
+          <div class="score-name">Village Centre Walkability</div>
+          <div class="score-detail">Mosman Junction and Military Rd retail strip are accessible daily. A real walking suburb, not a car-dependent one.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">8 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill high" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">💊</div>
+        <div class="score-info">
+          <div class="score-name">Pharmacy Access</div>
+          <div class="score-detail">Mosman Prescription Centre on Military Rd offers extended trading hours. Well-served for everyday health needs.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">7 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill med" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">🩺</div>
+        <div class="score-info">
+          <div class="score-name">After-Hours Medical</div>
+          <div class="score-detail">After-hours GP availability confirmed via Healthengine. Mixed-billing practices with long opening hours support weekend and evening care.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">7 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill med" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">🛝</div>
+        <div class="score-info">
+          <div class="score-name">Playgrounds</div>
+          <div class="score-detail">15 public playgrounds across the suburb including a nature play upgrade at Rosherville Reserve. Exceptional family density.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">9 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill high" style="width:90%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">🏟</div>
+        <div class="score-info">
+          <div class="score-name">Sporting Fields</div>
+          <div class="score-detail">Allan Border Oval, Balmoral, Georges Heights, Middle Head, and Rawson Oval. Active, well-maintained community infrastructure.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">9 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill high" style="width:90%"></div></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-icon">🏛</div>
+        <div class="score-info">
+          <div class="score-name">Council Planning Risk</div>
+          <div class="score-detail">Mosman Council is reviewing DCP changes in response to NSW Low and Mid-Rise Housing provisions. Traffic and density flagged as community concerns. Monitor, not alarm.</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-val">6 / 10</div>
+          <div class="score-bar-bg"><div class="score-bar-fill low" style="width:60%"></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RICHIE INSIGHT -->
+    <div class="insight-strip">
+      <div class="insight-label">Richie on Dalton Rd</div>
+      <div class="insight-quote">
+        "Dalton Rd sits in a <strong>stable, owner-occupier pocket:</strong> 130 properties, established streetscape, strong retention. This is the kind of street where people buy once and stay. The liveability infrastructure around it is what makes that a rational decision, not just an emotional one."
+      </div>
+    </div>
+
+  </div>
+  <!-- ═══════════ END PAGE 1 ═══════════ -->
+
+
+  <!-- ═══════════ PAGE 2: Infrastructure + Local Scene ═══════════ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div>
+        <div class="page-header-title">Infrastructure + Local Scene</div>
+        <div class="page-header-address">57 Dalton Rd, Mosman</div>
+      </div>
+      <div class="page-num">PAGE 2 OF 3</div>
+    </div>
+
+    <!-- TWO-COL: Transport + Schools -->
+    <div class="two-col">
+
+      <div>
+        <div class="section-label">Getting Around</div>
+
+        <div class="detail-card">
+          <div class="detail-card-head">
+            <div class="detail-card-icon">⛴</div>
+            <div class="detail-card-title">Ferry</div>
+          </div>
+          <ul class="detail-list">
+            <li>Multiple Mosman wharves: South Mosman, Mosman Wharf, and Taronga Zoo Wharf</li>
+            <li>South Mosman Wharf upgrade currently underway, improving passenger amenity</li>
+            <li>Direct ferry to Circular Quay for CBD commuters</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-head">
+            <div class="detail-card-icon">🚌</div>
+            <div class="detail-card-title">Bus</div>
+          </div>
+          <ul class="detail-list">
+            <li>Bridgepoint Shopping Centre, Spit Rd at Awaba St, and Moruben Rd at Clifford St all within 4–6 min walk</li>
+            <li>Routes to North Sydney interchange, CBD, and Chatswood corridors</li>
+            <li>Public transport to CBD: 8.2 km / 21 minutes</li>
+            <li>By car: 7.8 km / 15 minutes (peak)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Schools + Family</div>
+
+        <div class="detail-card">
+          <div class="detail-card-head">
+            <div class="detail-card-icon">🏫</div>
+            <div class="detail-card-title">Public Primary Schools</div>
+          </div>
+          <ul class="detail-list">
+            <li><strong>Mosman Public School</strong> — Top 5% nationally (NAPLAN). 583 students, co-ed. Covers 71% of the catchment.</li>
+            <li><strong>Middle Harbour Public School</strong> — Top 5% nationally. 512 students, co-ed.</li>
+            <li><strong>Beauty Point Public School</strong> — Top 12% nationally. 293 students, co-ed.</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-head">
+            <div class="detail-card-icon">🛝</div>
+            <div class="detail-card-title">Play + Recreation</div>
+          </div>
+          <ul class="detail-list">
+            <li>15 public playgrounds including a nature play upgrade at Rosherville Reserve</li>
+            <li>5 maintained ovals: Allan Border, Balmoral, Georges Heights, Middle Head, Rawson</li>
+            <li>Balmoral Beach and Esplanade a short drive from Dalton Rd</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LOCAL GEMS -->
+    <div class="off-section">
+      <div class="section-label">What's on the doorstep</div>
+      <div class="gems-grid">
+
+        <div class="gem-card">
+          <span class="gem-icon">🏖</span>
+          <div class="gem-name">Balmoral Beach</div>
+          <div class="gem-desc">Protected harbour beach with flat water, a boardwalk, and a year-round cafe strip. One of Sydney's best family beaches.</div>
+          <div class="gem-dist">~5 min drive</div>
+        </div>
+
+        <div class="gem-card">
+          <span class="gem-icon">🦁</span>
+          <div class="gem-name">Taronga Zoo</div>
+          <div class="gem-desc">One of Australia's premier zoos with direct ferry access from Circular Quay. A genuine daily-life plus for families with young children.</div>
+          <div class="gem-dist">~4 min drive</div>
+        </div>
+
+        <div class="gem-card">
+          <span class="gem-icon">☕</span>
+          <div class="gem-name">Mosman Junction</div>
+          <div class="gem-desc">Village hub on Military Rd with cafes, restaurants, boutique retail, and everyday services clustered in a walkable strip.</div>
+          <div class="gem-dist">~4–6 min walk</div>
+        </div>
+
+        <div class="gem-card">
+          <span class="gem-icon">🛒</span>
+          <div class="gem-name">Bridgepoint Shopping Centre</div>
+          <div class="gem-desc">Mosman's primary supermarket anchor with Woolworths, specialty stores, and services. The daily errands destination.</div>
+          <div class="gem-dist">~5 min walk</div>
+        </div>
+
+        <div class="gem-card">
+          <span class="gem-icon">🥾</span>
+          <div class="gem-name">Middle Head Trails</div>
+          <div class="gem-desc">National park walking tracks with harbour views and heritage fortifications. Rare access to nature from an inner-suburb address.</div>
+          <div class="gem-dist">~10 min drive</div>
+        </div>
+
+        <div class="gem-card">
+          <span class="gem-icon">🏏</span>
+          <div class="gem-name">Allan Border Oval</div>
+          <div class="gem-desc">Named for the cricket legend. A well-maintained local oval with community sport, events, and open space at the heart of Mosman life.</div>
+          <div class="gem-dist">~5 min drive</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HEALTHCARE -->
+    <div class="body-section border-b">
+      <div class="section-label">Healthcare access</div>
+      <div class="health-grid">
+
+        <div class="health-card">
+          <div class="health-icon">💊</div>
+          <div class="health-title">Mosman Prescription Centre</div>
+          <div class="health-body">Extended trading hours on Military Rd. Well-established pharmacy with strong local reputation for availability and service.</div>
+        </div>
+
+        <div class="health-card">
+          <div class="health-icon">🩺</div>
+          <div class="health-title">After-Hours GP</div>
+          <div class="health-body">After-hours GP availability confirmed in Mosman via Healthengine. Mixed-billing practices with long opening hours support weekend and evening care.</div>
+        </div>
+
+        <div class="health-card">
+          <div class="health-icon">🏥</div>
+          <div class="health-title">Hospital Access</div>
+          <div class="health-body">Royal North Shore Hospital is the nearest major facility, accessible via Military Rd and Pacific Hwy. Mater Hospital in North Sydney also within reach.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- ═══════════ END PAGE 2 ═══════════ -->
+
+
+  <!-- ═══════════ PAGE 3: Market Context + Watch-outs ═══════════ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div>
+        <div class="page-header-title">Market Context + What to Watch</div>
+        <div class="page-header-address">57 Dalton Rd, Mosman</div>
+      </div>
+      <div class="page-num">PAGE 3 OF 3</div>
+    </div>
+
+    <!-- SUBURB SCORES -->
+    <div class="demo-strip">
+      <div class="demo-stat">
+        <div class="demo-n accent">99</div>
+        <div class="demo-label">Affluence Score</div>
+        <div class="demo-sub">Top suburb nationally</div>
+      </div>
+      <div class="demo-stat">
+        <div class="demo-n">92</div>
+        <div class="demo-label">Family Score</div>
+        <div class="demo-sub">Exceptional family infra</div>
+      </div>
+      <div class="demo-stat">
+        <div class="demo-n">84</div>
+        <div class="demo-label">Safety Score</div>
+        <div class="demo-sub">Well above average</div>
+      </div>
+      <div class="demo-stat">
+        <div class="demo-n">80</div>
+        <div class="demo-label">Lifestyle Score</div>
+        <div class="demo-sub">Strong amenity depth</div>
+      </div>
+    </div>
+
+    <!-- MARKET + WATCH-OUTS -->
+    <div class="two-col" style="border-top: 1px solid var(--border);">
+
+      <div>
+        <div class="section-label">Market snapshot</div>
+
+        <div class="attr-item">
+          <div class="attr-num">$</div>
+          <div>
+            <div class="attr-title">Median house price</div>
+            <div class="attr-body" style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px;">$5,390,000</div>
+            <div class="attr-body">Mosman houses (May 2026). Sydney median is $2.04M — Mosman trades at 2.6x the city average.</div>
+          </div>
+        </div>
+
+        <div class="attr-item">
+          <div class="attr-num">📅</div>
+          <div>
+            <div class="attr-title">Days on Market</div>
+            <div class="attr-body" style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px;">49 days</div>
+            <div class="attr-body">Sydney average is 31 days. Mosman buyers are more deliberate, not less committed. Patience is rewarded at this price point.</div>
+          </div>
+        </div>
+
+        <div class="attr-item">
+          <div class="attr-num">📦</div>
+          <div>
+            <div class="attr-title">Current Supply</div>
+            <div class="attr-body" style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px;">2 months of stock</div>
+            <div class="attr-body">109 active listings, 44 sold in the last 30 days. Healthy turnover relative to available stock — a balanced market condition.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">What to watch</div>
+
+        <div class="watchout-row">
+          <div class="watchout-dot"></div>
+          <div>
+            <div class="watchout-title">Low and Mid-Rise Housing Reforms</div>
+            <div class="watchout-body">NSW Government is pushing Low and Mid-Rise Housing provisions onto councils. Mosman is actively reviewing its DCP in response. Traffic management and density are the key community concerns. Track DA applications near the property.</div>
+          </div>
+        </div>
+
+        <div class="watchout-row">
+          <div class="watchout-dot"></div>
+          <div>
+            <div class="watchout-title">Bulk Billing Coverage</div>
+            <div class="watchout-body">Bulk billing in Mosman is selective rather than widespread. Families with high GP usage should confirm their preferred practice's billing model before exchanging.</div>
+          </div>
+        </div>
+
+        <div class="watchout-row">
+          <div class="watchout-dot"></div>
+          <div>
+            <div class="watchout-title">A-Grade Pricing Premium</div>
+            <div class="watchout-body">The gap between A-grade homes and everything else is widening. Premium, well-presented properties are attracting up to 30% above comparable stock. Condition and presentation will be decisive.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FINAL VERDICT -->
+    <div class="insight-strip">
+      <div class="insight-label">The Dalton Rd verdict</div>
+      <div class="insight-quote">
+        Mosman scores well on every dimension that creates a <strong>20-minute lifestyle:</strong> transport, walkability, recreation, family infrastructure. The main risks are planning change and pricing selectivity, not fundamentals. For buyers who want prestige plus walkable convenience, <strong>Dalton Rd is not just a beautiful address. It earns its premium on daily life.</strong>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-left">
+        <div class="qr-wrap">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.vernonpartners.com.au/team/richie-tramontana&color=1a1a1a&bgcolor=ffffff" alt="QR code to Richie's Vernon Partners profile" />
+        </div>
+        <div>
+          <div class="footer-scan">Scan to connect</div>
+          <div class="footer-name">Richie Tramontana</div>
+          <div class="footer-url">Senior Sales Consultant, Vernon Partners</div>
+          <div class="footer-suburbs">Mosman · Cremorne · Neutral Bay · Seaforth</div>
+        </div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-logo">Vernon<span>Partners</span></div>
+        <div class="footer-tagline">Mosman, NSW 2088</div>
+        <div class="footer-contact">
+          <a href="tel:0468881922">0468 881 922</a>
+          <a href="mailto:richie.tramontana@vernonpartners.com.au">richie.tramontana@vernonpartners.com.au</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ═══════════ END PAGE 3 ═══════════ -->
+
+</body>
+</html>
