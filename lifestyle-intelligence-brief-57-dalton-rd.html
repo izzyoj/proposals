@@ -548,8 +548,15 @@
       .health-grid { grid-template-columns: 1fr; }
       .footer { padding: 20px; flex-direction: column; align-items: flex-start; }
       .footer-right { display: none; }
-      .score-main { padding: 16px 20px; }
-      .stat-n { font-size: 16px; }
+      /* Prepared-by: stack vertically so agency text doesn't squish */
+      .header-prepared { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .prepared-sep { display: none; }
+      /* Score strip: full-width score row, then 4 stats below */
+      .score-strip { flex-direction: column; }
+      .score-main { padding: 12px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); width: 100%; }
+      .score-stats { width: 100%; }
+      .stat { padding: 8px 6px; }
+      .stat-n { font-size: 14px; }
     }
   </style>
 </head>
