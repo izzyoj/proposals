@@ -520,6 +520,36 @@
     .health-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
     .health-body { font-size: 11.5px; color: var(--sub); line-height: 1.45; }
 
+    /* DATA SOURCES */
+    .sources-section {
+      padding: 14px 40px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--off);
+    }
+    .sources-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .sources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 28px;
+    }
+    .source-item {
+      font-size: 9.5px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .source-item a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
     /* PRINT */
     @media print {
       body { background: white; padding: 0; gap: 0; display: block; }
@@ -553,6 +583,8 @@
       /* Prepared-by: stack vertically so agency text doesn't squish */
       .header-prepared { flex-direction: column; align-items: flex-start; gap: 2px; }
       .prepared-sep { display: none; }
+      .sources-section { padding: 14px 20px 16px; }
+      .sources-grid { grid-template-columns: 1fr; gap: 5px; }
       /* Score strip: full-width score row, then 4 stats below */
       .score-strip { flex-direction: column; }
       .score-main { padding: 12px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); width: 100%; }
@@ -991,6 +1023,21 @@
       <div class="insight-label">The Dalton Rd verdict</div>
       <div class="insight-quote">
         Mosman scores well on every dimension that creates a <strong>20-minute lifestyle:</strong> transport, walkability, recreation, family infrastructure. The main risks are planning change and pricing selectivity, not fundamentals. For buyers who want prestige plus walkable convenience, <strong>Dalton Rd is not just a beautiful address. It earns its premium on daily life.</strong>
+      </div>
+    </div>
+
+    <!-- DATA SOURCES -->
+    <div class="sources-section">
+      <div class="sources-title">Data Sources</div>
+      <div class="sources-grid">
+        <div class="source-item"><strong>Transport for NSW</strong> — journey planner, ferry routes, South Mosman Wharf upgrade · <a href="https://www.transport.nsw.gov.au" target="_blank">transport.nsw.gov.au</a></div>
+        <div class="source-item"><strong>Mosman Council</strong> — playground inventory, oval facilities, DCP review status · <a href="https://www.mosman.nsw.gov.au" target="_blank">mosman.nsw.gov.au</a></div>
+        <div class="source-item"><strong>ACARA My School</strong> — NAPLAN school performance percentiles · <a href="https://www.myschool.edu.au" target="_blank">myschool.edu.au</a></div>
+        <div class="source-item"><strong>Healthengine</strong> — after-hours GP availability, bulk billing status · <a href="https://www.healthengine.com.au" target="_blank">healthengine.com.au</a></div>
+        <div class="source-item"><strong>ABS Census 2021 / SEIFA</strong> — socio-economic advantage index (affluence score) · <a href="https://www.abs.gov.au" target="_blank">abs.gov.au</a></div>
+        <div class="source-item"><strong>CoreLogic / Domain</strong> — property count estimates, A-grade pricing premium analysis · <a href="https://www.corelogic.com.au" target="_blank">corelogic.com.au</a></div>
+        <div class="source-item"><strong>NSW Government Planning</strong> — Low and Mid-Rise Housing reforms, DCP context · <a href="https://www.planning.nsw.gov.au" target="_blank">planning.nsw.gov.au</a></div>
+        <div class="source-item"><strong>Google Maps</strong> — walk, bus, and drive time estimates. Times are indicative and vary by departure.</div>
       </div>
     </div>
 
