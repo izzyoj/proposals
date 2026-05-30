@@ -504,6 +504,15 @@
     .footer-contact { margin-top: 10px; }
     .footer-contact a { display: block; font-size: 11px; color: rgba(255,255,255,0.45); text-decoration: none; }
     .footer-contact a:hover { color: var(--vp-light); }
+    .footer-agent-photo {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 8%;
+      border: 2px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
 
     /* HEALTHCARE GRID */
     .health-grid {
@@ -1047,6 +1056,7 @@
         <div class="qr-wrap">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.vernonpartners.com.au/team/richie-tramontana&color=1a1a1a&bgcolor=ffffff" alt="QR code to Richie's Vernon Partners profile" />
         </div>
+        <img id="footer-agent-photo" class="footer-agent-photo" alt="Richie Tramontana" />
         <div>
           <div class="footer-scan">Scan to connect</div>
           <div class="footer-name">Richie Tramontana</div>
@@ -1066,6 +1076,15 @@
 
   </div>
   <!-- ═══════════ END PAGE 3 ═══════════ -->
+
+  <script>
+    // Copy agent headshot from hidden header photo to footer — avoids duplicating base64 string
+    document.addEventListener('DOMContentLoaded', function () {
+      var src = document.querySelector('.agent-photo');
+      var dest = document.getElementById('footer-agent-photo');
+      if (src && dest) dest.src = src.src;
+    });
+  </script>
 
 </body>
 </html>
