@@ -639,20 +639,25 @@
       padding: 12px 0;
     }
 
-    /* Maturity: horizontal scroll (preserves 5-col meaning) */
+    /* Maturity: stack vertically on mobile (overflow-x blocked by slide scroll) */
     .maturity {
       display: flex;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 12px;
-      scrollbar-width: none;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 28px;
+      overflow-x: unset;
     }
 
-    .maturity::-webkit-scrollbar { display: none; }
-
     .mat-col {
-      min-width: 140px;
-      flex-shrink: 0;
+      min-width: unset;
+      flex-shrink: 1;
+      border-top: none;
+      border-left: 2px solid var(--dim-border);
+      padding: 12px 0 12px 16px;
+    }
+
+    .mat-col.lit {
+      border-left-color: var(--accent);
     }
 
     /* Suite strip: 2-col on tablet */
