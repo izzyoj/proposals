@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superhuman Forward Deploy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090b;
+    --text: #f4f4f5;
+    --muted: #71717a;
+    --dim: #27272a;
+    --dim-border: #3f3f46;
+    --accent: #e8321e;
+    --accent-soft: rgba(232, 50, 30, 0.08);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    cursor: default;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    padding: clamp(48px, 6vh, 96px) clamp(48px, 8vw, 128px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Slide 1 special layout */
+  .slide.s1 {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .inner {
+    max-width: 940px;
+    width: 100%;
+  }
+
+  .inner.wide { max-width: 1080px; }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+
+  .h1 {
+    font-size: clamp(44px, 5.6vw, 80px);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    margin-bottom: 28px;
+  }
+
+  .red { color: var(--accent); }
+  .h1 .red { color: var(--accent); }
+
+  .h2 {
+    font-size: clamp(30px, 3.8vw, 52px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    margin-bottom: 20px;
+  }
+
+  .sub {
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-bottom: 44px;
+  }
+
+  .sub .red { color: var(--accent); font-style: normal; }
+
+  .list {
+    list-style: none;
+    font-size: clamp(15px, 1.7vw, 21px);
+    line-height: 1.9;
+    color: var(--muted);
+  }
+
+  .list li {
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.75em;
+    width: 6px;
+    height: 1px;
+    background: var(--dim-border);
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-top: 44px;
+  }
+
+  .col-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim-border);
+    margin-bottom: 16px;
+  }
+
+  .col-label.accent { color: var(--accent); }
+  .col-label.white { color: var(--text); }
+
+  .col-body {
+    font-size: clamp(14px, 1.5vw, 19px);
+    line-height: 2;
+    color: var(--muted);
+  }
+
+  .ba {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 48px;
+  }
+
+  .ba-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .ba-before .ba-label { color: var(--dim-border); }
+  .ba-after .ba-label { color: var(--accent); }
+
+  .ba-body {
+    font-size: clamp(16px, 1.8vw, 22px);
+    line-height: 2.1;
+    color: var(--muted);
+  }
+
+  .yt {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-top: 44px;
+  }
+
+  .yt-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim-border);
+    margin-bottom: 18px;
+  }
+
+  .yt-label.white { color: var(--text); }
+  .yt-label.tomorrow { color: var(--accent); }
+
+  .yt-body {
+    font-size: clamp(15px, 1.6vw, 20px);
+    line-height: 2.2;
+    color: var(--muted);
+  }
+
+  .callout {
+    margin-top: 40px;
+    padding: 24px 28px;
+    background: var(--accent-soft);
+    border-left: 2px solid var(--accent);
+    font-size: clamp(14px, 1.5vw, 19px);
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .body-note {
+    font-size: clamp(14px, 1.5vw, 19px);
+    line-height: 1.9;
+    color: var(--muted);
+    margin-top: 28px;
+  }
+
+  .maturity {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    margin-top: 44px;
+  }
+
+  .mat-col {
+    padding: 20px 16px;
+    border-top: 2px solid var(--dim-border);
+  }
+
+  .mat-col.lit { border-top-color: var(--accent); }
+
+  .mat-n {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim-border);
+    margin-bottom: 10px;
+  }
+
+  .mat-col.lit .mat-n { color: var(--accent); }
+
+  .mat-title {
+    font-size: clamp(13px, 1.2vw, 16px);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .mat-desc {
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .phases { margin-top: 36px; }
+
+  .phase-row {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 28px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--dim);
+  }
+
+  .phase-row:first-child { border-top: 1px solid var(--dim); }
+
+  .phase-name {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+
+  .phase-desc {
+    font-size: clamp(13px, 1.4vw, 17px);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .closing-big {
+    font-size: clamp(36px, 5.2vw, 72px);
+    font-weight: 700;
+    line-height: 1.07;
+    letter-spacing: -0.035em;
+    margin-bottom: 20px;
+  }
+
+  .closing-sub {
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 44px;
+  }
+
+  /* ── Suite strip (slide 1 footer) ── */
+  .suite-footer {
+    width: 100%;
+    padding-bottom: 8px;
+  }
+
+  .suite-engine-label {
+    font-size: clamp(13px, 1.4vw, 18px);
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .suite-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    max-width: 860px;
+  }
+
+  .suite-card {
+    background: #111113;
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .suite-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #1c1c1f;
+  }
+
+  .suite-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .suite-text { flex: 1; }
+
+  .suite-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .suite-desc {
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  /* ── Nav ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    right: 44px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 200;
+  }
+
+  .nav-count {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--dim-border);
+  }
+
+  .nav-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--dim);
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    border-color: var(--dim-border);
+    color: var(--text);
+  }
+
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+  .nav-btn svg { width: 13px; height: 13px; }
+
+  /* ── Timeline strip ── */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 32px;
+  }
+
+  .tl-col {
+    padding: 16px 0 16px 0;
+    border-top: 2px solid var(--dim-border);
+  }
+
+  .tl-week {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tl-name {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ── Notes system ── */
+  .notes-btn {
+    position: fixed;
+    top: 28px;
+    right: 44px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--dim);
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+    z-index: 200;
+  }
+
+  .notes-btn:hover {
+    border-color: var(--dim-border);
+    color: var(--text);
+  }
+
+  .notes-btn.has-note {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .notes-btn svg { width: 14px; height: 14px; }
+
+  .notes-dot {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: none;
+  }
+
+  .notes-btn.has-note .notes-dot { display: block; }
+
+  .notes-panel {
+    position: fixed;
+    top: 0;
+    right: -360px;
+    width: 340px;
+    height: 100vh;
+    background: #111113;
+    border-left: 1px solid var(--dim);
+    display: flex;
+    flex-direction: column;
+    z-index: 300;
+    transition: right 0.3s ease;
+  }
+
+  .notes-panel.open { right: 0; }
+
+  .notes-panel-header {
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid var(--dim);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .notes-panel-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .notes-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+
+  .notes-close:hover { color: var(--text); }
+  .notes-close svg { width: 16px; height: 16px; }
+
+  .notes-slide-label {
+    padding: 16px 24px 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dim-border);
+  }
+
+  .notes-textarea {
+    flex: 1;
+    margin: 8px 16px 12px;
+    padding: 12px 14px;
+    background: #1a1a1d;
+    border: 1px solid var(--dim);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .notes-textarea::placeholder { color: var(--dim-border); }
+  .notes-textarea:focus { border-color: var(--dim-border); }
+
+  .notes-save-status {
+    padding: 0 24px 4px;
+    font-size: 11px;
+    color: var(--dim-border);
+    min-height: 18px;
+  }
+
+  .notes-footer {
+    padding: 12px 16px 24px;
+    border-top: 1px solid var(--dim);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .notes-export-btn {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: 1px solid var(--dim-border);
+    border-radius: 6px;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .notes-export-btn:hover {
+    border-color: var(--text);
+    color: var(--text);
+  }
+
+  .notes-export-btn.copied {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .notes-tally {
+    text-align: center;
+    font-size: 11px;
+    color: var(--dim-border);
+  }
+
+  /* ── Progress bar ── */
+  .prog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <div class="slide s1 active">
+    <div class="inner" style="flex: 1; display: flex; align-items: center;">
+      <div>
+        <div class="h1">Most companies do not<br>have an <span class="red">AI problem.</span></div>
+        <div class="sub">They have a context problem.</div>
+        <ul class="list">
+          <li>The bottleneck is your business memory.</li>
+          <li>Emails, docs, CRM notes, decisions. Scattered everywhere.</li>
+          <li>AI cannot automate what it cannot understand.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="suite-footer">
+      <div class="suite-engine-label">Superhuman suite is the engine</div>
+      <div class="suite-strip">
+        <div class="suite-card">
+          <div class="suite-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.5">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <polyline points="3,5 12,13 21,5"/>
+            </svg>
+          </div>
+          <div class="suite-text">
+            <div class="suite-name">Mail</div>
+            <div class="suite-desc">The most productive email app ever made</div>
+          </div>
+        </div>
+        <div class="suite-card">
+          <div class="suite-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.5">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M15 9.5c-.8-1-2-1.5-3.2-1.5C9.1 8 7 10.2 7 12.9c0 2.5 1.9 4.1 4.1 4.1 1.5 0 2.7-.6 3.4-1.6"/>
+              <path d="M12 12h3.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="suite-text">
+            <div class="suite-name">Grammarly</div>
+            <div class="suite-desc">Everyone's favorite AI writing partner</div>
+          </div>
+        </div>
+        <div class="suite-card">
+          <div class="suite-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.5">
+              <rect x="4" y="4" width="16" height="16" rx="3"/>
+              <path d="M9 4v16M4 9h5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="suite-text">
+            <div class="suite-name">Coda</div>
+            <div class="suite-desc">The all-in-one AI workspace for teams</div>
+          </div>
+        </div>
+        <div class="suite-card">
+          <div class="suite-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3"/>
+              <path d="M6 20v-1a6 6 0 0 1 12 0v1" stroke-linecap="round"/>
+              <path d="M19 12l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="suite-text">
+            <div class="suite-name">Go</div>
+            <div class="suite-desc">AI that works in every app you use</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1">Businesses are built on<br>scattered <span class="red">silos.</span></div>
+      <ul class="list" style="margin-top: 36px;">
+        <li>Email in one place</li>
+        <li>Documents in another</li>
+        <li>CRM somewhere else</li>
+        <li>Knowledge trapped in people</li>
+        <li>Decisions made from incomplete information</li>
+      </ul>
+      <div class="callout">Slow decisions. Duplicated work. Lost knowledge.</div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1">AI cannot automate<br>what it <span class="red">cannot understand.</span></div>
+      <div class="sub">The problem is not the model. The problem is <span class="red">business context.</span></div>
+      <div class="yt">
+        <div>
+          <div class="yt-label white">Yesterday</div>
+          <div class="yt-body">People searched systems.<br>People gathered information.<br>People managed workflows.</div>
+        </div>
+        <div>
+          <div class="yt-label tomorrow">Tomorrow</div>
+          <div class="yt-body">AI searches systems.<br>AI gathers information.<br>AI coordinates workflows.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1">Business Brain = <span class="red">Knowledge graph</span></div>
+      <div class="sub" style="margin-bottom: 20px;">Connects how the company works.</div>
+      <ul class="list">
+        <li>Who the customers are</li>
+        <li>How decisions get made</li>
+        <li>Where knowledge lives</li>
+        <li>What good looks like</li>
+        <li>What actions should happen next</li>
+      </ul>
+      <div class="callout" style="margin-top: 28px;">Not a chatbot.<br>Not search.<br>A living map of the business.</div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1"><span class="red">Coworker</span> that has your back</div>
+      <div class="sub">An AI-enabled business connects everything.</div>
+      <ul class="list">
+        <li>Knowledge is connected</li>
+        <li>Context is accessible</li>
+        <li>Decisions are supported</li>
+        <li>Actions are automated</li>
+        <li>Learning compounds over time</li>
+      </ul>
+      <div class="callout" style="margin-top: 28px;">AI becomes the business brain.<br><br>A teammate.</div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1">From open loop<br>to <span class="red">closed loop.</span></div>
+      <div class="grid2">
+        <div>
+          <div class="col-label white">Open Loop</div>
+          <div class="col-body">A decision gets made.<br>The result is checked later.<br>Maybe.</div>
+        </div>
+        <div>
+          <div class="col-label accent">Closed Loop</div>
+          <div class="col-body">The system sees what happened.<br>Compares it to what should happen.<br>Recommends the next move.<br>Then learns from the result.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="slide">
+    <div class="inner wide">
+      <div class="h2">The Maturity Model</div>
+      <div class="maturity">
+        <div class="mat-col">
+          <div class="mat-n">Level 1</div>
+          <div class="mat-title">Digital</div>
+          <div class="mat-desc">Tools exist. Nothing connects.</div>
+        </div>
+        <div class="mat-col">
+          <div class="mat-n">Level 2</div>
+          <div class="mat-title">Connected</div>
+          <div class="mat-desc">Systems talk. People still chase.</div>
+        </div>
+        <div class="mat-col">
+          <div class="mat-n">Level 3</div>
+          <div class="mat-title">AI Assisted</div>
+          <div class="mat-desc">AI answers and drafts.</div>
+        </div>
+        <div class="mat-col">
+          <div class="mat-n">Level 4</div>
+          <div class="mat-title">AI Enabled</div>
+          <div class="mat-desc">AI recommends and acts.</div>
+        </div>
+        <div class="mat-col lit">
+          <div class="mat-n">Level 5</div>
+          <div class="mat-title">AI Native</div>
+          <div class="mat-desc">The business runs through a closed loop.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h2">The Transformation Framework</div>
+      <div class="phases">
+        <div class="phase-row">
+          <div class="phase-name">Discover</div>
+          <div class="phase-desc">Find the friction. Bring work in from email, docs, meetings, CRM.</div>
+        </div>
+        <div class="phase-row">
+          <div class="phase-name">Connect</div>
+          <div class="phase-desc">Turn scattered knowledge into business memory. Unify systems and knowledge.</div>
+        </div>
+        <div class="phase-row">
+          <div class="phase-name">Enable</div>
+          <div class="phase-desc">Use AI to analyse and recommend. Teach AI the business.</div>
+        </div>
+        <div class="phase-row">
+          <div class="phase-name">Automate</div>
+          <div class="phase-desc">Draft, update, route, and execute workflows.</div>
+        </div>
+        <div class="phase-row">
+          <div class="phase-name">Scale</div>
+          <div class="phase-desc">Feed outcomes back into the system. Govern, optimise and expand.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="eyebrow">Phase 1</div>
+      <div class="h1">Discover.</div>
+      <div class="sub">AI Readiness Assessment</div>
+      <ul class="list">
+        <li>Processes</li>
+        <li>Systems</li>
+        <li>Knowledge</li>
+        <li>Repetitive work</li>
+        <li>Bottlenecks</li>
+      </ul>
+      <div class="callout">Output: AI Transformation Blueprint</div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="eyebrow">Phase 2 &amp; 3</div>
+      <div class="h1">Enable.</div>
+      <div class="sub">Build The Business Brain</div>
+      <div class="grid2">
+        <div>
+          <div class="col-label white">We create</div>
+          <ul class="list">
+            <li>Company memory</li>
+            <li>Team memory</li>
+            <li>Customer memory</li>
+            <li>Process memory</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label accent">Then deploy</div>
+          <ul class="list">
+            <li>AI assistants</li>
+            <li>Workflow automations</li>
+            <li>Decision support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top: 28px;">Output: Working AI teammate.</div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="eyebrow">Phase 4 &amp; 5</div>
+      <div class="h1">Scale.</div>
+      <div class="sub">Build The AI Operating System</div>
+      <ul class="list">
+        <li>Read</li>
+        <li>Analyse</li>
+        <li>Recommend</li>
+        <li>Act</li>
+        <li>Learn</li>
+      </ul>
+      <div class="body-note" style="color: var(--text);">With governance, approvals and controls.</div>
+      <div class="callout" style="margin-top: 24px;">Output: A scalable AI-enabled organisation.</div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1">Why <span class="red">Superhuman.</span></div>
+      <div class="sub">Most business work starts in communication.</div>
+      <ul class="list">
+        <li>A customer emails</li>
+        <li>A teammate replies</li>
+        <li>A decision gets buried</li>
+        <li>A task gets missed</li>
+        <li>A follow-up disappears</li>
+      </ul>
+      <div class="body-note" style="color: var(--text); margin-top: 28px;">Superhuman can become the front door for AI-enabled work.</div>
+      <div class="callout" style="margin-top: 24px;">
+        Not just where messages arrive. Where work begins.
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h1"><span class="red">Done</span> For You.</div>
+      <div class="sub">We help businesses mature into AI-enabled operations.</div>
+      <div class="grid2" style="margin-top: 28px;">
+        <div>
+          <ul class="list">
+            <li>Business brain</li>
+            <li>Workflow map</li>
+            <li>AI assistants</li>
+          </ul>
+        </div>
+        <div>
+          <ul class="list">
+            <li>Automation loops</li>
+            <li>Governance rules</li>
+            <li>Team handover</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-col">
+          <div class="tl-week">Week 1–2</div>
+          <div class="tl-name">Context Audit</div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-week">Week 3–4</div>
+          <div class="tl-name">Build and Deploy</div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-week">Week 4–6</div>
+          <div class="tl-name">Handover</div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top: 24px;">The client does not learn AI. The business starts using it.</div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="h2">Scattered output to outcomes that deliver <span style="color: var(--accent);">value</span></div>
+      <div class="ba">
+        <div class="ba-before">
+          <div class="ba-label" style="color: var(--text);">Before</div>
+          <div class="ba-body">Scattered knowledge.<br>Manual work.<br>Slow decisions.<br>Lost follow-up.</div>
+        </div>
+        <div class="ba-after">
+          <div class="ba-label">After</div>
+          <div class="ba-body">Connected context.<br>AI-assisted action.<br>Faster decisions.<br>Closed loop learning.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="slide">
+    <div class="inner">
+      <div class="closing-big"><span class="red">Superhuman</span> becomes<br>the operating layer.</div>
+      <div class="closing-sub">Between <span class="red">people</span>, <span class="red">knowledge</span> and <span class="red">AI.</span></div>
+      <ul class="list" style="font-size: clamp(16px, 1.8vw, 22px);">
+        <li>One workspace</li>
+        <li>One memory layer</li>
+        <li>One place to <span class="red">think</span>, <span class="red">decide</span> and <span class="red">act</span></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- Notes button -->
+<button class="notes-btn" id="notesBtn" title="Add feedback">
+  <div class="notes-dot"></div>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+</button>
+
+<!-- Notes panel -->
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-panel-header">
+    <span class="notes-panel-title">Feedback</span>
+    <button class="notes-close" id="notesClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <div class="notes-slide-label" id="noteSlideLabel">Slide 1</div>
+  <textarea class="notes-textarea" id="notesTextarea" placeholder="Type your feedback for this slide..."></textarea>
+  <div class="notes-save-status" id="saveStatus"></div>
+  <div class="notes-footer">
+    <button class="notes-export-btn" id="exportBtn">Copy all feedback to clipboard</button>
+    <div class="notes-tally" id="notesTally"></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <span class="nav-count" id="counter">1 / 15</span>
+  <button class="nav-btn" id="prev" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+  </button>
+  <button class="nav-btn" id="next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,6 15,12 9,18"/></svg>
+  </button>
+</nav>
+
+<div class="prog" id="prog"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const N = slides.length;
+  let i = 0;
+  let panelOpen = false;
+  let saveTimer = null;
+
+  // ── Navigation ──────────────────────────────────────
+  function render() {
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    document.getElementById('counter').textContent = `${i + 1} / ${N}`;
+    document.getElementById('prev').disabled = i === 0;
+    document.getElementById('next').disabled = i === N - 1;
+    document.getElementById('prog').style.width = `${((i + 1) / N) * 100}%`;
+    refreshNotesBtn();
+    if (panelOpen) syncPanel();
+  }
+
+  function go(dir) {
+    if (panelOpen) return;
+    const n = i + dir;
+    if (n >= 0 && n < N) { i = n; render(); }
+  }
+
+  document.getElementById('prev').addEventListener('click', e => { e.stopPropagation(); go(-1); });
+  document.getElementById('next').addEventListener('click', e => { e.stopPropagation(); go(1); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && panelOpen) { closePanel(); return; }
+    if (panelOpen) return;
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); go(1); }
+    else if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(-1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', () => {
+    if (panelOpen) { closePanel(); return; }
+    go(1);
+  });
+
+  // ── Notes ───────────────────────────────────────────
+  function noteKey(idx) { return `sh_note_${idx}`; }
+
+  function getNote(idx) { return localStorage.getItem(noteKey(idx)) || ''; }
+
+  function setNote(idx, text) {
+    if (text.trim()) {
+      localStorage.setItem(noteKey(idx), text);
+    } else {
+      localStorage.removeItem(noteKey(idx));
+    }
+  }
+
+  function countNotes() {
+    let n = 0;
+    for (let idx = 0; idx < N; idx++) { if (getNote(idx).trim()) n++; }
+    return n;
+  }
+
+  function refreshNotesBtn() {
+    const btn = document.getElementById('notesBtn');
+    btn.classList.toggle('has-note', getNote(i).trim().length > 0);
+  }
+
+  function syncPanel() {
+    document.getElementById('noteSlideLabel').textContent = `Slide ${i + 1} of ${N}`;
+    document.getElementById('notesTextarea').value = getNote(i);
+    const count = countNotes();
+    document.getElementById('notesTally').textContent =
+      count === 0 ? 'No feedback added yet' : `${count} of ${N} slides have feedback`;
+    document.getElementById('saveStatus').textContent = '';
+  }
+
+  function openPanel() {
+    panelOpen = true;
+    syncPanel();
+    document.getElementById('notesPanel').classList.add('open');
+    setTimeout(() => document.getElementById('notesTextarea').focus(), 320);
+  }
+
+  function closePanel() {
+    panelOpen = false;
+    document.getElementById('notesPanel').classList.remove('open');
+    refreshNotesBtn();
+  }
+
+  document.getElementById('notesBtn').addEventListener('click', e => {
+    e.stopPropagation();
+    panelOpen ? closePanel() : openPanel();
+  });
+
+  document.getElementById('notesClose').addEventListener('click', e => {
+    e.stopPropagation();
+    closePanel();
+  });
+
+  document.getElementById('notesPanel').addEventListener('click', e => e.stopPropagation());
+
+  // Auto-save on type
+  document.getElementById('notesTextarea').addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    document.getElementById('saveStatus').textContent = 'Saving...';
+    saveTimer = setTimeout(() => {
+      setNote(i, document.getElementById('notesTextarea').value);
+      document.getElementById('saveStatus').textContent = 'Saved';
+      refreshNotesBtn();
+      const count = countNotes();
+      document.getElementById('notesTally').textContent =
+        count === 0 ? 'No feedback added yet' : `${count} of ${N} slides have feedback`;
+      setTimeout(() => { document.getElementById('saveStatus').textContent = ''; }, 1500);
+    }, 600);
+  });
+
+  // Export
+  document.getElementById('exportBtn').addEventListener('click', e => {
+    e.stopPropagation();
+    let out = 'Superhuman Forward Deploy — Slide Feedback\n';
+    out += '='.repeat(44) + '\n\n';
+    let any = false;
+    for (let idx = 0; idx < N; idx++) {
+      const note = getNote(idx).trim();
+      if (note) { out += `Slide ${idx + 1}:\n${note}\n\n`; any = true; }
+    }
+    if (!any) out += 'No feedback added yet.\n';
+    navigator.clipboard.writeText(out).then(() => {
+      const btn = document.getElementById('exportBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy all feedback to clipboard';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  });
+
+  render();
+</script>
+</body>
+</html>
