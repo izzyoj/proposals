@@ -599,6 +599,119 @@
     transition: width 0.4s ease;
     z-index: 200;
   }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .slide {
+      padding: 32px 28px 96px;
+      align-items: flex-start;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .slide.s1 {
+      padding-bottom: 100px;
+    }
+
+    .inner, .inner.wide {
+      max-width: 100%;
+    }
+
+    /* Stack all 2-col grids */
+    .grid2, .ba, .yt {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 28px;
+    }
+
+    /* Phase rows: label above body */
+    .phase-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    /* Timeline: vertical */
+    .timeline {
+      grid-template-columns: 1fr;
+    }
+
+    .tl-col {
+      padding: 12px 0;
+    }
+
+    /* Maturity: horizontal scroll (preserves 5-col meaning) */
+    .maturity {
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .maturity::-webkit-scrollbar { display: none; }
+
+    .mat-col {
+      min-width: 140px;
+      flex-shrink: 0;
+    }
+
+    /* Suite strip: 2-col on tablet */
+    .suite-strip {
+      grid-template-columns: 1fr 1fr;
+      max-width: 100%;
+    }
+
+    /* Notes panel: full width */
+    .notes-panel {
+      width: 100%;
+      right: -100%;
+    }
+
+    .notes-panel.open { right: 0; }
+
+    /* Bigger touch targets */
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+    }
+
+    .notes-btn {
+      width: 44px;
+      height: 44px;
+      top: 20px;
+      right: 20px;
+    }
+
+    .nav {
+      bottom: 20px;
+      right: 20px;
+      gap: 12px;
+    }
+
+    .callout {
+      margin-top: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slide {
+      padding: 24px 20px 96px;
+    }
+
+    /* Suite strip: single col on phone */
+    .suite-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .suite-card {
+      padding: 14px 16px;
+    }
+
+    /* Tighter spacing */
+    .h1 { margin-bottom: 20px; }
+    .sub { margin-bottom: 28px; }
+    .grid2, .ba, .yt { gap: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -1047,7 +1160,31 @@
     else if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(-1); }
   });
 
+  // ── Touch swipe ──────────────────────────────────────
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let swipeFired = false;
+
+  document.getElementById('deck').addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+    swipeFired = false;
+  }, { passive: true });
+
+  document.getElementById('deck').addEventListener('touchend', e => {
+    if (panelOpen) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    // Only navigate if clearly a horizontal swipe (not a vertical scroll)
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      swipeFired = true;
+      if (dx < 0) go(1);   // swipe left = next
+      else go(-1);           // swipe right = prev
+    }
+  }, { passive: true });
+
   document.getElementById('deck').addEventListener('click', () => {
+    if (swipeFired) { swipeFired = false; return; }
     if (panelOpen) { closePanel(); return; }
     go(1);
   });
