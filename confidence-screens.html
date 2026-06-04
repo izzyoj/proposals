@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>48 Years In — Confidence Screens</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --accent: #0071e3;
+      --text: #f5f5f7;
+      --dim: #86868b;
+      --amber: #f59e0b;
+
+      /* Safe zone constants (at 1080×1920) */
+      --safe-top:    220px;   /* below Instagram UI bar */
+      --safe-bottom: 1470px;  /* above Instagram caption/buttons */
+      --safe-left:   35px;
+      --safe-right:  35px;
+
+      /* Content bands */
+      --text-zone-top:    220px;
+      --text-zone-bottom: 750px;   /* above face */
+      --brand-zone-top:   1360px;
+      --brand-zone-bot:   1460px;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .stage-wrap {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 1080×1920 canvas, scaled to fit viewport */
+    .stage {
+      width: 1080px;
+      height: 1920px;
+      transform-origin: center center;
+      position: relative;
+      background: var(--bg);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Subtle ambient glow in safe text zone */
+    .stage::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 800px;
+      background: radial-gradient(ellipse 80% 50% at 50% 30%, rgba(0,113,227,0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── TEXT ZONE: 220–750px ── */
+    /* All slide content sits here — above face, below Instagram UI */
+    .text-zone {
+      position: absolute;
+      top: var(--text-zone-top);   /* 220px — first safe pixel */
+      left: 0;
+      right: 0;
+      height: 530px;               /* 220 to 750px */
+      padding: 28px 88px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;   /* anchor to bottom of zone by default */
+      gap: 0;
+      z-index: 2;
+    }
+
+    .text-zone.top    { justify-content: flex-start; }
+    .text-zone.middle { justify-content: center; }
+
+    /* ── DAY COUNTER: persistent, top-right, safe zone ── */
+    .day-counter {
+      position: absolute;
+      top: 240px;     /* 20px below top no-go */
+      right: 88px;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      z-index: 3;
+    }
+
+    /* ── BRANDING ZONE: 1360–1460px — above bottom no-go ── */
+    .brand-zone {
+      position: absolute;
+      top: 1360px;
+      left: 0;
+      right: 0;
+      height: 100px;
+      padding: 0 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 2;
+    }
+
+    .wordmark {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+
+    .slide-counter {
+      font-size: 22px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── SLIDES ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+    }
+    .slide.active { display: block; }
+
+    /* ── TYPE SCALE (at 1080px canvas) ── */
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(0,113,227,0.12);
+      border: 1px solid rgba(0,113,227,0.2);
+      padding: 12px 28px;
+      border-radius: 980px;
+      align-self: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .label {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 24px;
+    }
+
+    /* Hook — italic, punchy */
+    .t-hook {
+      font-size: 76px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      font-style: italic;
+    }
+
+    /* Display — series name, day number */
+    .t-display {
+      font-size: 96px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--text);
+    }
+
+    /* Giant — single-word reveal */
+    .t-giant {
+      font-size: 130px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      color: var(--accent);
+      text-shadow: 0 0 80px rgba(0,113,227,0.5);
+    }
+
+    /* Title — section headings */
+    .t-title {
+      font-size: 74px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    /* Headline — sub-headings */
+    .t-headline {
+      font-size: 58px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    /* List — readable at scroll speed, 48px minimum */
+    .t-list {
+      font-size: 50px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      color: var(--text);
+    }
+
+    /* Punch — three-part stacked phrases */
+    .t-punch {
+      font-size: 68px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .c-accent { color: var(--accent); }
+    .c-dim    { color: var(--dim); }
+    .c-amber  { color: var(--amber); }
+
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+
+    /* ── TAP ZONES ── */
+    .tap-prev, .tap-next {
+      position: absolute;
+      top: 0; height: 100%;
+      width: 50%;
+      z-index: 10;
+      cursor: pointer;
+    }
+    .tap-prev { left: 0; }
+    .tap-next { right: 0; }
+
+    /* ── NAV HINT (outside stage) ── */
+    .nav-hint {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: -apple-system, sans-serif;
+      pointer-events: none;
+      white-space: nowrap;
+      transition: opacity 0.4s;
+    }
+  </style>
+</head>
+<body>
+
+<div class="stage-wrap">
+  <div class="stage" id="stage">
+
+    <!-- TAP ZONES -->
+    <div class="tap-prev" onclick="navigate(-1)"></div>
+    <div class="tap-next" onclick="navigate(1)"></div>
+
+    <!-- PERSISTENT: Day counter — 240px from top (safe zone) -->
+    <div class="day-counter">Day 8</div>
+
+    <!-- ══════════════════════════════
+         SLIDE 1 — Hook
+         "I feel nervous even when I'm prepared"
+    ══════════════════════════════ -->
+    <div class="slide active" id="slide-1">
+      <div class="text-zone" style="justify-content: flex-end; padding-bottom: 24px;">
+        <p class="t-hook c-dim">I feel nervous</p>
+        <p class="t-hook c-dim">even when</p>
+        <p class="t-hook" style="color: var(--text);">I'm prepared.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 2 — Series ID
+         "Day 8 of Becoming the person you trust"
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-2">
+      <div class="text-zone top">
+        <div class="pill">48 Years In</div>
+        <p class="t-display">Day 8.</p>
+        <p class="t-headline c-dim" style="margin-top: 10px;">of Becoming the</p>
+        <p class="t-headline">person you trust.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 3 — Three elements overview
+         "Feeling safe. Not performing. Everything is going to be ok"
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-3">
+      <div class="text-zone top">
+        <div class="label">Three things create it</div>
+        <p class="t-list">Feeling safe.</p>
+        <p class="t-list c-dim">Not performing.</p>
+        <p class="t-list">Everything is going to be ok.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 4 — Element one reveal
+         "Safe"
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-4">
+      <div class="text-zone" style="justify-content: flex-end; padding-bottom: 16px;">
+        <div class="label">Element one</div>
+        <div class="divider"></div>
+        <p class="t-giant">Safe.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 5 — Five factors
+         "Environment. Time. Appearance. Social life. Financial life."
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-5">
+      <div class="text-zone top">
+        <div class="label">The backbone</div>
+        <p class="t-list">Environment.</p>
+        <p class="t-list c-dim">Time.</p>
+        <p class="t-list">Appearance.</p>
+        <p class="t-list c-dim">Social life.</p>
+        <p class="t-list">Financial life.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 6 — No act, no mask
+         "No act. No mask. No performance."
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-6">
+      <div class="text-zone" style="justify-content: flex-end; padding-bottom: 24px;">
+        <p class="t-punch">No act.</p>
+        <p class="t-punch c-dim">No mask.</p>
+        <p class="t-punch">No performance.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 7 — What people are after
+         "Friends. Safety. Rewards."
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-7">
+      <div class="text-zone top">
+        <div class="label">What people are after</div>
+        <p class="t-list">Friends.</p>
+        <p class="t-list c-dim">Safety.</p>
+        <p class="t-list">Rewards.</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SLIDE 8 — Closer
+         "Go on. Become the person you trust."
+    ══════════════════════════════ -->
+    <div class="slide" id="slide-8">
+      <div class="text-zone" style="justify-content: flex-end; padding-bottom: 24px;">
+        <p class="t-headline c-dim">Go on.</p>
+        <p class="t-title" style="margin-top: 10px;">Become the person</p>
+        <p class="t-title c-accent">you trust.</p>
+      </div>
+    </div>
+
+    <!-- BRANDING ZONE: 1360–1460px — safely above bottom no-go (1470px) -->
+    <div class="brand-zone">
+      <div class="wordmark">48 Years In</div>
+      <div class="slide-counter" id="slide-counter">1 / 8</div>
+    </div>
+
+  </div><!-- /stage -->
+</div>
+
+<div class="nav-hint" id="nav-hint">tap left &nbsp;/&nbsp; tap right &nbsp;&nbsp;&middot;&nbsp;&nbsp; arrow keys</div>
+
+<script>
+  // Scale stage to fit viewport
+  function scaleStage() {
+    const stage = document.getElementById('stage');
+    const sx = window.innerWidth  / 1080;
+    const sy = window.innerHeight / 1920;
+    stage.style.transform = `scale(${Math.min(sx, sy)})`;
+  }
+  scaleStage();
+  window.addEventListener('resize', scaleStage);
+
+  // Navigation
+  let current = 1;
+  const total  = 8;
+
+  function navigate(dir) {
+    document.getElementById(`slide-${current}`).classList.remove('active');
+    current = Math.max(1, Math.min(total, current + dir));
+    document.getElementById(`slide-${current}`).classList.add('active');
+    document.getElementById('slide-counter').textContent = `${current} / ${total}`;
+    document.getElementById('nav-hint').style.opacity = '0';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  });
+</script>
+
+</body>
+</html>
