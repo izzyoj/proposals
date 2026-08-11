@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nisus × Braiin — Strategic Opportunity Playback</title>
+<style>
+:root{
+  --ink:#111827; --muted:#5f6b7a; --soft:#f5f7fa; --line:#e6eaf0;
+  --navy:#0c1b33; --blue:#2b63f1; --cyan:#28b6d8; --green:#36a269;
+  --warm:#f4b942; --white:#fff; --max:1140px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter, ui-sans-serif, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .inner{height:62px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:800;letter-spacing:-.02em}.brand span{color:var(--blue)}
+.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.nav a{text-decoration:none}.nav a:hover{color:var(--ink)}
+.hero{background:
+radial-gradient(circle at 86% 20%, rgba(40,182,216,.23), transparent 28%),
+radial-gradient(circle at 70% 60%, rgba(43,99,241,.23), transparent 34%),
+linear-gradient(135deg,#071327 0%,#10274b 72%,#14315e 100%);
+color:#fff;padding:92px 0 82px;overflow:hidden}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:#7bd9ef;margin-bottom:18px}
+.hero h1{font-size:clamp(42px,6vw,78px);line-height:.98;letter-spacing:-.055em;margin:0 0 24px;max-width:930px}
+.hero p{font-size:20px;line-height:1.5;color:#d9e4f3;max-width:780px;margin:0 0 28px}
+.hero .note{display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);padding:10px 14px;border-radius:999px;font-size:13px;color:#d6e3f1}
+.dot{width:7px;height:7px;background:#66d0e7;border-radius:50%;display:inline-block}
+section{padding:82px 0;border-bottom:1px solid var(--line)}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+h2{font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-.04em;margin:0 0 18px}
+.lede{font-size:19px;color:var(--muted);max-width:780px;margin:0 0 38px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{border:1px solid var(--line);border-radius:18px;padding:24px;background:#fff}
+.card h3{margin:8px 0 8px;font-size:19px}.card p{margin:0;color:var(--muted)}
+.metric{font-size:34px;font-weight:850;letter-spacing:-.04em;color:var(--navy)}
+.quote-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:34px}
+.quote{padding:28px;border-radius:20px;background:var(--navy);color:white;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+.quote q{font-size:21px;line-height:1.35;font-weight:650}.quote small{color:#a9bbd3;margin-top:20px}
+.playback{margin-top:28px;padding:28px 30px;border-left:4px solid var(--cyan);background:#f2fbfd;border-radius:0 16px 16px 0;font-size:19px}
+.split{display:grid;grid-template-columns:1fr 90px 1fr;align-items:stretch;gap:18px;margin-top:34px}
+.pillar{border-radius:22px;padding:30px;border:1px solid var(--line)}
+.pillar.nisus{background:#f8fafc}.pillar.braiin{background:#f2f6ff}
+.pillar h3{font-size:25px;margin:0 0 18px}.pillar ul{padding-left:18px;color:var(--muted);margin:0}.pillar li{margin:8px 0}
+.plus{display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--blue);font-weight:300}
+.together{margin-top:20px;padding:30px;border-radius:22px;background:linear-gradient(110deg,#0d2343,#174c72);color:#fff;text-align:center}
+.together strong{display:block;font-size:30px;letter-spacing:-.025em}.together span{display:block;color:#dce8f6;margin-top:8px;font-size:17px}
+.beforeafter{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+.ba{border-radius:22px;padding:30px;border:1px solid var(--line)}
+.ba h3{font-size:23px;margin:0 0 18px}.ba.before{background:#fafafa}.ba.after{background:#f2f7ff}
+.row{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}.arrow{color:var(--blue);font-weight:900}
+.clients{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.clientbox{border-radius:22px;padding:30px;background:var(--soft)}
+.clientbox h3{font-size:25px;margin-top:0}.clientbox .tag{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:13px;margin:4px 5px 4px 0}
+.big-question{background:#0b1930;color:#fff;text-align:center}
+.big-question h2{max-width:900px;margin:0 auto 20px;font-size:clamp(36px,5vw,62px)}
+.big-question p{max-width:800px;margin:0 auto;color:#bed0e5;font-size:19px}
+.hmw-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+.hmw{border:1px solid var(--line);border-radius:22px;padding:28px;position:relative;overflow:hidden}
+.hmw:before{content:"HMW";position:absolute;right:20px;top:15px;font-size:54px;font-weight:900;color:#f0f3f8;z-index:0}
+.hmw>*{position:relative;z-index:1}.hmw .n{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.12em}.hmw h3{font-size:23px;line-height:1.25;margin:14px 0 12px}.hmw p{color:var(--muted);margin:0}
+.imagine{background:#f6f8fb}
+.journey{display:grid;grid-template-columns:1fr 70px 1fr;gap:18px;align-items:center;margin-top:34px}
+.state{border-radius:22px;padding:30px;background:#fff;border:1px solid var(--line)}
+.state h3{font-size:25px;margin-top:0}.state ul{margin:0;padding-left:18px;color:var(--muted)}.state li{margin:8px 0}
+.journey .mid{text-align:center;font-size:42px;color:var(--blue)}
+.callout{font-size:29px;line-height:1.3;letter-spacing:-.025em;font-weight:750;margin:34px 0 0;padding:28px;border-radius:20px;background:#0d2343;color:#fff}
+.evidence{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px}
+.ev{border:1px solid var(--line);border-radius:20px;padding:26px}
+.ev h3{margin:0 0 8px}.ev p{color:var(--muted);margin:0 0 18px}.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:700;background:#f3f6fb;border-radius:999px;padding:8px 10px}
+.contribute{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:32px}
+.step{padding:22px 18px;border-radius:18px;border:1px solid var(--line);min-height:175px}
+.step .num{font-size:12px;color:var(--blue);font-weight:800}.step h3{font-size:19px;margin:12px 0 8px}.step p{font-size:14px;color:var(--muted);margin:0}
+.questions{background:linear-gradient(135deg,#eef5ff,#f8fbff)}
+.q{padding:18px 0;border-top:1px solid #dbe5f1;font-size:22px;font-weight:650;letter-spacing:-.01em}
+.q:first-of-type{border-top:0}
+.close{margin-top:30px;color:var(--muted);max-width:780px;font-size:17px}
+footer{padding:36px 0 50px;color:#7b8795;font-size:12px}
+.sources{margin-top:16px}.sources a{color:#53657b}
+@media(max-width:900px){
+.grid-4,.quote-grid,.contribute{grid-template-columns:1fr 1fr}
+.split,.journey{grid-template-columns:1fr}.plus,.journey .mid{transform:rotate(90deg)}
+}
+@media(max-width:650px){
+.nav{display:none}.hero{padding:70px 0 60px}
+section{padding:62px 0}.grid-4,.quote-grid,.hmw-grid,.clients,.beforeafter,.evidence,.contribute{grid-template-columns:1fr}
+.wrap{padding:0 20px}.hero p,.lede{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap inner">
+    <div class="brand">Nisus <span>×</span> Braiin</div>
+    <nav class="nav">
+      <a href="#playback">Playback</a><a href="#combination">Combination</a>
+      <a href="#opportunities">Opportunities</a><a href="#baz">Why Baz</a><a href="#explore">Explore</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Strategic playback + opportunity exploration</div>
+    <h1>From trusted local delivery to AI-enabled government transformation.</h1>
+    <p>Exploring how Nisus's government relationships and delivery capability could combine with Braiin's AI, technology and scale to create new value for Australian government and regulated clients.</p>
+    <div class="note"><span class="dot"></span> A thought starter following our conversation — not a grand proposal.</div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">01 · The foundation</div>
+    <h2>Sean has already built the difficult part.</h2>
+    <p class="lede">Nisus enters this next chapter with established trust, a credible government footprint and a delivery model built inside Canberra's ecosystem. The acquisition amplifies that foundation rather than replacing it.</p>
+    <div class="grid-4">
+      <div class="card"><div class="metric">~30</div><h3>Client organisations</h3><p>Government and private organisations supported by Nisus.</p></div>
+      <div class="card"><div class="metric">40+</div><h3>People</h3><p>ICT contractors and specialists supporting government and enterprise clients.</p></div>
+      <div class="card"><div class="metric">Gov</div><h3>Trusted footprint</h3><p>Built within Canberra's government ecosystem through relationships and execution.</p></div>
+      <div class="card"><div class="metric">Multi</div><h3>Capability</h3><p>Strategy, procurement, data, architecture, cyber security and delivery services.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="playback">
+  <div class="wrap">
+    <div class="kicker">02 · Sean's vision, played back</div>
+    <h2>The acquisition is about scale — without losing what made Nisus valuable.</h2>
+    <div class="quote-grid">
+      <div class="quote"><q>We've built Nisus steadily into a trust and relationship-driven business with a strong footprint across government clients.</q><small>Sean Ni · TechPartner</small></div>
+      <div class="quote"><q>Partnering with Braiin is a natural next step — not out of necessity, but the opportunity to scale.</q><small>Sean Ni · TechPartner</small></div>
+      <div class="quote"><q>Take what we've built locally and connect it into a global platform… particularly as AI adoption accelerates in government and regulated environments.</q><small>Sean Ni · TechPartner</small></div>
+    </div>
+    <div class="playback"><strong>My playback:</strong> preserve Nisus's local trust, relationships and execution — while adding technology, capital, AI capability and scale that would have been much harder to build independently.</div>
+  </div>
+</section>
+
+<section id="combination">
+  <div class="wrap">
+    <div class="kicker">03 · The combination</div>
+    <h2>Two complementary assets — one potentially differentiated proposition.</h2>
+    <p class="lede">Braiin's CEO describes the opportunity as combining Nisus's local execution with Braiin's global AI capability to deliver smarter, more efficient outcomes. That creates a useful strategic lens.</p>
+    <div class="split">
+      <div class="pillar nisus">
+        <h3>Nisus brings</h3>
+        <ul><li>Government trust and Canberra relationships</li><li>Local policy and operating context</li><li>Consulting and delivery capability</li><li>Architecture, data and cyber expertise</li><li>Credibility in regulated environments</li><li>Client access and execution</li></ul>
+      </div>
+      <div class="plus">+</div>
+      <div class="pillar braiin">
+        <h3>Braiin brings</h3>
+        <ul><li>AI and intelligent automation</li><li>Predictive analytics</li><li>Agentic workflow capability</li><li>Technology platforms and IP</li><li>Global specialist capacity</li><li>Capital and international scale</li></ul>
+      </div>
+    </div>
+    <div class="together"><strong>Together: AI capability that can actually be discovered, shaped, governed and delivered inside government.</strong><span>The opportunity may not simply be to make Nisus bigger. It may be to change what Nisus is capable of taking to market.</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">04 · What the acquisition changes</div>
+    <h2>From capability-led services to capability + technology + reusable IP.</h2>
+    <div class="beforeafter">
+      <div class="ba before"><h3>Nisus — established foundation</h3>
+        <div class="row"><span class="arrow">→</span><span>Strong Australian government footprint</span></div>
+        <div class="row"><span class="arrow">→</span><span>Primarily people-led consulting capability</span></div>
+        <div class="row"><span class="arrow">→</span><span>Local delivery capacity and relationships</span></div>
+        <div class="row"><span class="arrow">→</span><span>Traditional ICT transformation services</span></div>
+      </div>
+      <div class="ba after"><h3>Nisus + Braiin — expanded possibility</h3>
+        <div class="row"><span class="arrow">↗</span><span>Local footprint connected to a global AI platform</span></div>
+        <div class="row"><span class="arrow">↗</span><span>People + technology + repeatable IP</span></div>
+        <div class="row"><span class="arrow">↗</span><span>Expanded specialist and delivery capacity</span></div>
+        <div class="row"><span class="arrow">↗</span><span>AI-enabled transformation and operational execution</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">05 · What it could mean for clients</div>
+    <h2>More value in both directions.</h2>
+    <div class="clients">
+      <div class="clientbox"><h3>For Nisus clients</h3><p>Existing relationships could gain access to more than individual ICT capability.</p>
+        <span class="tag">AI + automation</span><span class="tag">Predictive analytics</span><span class="tag">Reusable platforms / IP</span><span class="tag">Global specialist capacity</span><span class="tag">Experiment → production</span>
+      </div>
+      <div class="clientbox"><h3>For Braiin</h3><p>Nisus potentially provides a trusted implementation layer in environments where credibility and governance matter.</p>
+        <span class="tag">Federal Government access</span><span class="tag">Regulated delivery expertise</span><span class="tag">Local consulting capability</span><span class="tag">Security + architecture context</span><span class="tag">Government execution</span>
+      </div>
+    </div>
+    <div class="playback"><strong>The flywheel:</strong> Braiin gives Nisus more to take into trusted relationships. Nisus gives Braiin a credible path into complex environments where relationships, governance and delivery capability matter enormously.</div>
+  </div>
+</section>
+
+<section class="big-question">
+  <div class="wrap">
+    <div class="eyebrow">The strategic question</div>
+    <h2>Where could this combination create disproportionate value?</h2>
+    <p>Rather than start with technology and ask “where can we sell this?”, what if Nisus starts with the problems its clients already have — then identifies where Braiin's capability creates a step-change in the outcome?</p>
+  </div>
+</section>
+
+<section id="opportunities">
+  <div class="wrap">
+    <div class="kicker">06 · Opportunity spaces</div>
+    <h2>Four “How Might We” questions worth exploring.</h2>
+    <div class="hmw-grid">
+      <div class="hmw"><div class="n">HMW 01</div><h3>How might we use Nisus's existing relationships to identify high-value government workflows where AI materially improves cost, speed, service quality or decision-making?</h3><p>Start with painful work: manual processing, fragmented information, case triage, repetitive coordination and high-volume service interactions.</p></div>
+      <div class="hmw"><div class="n">HMW 02</div><h3>How might we turn Braiin's technology and Nisus's expertise into repeatable government propositions rather than relying only on individual consulting engagements?</h3><p>Think discovery accelerators, AI readiness, workflow redesign and outcome-based packaged services.</p></div>
+      <div class="hmw"><div class="n">HMW 03</div><h3>How might we help agencies move AI from prototype to governed production across architecture, security, data, operating model, adoption and delivery?</h3><p>A practical bridge between AI experimentation and resilient operational services.</p></div>
+      <div class="hmw"><div class="n">HMW 04</div><h3>How might we combine AI, customer insight and workflow automation to fundamentally improve how citizens and businesses interact with government services?</h3><p>Move beyond “a chatbot” toward intelligent end-to-end service experiences with human oversight.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="imagine">
+  <div class="wrap">
+    <div class="kicker">07 · Imagine a world where</div>
+    <h2>Government service delivery moves from fragmented and reactive to intelligent and proactive.</h2>
+    <div class="journey">
+      <div class="state"><h3>Today</h3><ul><li>Customers repeat information</li><li>Staff search across fragmented systems</li><li>Cases require manual triage and hand-offs</li><li>Routine communication consumes capacity</li><li>Insights arrive after the work is done</li><li>AI pilots remain disconnected from operations</li></ul></div>
+      <div class="mid">→</div>
+      <div class="state"><h3>Possible future</h3><ul><li>Intent and context understood at entry</li><li>Relevant data assembled automatically</li><li>Routine work executed within controls</li><li>Exceptions routed to the right human</li><li>Customers receive proactive communication</li><li>Every interaction improves service insight</li></ul></div>
+    </div>
+    <div class="callout">That starts to look less like “selling AI” — and more like redesigning government services around what AI now makes possible.</div>
+  </div>
+</section>
+
+<section id="baz">
+  <div class="wrap">
+    <div class="kicker">08 · Why this resonated with Baz</div>
+    <h2>I’ve spent my career at this intersection.</h2>
+    <p class="lede">Connecting customer problems, technology, complex stakeholders and execution across Federal Government, SaaS, digital marketplaces, customer experience and product environments.</p>
+    <div class="evidence">
+      <div class="ev"><h3>Government transformation</h3><p>DAFF · ACCC · DISR — regulated delivery across policy, security, architecture, engineering, operations and multi-team dependencies.</p><div class="chips"><span class="chip">Digital Identity · 9 teams</span><span class="chip">165 hrs manual work removed</span><span class="chip">+28% delivery capacity</span><span class="chip">$12.2K+/mo savings</span></div></div>
+      <div class="ev"><h3>Customer + product</h3><p>Gumtree / eBay — customer experience, discovery and product feedback loops across one of Australia's highest-traffic marketplaces.</p><div class="chips"><span class="chip">45+ NPS</span><span class="chip">40-person support operation</span><span class="chip">Internal research capability</span><span class="chip">Discovery → delivery</span></div></div>
+      <div class="ev"><h3>Commercial transformation</h3><p>MRI Software APAC — post-acquisition integration, professional services, product, support, CX and operating model transformation.</p><div class="chips"><span class="chip">114% YTD performance</span><span class="chip">732 hrs waste removed</span><span class="chip">35% contact-centre cost reduction</span><span class="chip">100+ person environment</span></div></div>
+      <div class="ev"><h3>Product + AI thinking</h3><p>Problem discovery, JTBD, workflow orchestration, human + agent operating models, MVP validation and turning emerging capability into practical propositions.</p><div class="chips"><span class="chip">Problem → value</span><span class="chip">Workflow → automation</span><span class="chip">MVP → evidence</span><span class="chip">Capability → proposition</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">09 · Where I could contribute</div>
+    <h2>Not another layer — a connector across the system.</h2>
+    <div class="contribute">
+      <div class="step"><div class="num">01</div><h3>Discover</h3><p>Work with clients to uncover valuable problems, workflows and unmet needs.</p></div>
+      <div class="step"><div class="num">02</div><h3>Shape</h3><p>Turn opportunities into propositions, pilots, roadmaps and measurable value cases.</p></div>
+      <div class="step"><div class="num">03</div><h3>Connect</h3><p>Bridge clients, product, AI specialists, architects, security and delivery teams.</p></div>
+      <div class="step"><div class="num">04</div><h3>Deliver</h3><p>Take promising ideas through governed implementation in complex environments.</p></div>
+      <div class="step"><div class="num">05</div><h3>Productise</h3><p>Turn successful engagements into repeatable Nisus / Braiin capability and IP.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="explore" class="questions">
+  <div class="wrap">
+    <div class="kicker">10 · A few things worth exploring</div>
+    <h2>Questions, not assumptions.</h2>
+    <div class="q">Where are Nisus clients already asking questions about AI?</div>
+    <div class="q">Which Braiin capabilities translate most naturally into government problems?</div>
+    <div class="q">Could Nisus create a lightweight AI discovery offer before pursuing larger implementations?</div>
+    <div class="q">Is government customer experience an underexplored intersection between the two businesses?</div>
+    <div class="q">Which existing client relationship could provide a low-risk first proof of value?</div>
+    <p class="close">No grand proposal — these were simply the opportunities that occurred to me after our conversation and reading Sean's comments about where Nisus could go next.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong>Strategic thought starter · Baz Ozturk · August 2026</strong>
+    <div class="sources">Sources: TechPartner article “Braiin acquires ICT contractor and tech consulting firm Nisus Australia”; Braiin Limited official website and investor materials. Braiin describes itself as a global AI platform operating across AI, agritech, customer experience and property technology, and in July 2026 announced ARIA, an agentic workflow platform for real estate.</div>
+  </div>
+</footer>
+</body>
+</html>
