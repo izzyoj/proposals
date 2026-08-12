@@ -118,7 +118,8 @@ section h2{
   padding:18px 14px;
   text-align:center;
   font-size:14px;
-  font-weight:750;
+  font-weight:700;
+  color:var(--ink);
   background:#fff;
 }
 .opportunity-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-top:32px}
@@ -314,16 +315,11 @@ footer{padding:46px 0 52px;color:#7a8796;font-size:12px}
   .footer-note{text-align:left}
   .brand-text{font-size:14px}
 }
-@media(max-width:900px){
-.grid4{grid-template-columns:repeat(2,1fr)}
-.shift-grid{grid-template-columns:repeat(2,1fr)}
-.growth-flow{grid-template-columns:repeat(3,1fr)}
-}
-@media(max-width:540px){
-.grid4{grid-template-columns:1fr 1fr}
 .shift-grid{grid-template-columns:1fr 1fr}
 .growth-flow{grid-template-columns:repeat(2,1fr)}
 }
+@media(max-width:768px){.growth-flow{grid-template-columns:repeat(3,1fr);gap:8px}}
+@media(max-width:480px){.growth-flow{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
